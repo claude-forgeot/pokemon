@@ -1,0 +1,86 @@
+"""Result screen module -- displays battle outcome."""
+
+import pygame
+
+from game_state import GameState
+from gui.base_screen import BaseScreen
+from gui.constants import Constants
+
+
+class ResultScreen(BaseScreen):
+    """Displays the winner and loser after a battle, with a return button."""
+
+    def __init__(self, game, winner_name, loser_name):
+        """Initialize the result screen.
+
+        Args:
+            game: The Game instance.
+            winner_name: Name of the winning Pokemon.
+            loser_name: Name of the losing Pokemon.
+        """
+        super().__init__(game)
+        self.winner_name = winner_name
+        self.loser_name = loser_name
+        self.font_title = pygame.font.SysFont("arial", 40, bold=True)
+        self.font_info = pygame.font.SysFont("arial", 22)
+        self.font_button = pygame.font.SysFont("arial", 22)
+
+        self.menu_button = pygame.Rect(
+            Constants.SCREEN_WIDTH // 2 - 100,
+            Constants.SCREEN_HEIGHT - 120,
+            200, 50,
+        )
+
+    def handle_events(self, events):
+        """Handle click on the return-to-menu button.
+
+        Returns:
+            GameState or None: MENU if button clicked.
+        """
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.menu_button.collidepoint(event.pos):
+                    return GameState.MENU
+        return None
+
+    def update(self):
+        """No update logic needed."""
+
+    def draw(self, surface):
+        """Draw the result screen with winner/loser info."""
+        surface.fill(Constants.WHITE)
+
+        # Title
+        title = self.font_title.render("Battle Over!", True, Constants.BLACK)
+        title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 120))
+        surface.blit(title, title_rect)
+
+        # Winner
+        win_text = self.font_info.render(
+            f"Winner: {self.winner_name}", True, Constants.GREEN
+        )
+        win_rect = win_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 220))
+        surface.blit(win_text, win_rect)
+
+        # Loser
+        lose_text = self.font_info.render(
+            f"Defeated: {self.loser_name}", True, Constants.RED
+        )
+        lose_rect = lose_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 270))
+        surface.blit(lose_text, lose_rect)
+
+        # Pokedex info
+        pdex_text = self.font_info.render(
+            f"Pokedex entries: {self.game.pokedex.get_count()}",
+            True, Constants.DARK_GRAY,
+        )
+        pdex_rect = pdex_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 340))
+        surface.blit(pdex_text, pdex_rect)
+
+        # Return button
+        pygame.draw.rect(
+            surface, Constants.BLUE, self.menu_button,
+            border_radius=Constants.BUTTON_RADIUS,
+        )
+        btn_label = self.font_button.render("Back to Menu", True, Constants.WHITE)
+        surface.blit(btn_label, btn_label.get_rect(center=self.menu_button.center))
