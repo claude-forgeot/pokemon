@@ -23,4 +23,5 @@ class GameState(Enum):
     RESULT = "result"
     POKEDEX = "pokedex"
     ADD_POKEMON = "add_pokemon"
+    SAVE_SELECT = "save_select"
     QUIT = "quit"

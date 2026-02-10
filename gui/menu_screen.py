@@ -1,4 +1,4 @@
-"""Menu screen module -- main menu with 3 options."""
+"""Menu screen module -- main menu with game options."""
 
 import pygame
 
@@ -8,7 +8,7 @@ from gui.constants import Constants
 
 
 class MenuScreen(BaseScreen):
-    """Main menu screen with 3 buttons: Start Battle, Add Pokemon, Pokedex.
+    """Main menu screen with buttons for all game actions.
 
     POO: This class INHERITS from BaseScreen and implements all 3 abstract
     methods. 'super().__init__(game)' calls the parent's constructor to
@@ -25,18 +25,26 @@ class MenuScreen(BaseScreen):
         self.font_title = pygame.font.SysFont("arial", 48, bold=True)
         self.font_button = pygame.font.SysFont("arial", 24)
         self.font_small = pygame.font.SysFont("arial", 16)
+        self.message = ""
+        self.message_timer = 0
 
         # Define button rectangles (centered horizontally)
         center_x = Constants.SCREEN_WIDTH // 2 - Constants.BUTTON_WIDTH // 2
         self.buttons = {
+            "new_game": pygame.Rect(
+                center_x, 200, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+            ),
+            "load_save": pygame.Rect(
+                center_x, 270, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+            ),
             "battle": pygame.Rect(
-                center_x, 250, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 340, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
             "add": pygame.Rect(
-                center_x, 320, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 410, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
             "pokedex": pygame.Rect(
-                center_x, 390, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 480, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
         }
         self.hover_button = None
@@ -55,6 +63,13 @@ class MenuScreen(BaseScreen):
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.buttons["new_game"].collidepoint(event.pos):
+                    self.game.new_game()
+                    self.message = "New game started! Pokedex reset."
+                    self.message_timer = 120
+                    return None
+                if self.buttons["load_save"].collidepoint(event.pos):
+                    return GameState.SAVE_SELECT
                 if self.buttons["battle"].collidepoint(event.pos):
                     if len(self.game.get_available_pokemon()) < 2:
                         return None
@@ -66,26 +81,32 @@ class MenuScreen(BaseScreen):
         return None
 
     def update(self):
-        """No update logic needed for the menu."""
+        """Update message timer."""
+        if self.message_timer > 0:
+            self.message_timer -= 1
+            if self.message_timer == 0:
+                self.message = ""
 
     def draw(self, surface):
-        """Draw the menu: title, 3 buttons, and Pokemon count."""
+        """Draw the menu: title, buttons, and Pokemon count."""
         surface.fill(Constants.WHITE)
 
         # Title
         title = self.font_title.render("Pokemon Battle", True, Constants.BLACK)
-        title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 120))
+        title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 100))
         surface.blit(title, title_rect)
 
         # Subtitle
         subtitle = self.font_small.render(
             "Gotta catch 'em all!", True, Constants.DARK_GRAY
         )
-        sub_rect = subtitle.get_rect(center=(Constants.SCREEN_WIDTH // 2, 170))
+        sub_rect = subtitle.get_rect(center=(Constants.SCREEN_WIDTH // 2, 150))
         surface.blit(subtitle, sub_rect)
 
         # Buttons
         labels = {
+            "new_game": "New Game",
+            "load_save": "Load Save",
             "battle": "Start Battle",
             "add": "Add Pokemon",
             "pokedex": "Pokedex",
@@ -106,11 +127,19 @@ class MenuScreen(BaseScreen):
             msg = f"{count} Pokemon available"
             msg_color = Constants.DARK_GRAY
         info = self.font_small.render(msg, True, msg_color)
-        info_rect = info.get_rect(center=(Constants.SCREEN_WIDTH // 2, 480))
+        info_rect = info.get_rect(center=(Constants.SCREEN_WIDTH // 2, 545))
         surface.blit(info, info_rect)
 
         # Pokedex count
         pdex_msg = f"Pokedex: {self.game.pokedex.get_count()} encountered"
         pdex = self.font_small.render(pdex_msg, True, Constants.DARK_GRAY)
-        pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 510))
+        pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 565))
         surface.blit(pdex, pdex_rect)
+
+        # Message (for "New game started" feedback)
+        if self.message:
+            msg_surf = self.font_small.render(self.message, True, Constants.GREEN)
+            msg_rect = msg_surf.get_rect(
+                center=(Constants.SCREEN_WIDTH // 2, 580)
+            )
+            surface.blit(msg_surf, msg_rect)

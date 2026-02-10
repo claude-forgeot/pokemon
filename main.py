@@ -24,7 +24,7 @@ from gui.menu_screen import MenuScreen
 from gui.pokedex_screen import PokedexScreen
 from gui.result_screen import ResultScreen
 from gui.selection_screen import SelectionScreen
-
+from gui.save_select_screen import SaveSelectScreen
 
 def main():
     """Run the Pygame main loop with state machine dispatch."""
@@ -87,6 +87,7 @@ def main():
                         winner_name = current_screen.winner
                         combat = current_screen.combat
                         loser_name = combat.get_loser()
+                    game.save_game()
                     current_screen = ResultScreen(
                         game,
                         winner_name or "Unknown",
@@ -96,6 +97,8 @@ def main():
                     current_screen = PokedexScreen(game)
                 case GameState.ADD_POKEMON:
                     current_screen = AddPokemonScreen(game)
+                case GameState.SAVE_SELECT:
+                    current_screen = SaveSelectScreen(game)    
                 case GameState.QUIT:
                     running = False
             state = next_state
