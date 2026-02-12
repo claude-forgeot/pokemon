@@ -25,6 +25,7 @@ from gui.pokedex_screen import PokedexScreen
 from gui.result_screen import ResultScreen
 from gui.selection_screen import SelectionScreen
 from gui.save_select_screen import SaveSelectScreen
+from gui.team_select_screen import TeamSelectScreen
 
 def main():
     """Run the Pygame main loop with state machine dispatch."""
@@ -66,17 +67,28 @@ def main():
                 case GameState.SELECTION:
                     current_screen = SelectionScreen(game)
                 case GameState.COMBAT:
-                    # Get selected Pokemon from selection screen
-                    if hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
+                    from pokemon import Pokemon
+                    player_team = []
+                    opponent_team = []
+                    if hasattr(current_screen, "selected_indices") and current_screen.selected_indices:
                         pokemon_list = game.get_available_pokemon()
-                        selected_pokemon = pokemon_list[current_screen.selected_index]
-                        # Create a fresh copy for combat
-                        from pokemon import Pokemon
-                        selected_pokemon = Pokemon.from_dict(selected_pokemon.to_dict())
-                    opponent_pokemon = game.get_random_opponent()
-                    if selected_pokemon and opponent_pokemon:
+                        for idx in current_screen.selected_indices:
+                            p = Pokemon.from_dict(pokemon_list[idx].to_dict())
+                            player_team.append(p)
+                        import random
+                        opp_sources = random.sample(
+                            pokemon_list, min(len(player_team), len(pokemon_list))
+                        )
+                        for p in opp_sources:
+                            opponent_team.append(Pokemon.from_dict(p.to_dict()))
+                    elif hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
+                        pokemon_list = game.get_available_pokemon()
+                        p = pokemon_list[current_screen.selected_index]
+                        player_team = [Pokemon.from_dict(p.to_dict())]
+                        opponent_team = [Pokemon.from_dict(game.get_random_opponent().to_dict())]
+                    if player_team and opponent_team:
                         current_screen = CombatScreen(
-                            game, selected_pokemon, opponent_pokemon
+                            game, player_team, opponent_team
                         )
                     else:
                         current_screen = MenuScreen(game)
@@ -98,7 +110,9 @@ def main():
                 case GameState.ADD_POKEMON:
                     current_screen = AddPokemonScreen(game)
                 case GameState.SAVE_SELECT:
-                    current_screen = SaveSelectScreen(game)    
+                    current_screen = SaveSelectScreen(game)
+                case GameState.TEAM_SELECT:
+                    current_screen = TeamSelectScreen(game)        
                 case GameState.QUIT:
                     running = False
             state = next_state
