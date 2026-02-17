@@ -1,15 +1,19 @@
 """Combat module -- manages a battle between two Pokemon."""
 
+
 import random
+
 
 
 class Combat:
     """Manages a battle between two Pokemon.
 
+
     POO: This class demonstrates COMPOSITION -- it contains Pokemon objects
     and a TypeChart object as attributes, rather than inheriting from them.
     Composition means "has-a" (a Combat HAS two Pokemon), while inheritance
     means "is-a" (a CombatScreen IS-A BaseScreen).
+
 
     The 5 methods required by the assignment are:
         1. get_type_multiplier(attacker, defender)
@@ -18,12 +22,17 @@ class Combat:
         4. get_winner()
         5. get_loser()
     Plus: register_to_pokedex(pokemon, pokedex)
+          award_xp_to_winner()  # NOUVEAU : Système XP
     """
 
+
     MISS_CHANCE = 0.1  # 10% chance to miss
+    BASE_XP_REWARD = 20  # XP donné au gagnant
+
 
     def __init__(self, player_pokemon, opponent_pokemon, type_chart):
         """Create a new Combat instance.
+
 
         Args:
             player_pokemon: The player's Pokemon object.
@@ -35,15 +44,19 @@ class Combat:
         self.type_chart = type_chart
         self.turn_log = []
 
+
     def get_type_multiplier(self, attacker, defender):
         """Get the type effectiveness multiplier for an attack.
+
 
         Uses the attacker's primary type (index 0) against all of the
         defender's types, combined together.
 
+
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
+
 
         Returns:
             float: Combined type multiplier.
@@ -51,15 +64,19 @@ class Combat:
         attack_type = attacker.types[0]
         return self.type_chart.get_combined_multiplier(attack_type, defender.types)
 
+
     def calculate_damage(self, attacker, defender):
         """Calculate damage dealt by attacker to defender.
+
 
         Formula: max(1, (attack * type_multiplier) - defense)
         Exception: if type_multiplier is 0 (immunity), damage is 0.
 
+
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
+
 
         Returns:
             int: Damage amount (>= 0).
@@ -70,14 +87,18 @@ class Combat:
         raw_damage = int(attacker.attack * multiplier) - defender.defense
         return max(1, raw_damage)
 
+
     def attack(self, attacker, defender):
         """Execute one attack from attacker to defender.
 
+
         Handles miss chance (10%), damage calculation, and HP reduction.
+
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
+
 
         Returns:
             dict: Result with keys:
@@ -102,9 +123,11 @@ class Combat:
             self.turn_log.append(result)
             return result
 
+
         multiplier = self.get_type_multiplier(attacker, defender)
         damage = self.calculate_damage(attacker, defender)
         defender.take_damage(damage)
+
 
         # Determine effectiveness label
         if multiplier == 0.0:
@@ -116,6 +139,7 @@ class Combat:
         else:
             effective = "normal"
 
+
         # Build message
         message = f"{attacker.name} attacks {defender.name} for {damage} damage!"
         if effective == "immune":
@@ -125,8 +149,10 @@ class Combat:
         elif effective == "not_very":
             message += " It's not very effective..."
 
+
         if not defender.is_alive():
             message += f" {defender.name} fainted!"
+
 
         result = {
             "hit": True,
@@ -139,8 +165,10 @@ class Combat:
         self.turn_log.append(result)
         return result
 
+
     def get_winner(self):
         """Return the name of the winning Pokemon, or None if battle continues.
+
 
         Returns:
             str or None: Winner's name, or None if both are still alive.
@@ -151,8 +179,10 @@ class Combat:
             return self.opponent_pokemon.name
         return None
 
+
     def get_loser(self):
         """Return the name of the losing Pokemon, or None if battle continues.
+
 
         Returns:
             str or None: Loser's name, or None if both are still alive.
@@ -163,14 +193,54 @@ class Combat:
             return self.player_pokemon.name
         return None
 
+
+    def award_xp_to_winner(self):
+        """Give XP to the winning Pokemon after battle ends.
+
+
+        POO: Calls the gain_xp() method on the winner Pokemon instance.
+        The amount depends on the loser's level (simple formula).
+
+
+        Returns:
+            str: Message describing XP gained and level up if any.
+        """
+        winner_name = self.get_winner()
+        if winner_name is None:
+            return "No winner yet!"
+
+        # Trouve le gagnant et calcule XP basé sur le niveau du perdant
+        loser = self.get_loser()
+        loser_pokemon = self.player_pokemon if loser == self.player_pokemon.name else self.opponent_pokemon
+        xp_reward = self.BASE_XP_REWARD + loser_pokemon.level * 2  # 20 + 2×niveau_perdant
+        
+        if winner_name == self.player_pokemon.name:
+            winner = self.player_pokemon
+        else:
+            winner = self.opponent_pokemon
+            
+        old_level = winner.level
+        winner.gain_xp(xp_reward)
+        
+        message = f"{winner.name} gained {xp_reward} XP!"
+        if winner.level > old_level:
+            message += f" {winner.name} reached level {winner.level}!"
+            
+        return message
+
+
     def register_to_pokedex(self, pokemon, pokedex):
         """Register a Pokemon in the Pokedex after an encounter.
+
 
         Args:
             pokemon: The Pokemon to register.
             pokedex: The Pokedex instance to add the entry to.
 
+
         Returns:
             bool: True if the Pokemon was newly added, False if already known.
         """
         return pokedex.add_entry(pokemon)
+
+
