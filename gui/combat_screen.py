@@ -41,22 +41,15 @@ class CombatScreen(BaseScreen):
         self.winner = None
         self.xp_message = ""
         self.show_switch = False
-        self.show_moves = False
 
-        self.font_move = pygame.font.SysFont("arial", 14, bold=True)
-
-        # Bottom action buttons (switch, forfeit, continue)
+        # Buttons
         btn_y = Constants.SCREEN_HEIGHT - 75
-        self.switch_button = pygame.Rect(50, btn_y, 150, 45)
-        self.forfeit_button = pygame.Rect(220, btn_y, 150, 45)
-        self.attack_button = pygame.Rect(390, btn_y, 150, 45)
+        self.attack_button = pygame.Rect(50, btn_y, 150, 45)
+        self.switch_button = pygame.Rect(220, btn_y, 150, 45)
+        self.forfeit_button = pygame.Rect(390, btn_y, 150, 45)
         self.continue_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100, btn_y, 200, 45
         )
-
-        # Move buttons (built dynamically)
-        self.move_buttons = []
-        self._build_move_buttons()
 
         # Switch menu buttons (built when needed)
         self.switch_buttons = []
@@ -121,16 +114,7 @@ class CombatScreen(BaseScreen):
 
                 # Player turn actions
                 if self.phase == "player_turn":
-                    # Check move buttons first
-                    move_clicked = False
-                    for move, btn in self.move_buttons:
-                        if btn.collidepoint(event.pos):
-                            self._do_player_attack(move)
-                            move_clicked = True
-                            break
-                    if move_clicked:
-                        pass
-                    elif self.attack_button.collidepoint(event.pos) and not self.player.moves:
+                    if self.attack_button.collidepoint(event.pos):
                         self._do_player_attack()
                     elif self.switch_button.collidepoint(event.pos):
                         alive = [(i, p) for i, p in enumerate(self.player_team)
@@ -143,30 +127,6 @@ class CombatScreen(BaseScreen):
                         self.winner = self.opponent.name
                         self._finish_battle()
 
-        return None
-
-    def _build_move_buttons(self):
-        """Create button rectangles for the player's current Pokemon's moves."""
-        self.move_buttons = []
-        moves = self.player.moves
-        if not moves:
-            return
-        # 2x2 grid above the action buttons
-        btn_w = 135
-        btn_h = 38
-        start_x = 390
-        start_y = Constants.SCREEN_HEIGHT - 165
-        for idx, move in enumerate(moves):
-            col = idx % 2
-            row = idx // 2
-            x = start_x + col * (btn_w + 5)
-            y = start_y + row * (btn_h + 5)
-            self.move_buttons.append((move, pygame.Rect(x, y, btn_w, btn_h)))
-
-    def _pick_random_move(self, pokemon):
-        """Pick a random move for the AI, or None if no moves."""
-        if pokemon.moves:
-            return random.choice(pokemon.moves)
         return None
 
     def _build_switch_buttons(self, alive_list):
@@ -188,19 +148,17 @@ class CombatScreen(BaseScreen):
         self.player = self.player_team[new_index]
         self.combat = Combat(self.player, self.opponent, self.game.type_chart)
         self.player_sprite = self._load_sprite(self.player.sprite_path)
-        self._build_move_buttons()
         self._add_log(f"You switched {old_name} for {self.player.name}!")
 
         # Opponent attacks after switch
-        opp_move = self._pick_random_move(self.opponent)
-        opp_result = self.combat.attack(self.opponent, self.player, opp_move)
+        opp_result = self.combat.attack(self.opponent, self.player)
         self._add_log(opp_result["message"])
         if opp_result["ko"]:
             self._handle_player_faint()
 
-    def _do_player_attack(self, move=None):
+    def _do_player_attack(self):
         """Execute player attack, then opponent attacks back."""
-        result = self.combat.attack(self.player, self.opponent, move)
+        result = self.combat.attack(self.player, self.opponent)
         self._add_log(result["message"])
 
         if result["ko"]:
@@ -212,10 +170,9 @@ class CombatScreen(BaseScreen):
             else:
                 self._next_alive_opponent()
 
-        # Opponent attacks back with a random move
+        # Opponent attacks back
         self.phase = "opponent_turn"
-        opp_move = self._pick_random_move(self.opponent)
-        opp_result = self.combat.attack(self.opponent, self.player, opp_move)
+        opp_result = self.combat.attack(self.opponent, self.player)
         self._add_log(opp_result["message"])
 
         if opp_result["ko"]:
@@ -244,7 +201,6 @@ class CombatScreen(BaseScreen):
                     self.player = p
                     self.combat = Combat(self.player, self.opponent, self.game.type_chart)
                     self.player_sprite = self._load_sprite(self.player.sprite_path)
-                    self._build_move_buttons()
                     self._add_log(f"Go, {self.player.name}!")
                     self.phase = "player_turn"
                     break
@@ -299,27 +255,12 @@ class CombatScreen(BaseScreen):
             btn_label = self.font_button.render("Continue", True, Constants.WHITE)
             surface.blit(btn_label, btn_label.get_rect(center=self.continue_button.center))
         else:
-            is_active = self.phase == "player_turn"
-
-            # Move buttons (if Pokemon has moves)
-            if self.move_buttons:
-                for move, btn in self.move_buttons:
-                    type_color = Constants.TYPE_COLORS.get(move.move_type, Constants.GRAY)
-                    color = type_color if is_active else Constants.GRAY
-                    pygame.draw.rect(surface, color, btn, border_radius=5)
-                    label = f"{move.name}"
-                    label_surf = self.font_move.render(label, True, Constants.WHITE)
-                    surface.blit(label_surf, label_surf.get_rect(center=(btn.centerx, btn.centery - 6)))
-                    info = f"PWR:{move.power} {move.move_type}"
-                    info_surf = self.font_stat.render(info, True, Constants.WHITE)
-                    surface.blit(info_surf, info_surf.get_rect(center=(btn.centerx, btn.centery + 10)))
-            else:
-                # Fallback: single Attack button (no moves)
-                color = Constants.RED if is_active else Constants.GRAY
-                pygame.draw.rect(surface, color, self.attack_button,
-                                 border_radius=Constants.BUTTON_RADIUS)
-                atk_label = self.font_button.render("Attack!", True, Constants.WHITE)
-                surface.blit(atk_label, atk_label.get_rect(center=self.attack_button.center))
+            # Attack
+            color = Constants.RED if self.phase == "player_turn" else Constants.GRAY
+            pygame.draw.rect(surface, color, self.attack_button,
+                             border_radius=Constants.BUTTON_RADIUS)
+            atk_label = self.font_button.render("Attack!", True, Constants.WHITE)
+            surface.blit(atk_label, atk_label.get_rect(center=self.attack_button.center))
 
             # Switch
             has_alive = any(p.is_alive() and i != self.player_index

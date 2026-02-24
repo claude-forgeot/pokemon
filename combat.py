@@ -36,68 +36,49 @@ class Combat:
         self.type_chart = type_chart
         self.turn_log = []
 
-    def get_type_multiplier(self, attacker, defender, move=None):
+    def get_type_multiplier(self, attacker, defender):
         """Get the type effectiveness multiplier for an attack.
 
-        If a move is provided, uses the move's type. Otherwise uses
-        the attacker's primary type (index 0).
+        Uses the attacker's primary type (index 0) against all of the
+        defender's types, combined together.
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
 
         Returns:
             float: Combined type multiplier.
         """
-        if move is not None:
-            attack_type = move.move_type
-        else:
-            attack_type = attacker.types[0]
+        attack_type = attacker.types[0]
         return self.type_chart.get_combined_multiplier(attack_type, defender.types)
 
-    def calculate_damage(self, attacker, defender, move=None):
+    def calculate_damage(self, attacker, defender):
         """Calculate damage dealt by attacker to defender.
 
-        If a move is provided, uses a formula that includes level and move power:
-            base = ((2 * level / 5 + 2) * power * attack / defense) / 50 + 2
-            damage = base * type_multiplier
-        Otherwise falls back to the simple formula for backward compatibility.
+        Formula: max(1, (attack * type_multiplier) - defense)
+        Exception: if type_multiplier is 0 (immunity), damage is 0.
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
 
         Returns:
             int: Damage amount (>= 0).
         """
-        multiplier = self.get_type_multiplier(attacker, defender, move)
+        multiplier = self.get_type_multiplier(attacker, defender)
         if multiplier == 0.0:
             return 0
-
-        if move is not None:
-            # Damage formula inspired by Pokemon games (simplified)
-            level = attacker.level
-            power = move.power
-            base = ((2 * level / 5 + 2) * power * attacker.attack / defender.defense) / 50 + 2
-            raw_damage = int(base * multiplier)
-        else:
-            raw_damage = int(attacker.attack * multiplier) - defender.defense
-
+        raw_damage = int(attacker.attack * multiplier) - defender.defense
         return max(1, raw_damage)
 
-    def attack(self, attacker, defender, move=None):
+    def attack(self, attacker, defender):
         """Execute one attack from attacker to defender.
 
-        If a move is provided, uses the move's accuracy for hit/miss check
-        and the move's type and power for damage. Otherwise uses the default
-        miss chance (10%) and simple formula.
+        Handles miss chance (10%), damage calculation, and HP reduction.
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
 
         Returns:
             dict: Result with keys:
@@ -107,18 +88,10 @@ class Combat:
                 - effective (str): "super", "not_very", "immune", or "normal".
                 - ko (bool): Whether the defender fainted.
                 - message (str): Human-readable description of the attack.
-                - move_name (str): Name of the move used (or "Attack").
         """
-        move_name = move.name if move else "Attack"
-
-        # Check for miss using move accuracy or default miss chance
-        if move is not None:
-            miss = random.randint(1, 100) > move.accuracy
-        else:
-            miss = random.random() < self.MISS_CHANCE
-
-        if miss:
-            message = f"{attacker.name}'s {move_name} missed!"
+        # Check for miss
+        if random.random() < self.MISS_CHANCE:
+            message = f"{attacker.name}'s attack missed!"
             result = {
                 "hit": False,
                 "damage": 0,
@@ -126,13 +99,12 @@ class Combat:
                 "effective": "normal",
                 "ko": False,
                 "message": message,
-                "move_name": move_name,
             }
             self.turn_log.append(result)
             return result
 
-        multiplier = self.get_type_multiplier(attacker, defender, move)
-        damage = self.calculate_damage(attacker, defender, move)
+        multiplier = self.get_type_multiplier(attacker, defender)
+        damage = self.calculate_damage(attacker, defender)
         defender.take_damage(damage)
 
         # Determine effectiveness label
@@ -146,13 +118,13 @@ class Combat:
             effective = "normal"
 
         # Build message
-        message = f"{attacker.name} used {move_name}! {damage} damage!"
+        message = f"{attacker.name} attacks {defender.name} for {damage} damage!"
         if effective == "immune":
-            message = f"{attacker.name} used {move_name}... It had no effect!"
+            message = f"{attacker.name} attacks {defender.name}... It had no effect!"
         elif effective == "super":
-            message += " Super effective!"
+            message += " It's super effective!"
         elif effective == "not_very":
-            message += " Not very effective..."
+            message += " It's not very effective..."
 
         if not defender.is_alive():
             message += f" {defender.name} fainted!"
@@ -164,7 +136,6 @@ class Combat:
             "effective": effective,
             "ko": not defender.is_alive(),
             "message": message,
-            "move_name": move_name,
         }
         self.turn_log.append(result)
         return result

@@ -8,7 +8,6 @@ Usage:
 """
 
 import os
-import random
 import sys
 
 # Add project root to path so imports work when running as script
@@ -16,9 +15,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.api_client import ApiClient
 from utils.file_handler import FileHandler
-
-# Number of moves to fetch per Pokemon
-MOVES_PER_POKEMON = 4
 
 # Pokemon IDs to fetch (Gen 1 popular picks)
 POKEMON_IDS = [
@@ -38,56 +34,6 @@ POKEMON_IDS = [
     103,  # Exeggutor
     34,   # Nidoking
 ]
-
-
-def _fetch_moves(client, raw_moves):
-    """Fetch up to 4 damaging moves for a Pokemon from PokeAPI.
-
-    Picks moves that have power > 0 (damaging moves, not status).
-    Tries to get a variety of types. Falls back to a default Tackle move.
-
-    Args:
-        client: ApiClient instance.
-        raw_moves: List of move entries from the Pokemon API response.
-
-    Returns:
-        list[dict]: Up to 4 move dicts with name, move_type, power, accuracy.
-    """
-    # Shuffle to get variety, then try to fetch damaging moves
-    candidates = list(raw_moves)
-    random.shuffle(candidates)
-
-    moves = []
-    for entry in candidates:
-        if len(moves) >= MOVES_PER_POKEMON:
-            break
-        try:
-            move_data = client.fetch_move(entry["move"]["name"])
-            power = move_data.get("power")
-            if power is None or power == 0:
-                continue
-            accuracy = move_data.get("accuracy") or 100
-            move_type = move_data["type"]["name"]
-            move_name = move_data["name"].replace("-", " ").title()
-            moves.append({
-                "name": move_name,
-                "move_type": move_type,
-                "power": power,
-                "accuracy": accuracy,
-            })
-        except Exception:
-            continue
-
-    # Fallback: always have at least one move
-    if not moves:
-        moves.append({
-            "name": "Tackle",
-            "move_type": "normal",
-            "power": 40,
-            "accuracy": 100,
-        })
-
-    return moves
 
 
 def populate():
@@ -118,9 +64,6 @@ def populate():
             except Exception:
                 sprite_path = ""
 
-            # Fetch up to 4 damaging moves
-            moves = _fetch_moves(client, data["moves"])
-
             pokemon_entry = {
                 "name": name,
                 "hp": stats.get("hp", 50),
@@ -129,11 +72,9 @@ def populate():
                 "defense": stats.get("defense", 50),
                 "types": types,
                 "sprite_path": sprite_path,
-                "moves": moves,
             }
             pokemon_list.append(pokemon_entry)
-            move_names = [m["name"] for m in moves]
-            print(f"  [OK] {name} ({'/'.join(types)}) moves: {move_names}")
+            print(f"  [OK] {name} ({'/'.join(types)})")
 
         except Exception as error:
             print(f"  [WARN] Failed to fetch Pokemon ID {poke_id}: {error}")

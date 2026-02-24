@@ -1,7 +1,5 @@
 """Pokemon module -- represents a Pokemon creature with stats and types."""
 
-from move import Move
-
 
 class Pokemon:
     """A Pokemon creature with stats and types.
@@ -40,9 +38,6 @@ class Pokemon:
         self.defense = defense
         self.types = types
         self.sprite_path = sprite_path
-
-        # Moves (up to 4 attacks)
-        self.moves = []
 
         # XP and evolution system (by Yasmine)
         self.xp = 0
@@ -116,7 +111,6 @@ class Pokemon:
             "defense": self.defense,
             "types": self.types,
             "sprite_path": self.sprite_path,
-            "moves": [m.to_dict() for m in self.moves],
             "xp": self.xp,
             "xp_to_next_level": self.xp_to_next_level,
             "evolution_level": self.evolution_level,
@@ -146,9 +140,6 @@ class Pokemon:
             types=data["types"],
             sprite_path=data.get("sprite_path", ""),
         )
-        # Restore moves if present
-        moves_data = data.get("moves", [])
-        pokemon.moves = [Move.from_dict(m) for m in moves_data]
         # Restore XP fields if present (backward-compatible with old saves)
         pokemon.xp = data.get("xp", 0)
         pokemon.xp_to_next_level = data.get("xp_to_next_level", 10 + pokemon.level * 5)
