@@ -10,17 +10,19 @@ from gui.constants import Constants
 class ResultScreen(BaseScreen):
     """Displays the winner and loser after a battle, with a return button."""
 
-    def __init__(self, game, winner_name, loser_name):
+    def __init__(self, game, winner_name, loser_name, xp_message=""):
         """Initialize the result screen.
 
         Args:
             game: The Game instance.
             winner_name: Name of the winning Pokemon.
             loser_name: Name of the losing Pokemon.
+            xp_message: XP gain message from combat.
         """
         super().__init__(game)
         self.winner_name = winner_name
         self.loser_name = loser_name
+        self.xp_message = xp_message
         self.font_title = pygame.font.SysFont("arial", 40, bold=True)
         self.font_info = pygame.font.SysFont("arial", 22)
         self.font_button = pygame.font.SysFont("arial", 22)
@@ -69,12 +71,18 @@ class ResultScreen(BaseScreen):
         lose_rect = lose_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 270))
         surface.blit(lose_text, lose_rect)
 
+        # XP message
+        if self.xp_message:
+            xp_text = self.font_info.render(self.xp_message, True, Constants.BLUE)
+            xp_rect = xp_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 320))
+            surface.blit(xp_text, xp_rect)
+
         # Pokedex info
         pdex_text = self.font_info.render(
             f"Pokedex entries: {self.game.pokedex.get_count()}",
             True, Constants.DARK_GRAY,
         )
-        pdex_rect = pdex_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 340))
+        pdex_rect = pdex_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 370))
         surface.blit(pdex_text, pdex_rect)
 
         # Return button

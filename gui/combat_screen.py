@@ -39,6 +39,7 @@ class CombatScreen(BaseScreen):
         self.log_messages = []
         self.phase = "player_turn"
         self.winner = None
+        self.xp_message = ""
         self.show_switch = False
 
         # Buttons
@@ -124,7 +125,7 @@ class CombatScreen(BaseScreen):
                     elif self.forfeit_button.collidepoint(event.pos):
                         self._add_log("You forfeited the battle!")
                         self.winner = self.opponent.name
-                        self.phase = "finished"
+                        self._finish_battle()
 
         return None
 
@@ -163,7 +164,7 @@ class CombatScreen(BaseScreen):
         if result["ko"]:
             if self._all_fainted(self.opponent_team):
                 self.winner = self.player.name
-                self.phase = "finished"
+                self._finish_battle()
                 self._add_log("You win the battle!")
                 return
             else:
@@ -180,11 +181,17 @@ class CombatScreen(BaseScreen):
 
         self.phase = "player_turn"
 
+    def _finish_battle(self):
+        """Mark battle as finished and award XP to the winner."""
+        self.phase = "finished"
+        self.xp_message = self.combat.award_xp_to_winner()
+        self._add_log(self.xp_message)
+
     def _handle_player_faint(self):
         """Handle when current player Pokemon faints."""
         if self._all_fainted(self.player_team):
             self.winner = self.opponent.name
-            self.phase = "finished"
+            self._finish_battle()
             self._add_log("You lost the battle!")
         else:
             # Auto-switch to next alive Pokemon
@@ -358,3 +365,8 @@ class CombatScreen(BaseScreen):
         stat_text = f"ATK:{pokemon.attack}  DEF:{pokemon.defense}  Lv.{pokemon.level}"
         stat_surf = self.font_stat.render(stat_text, True, Constants.DARK_GRAY)
         surface.blit(stat_surf, (info_x, stat_y))
+
+        xp_y = stat_y + 18
+        xp_text = f"XP:{pokemon.xp}/{pokemon.xp_to_next_level}"
+        xp_surf = self.font_stat.render(xp_text, True, Constants.DARK_GRAY)
+        surface.blit(xp_surf, (info_x, xp_y))

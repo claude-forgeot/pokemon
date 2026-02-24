@@ -94,16 +94,19 @@ def main():
                         current_screen = MenuScreen(game)
                         next_state = GameState.MENU
                 case GameState.RESULT:
-                    # Get winner/loser from combat screen
+                    # Get winner/loser and XP message from combat screen
+                    xp_message = ""
                     if hasattr(current_screen, "winner"):
                         winner_name = current_screen.winner
                         combat = current_screen.combat
                         loser_name = combat.get_loser()
+                        xp_message = getattr(current_screen, "xp_message", "")
                     game.save_game()
                     current_screen = ResultScreen(
                         game,
                         winner_name or "Unknown",
                         loser_name or "Unknown",
+                        xp_message,
                     )
                 case GameState.POKEDEX:
                     current_screen = PokedexScreen(game)

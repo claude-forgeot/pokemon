@@ -39,6 +39,12 @@ class Pokemon:
         self.types = types
         self.sprite_path = sprite_path
 
+        # XP and evolution system (by Yasmine)
+        self.xp = 0
+        self.xp_to_next_level = 10 + level * 5
+        self.evolution_level = None
+        self.evolution_target = None
+
     def take_damage(self, amount):
         """Reduce HP by the given amount, floored at 0.
 
@@ -59,6 +65,38 @@ class Pokemon:
         """Fully restore HP to max_hp."""
         self.hp = self.max_hp
 
+    def gain_xp(self, amount):
+        """Add XP and handle level ups.
+
+        Args:
+            amount: XP points to add (positive int).
+        """
+        self.xp += amount
+        while self.xp >= self.xp_to_next_level:
+            self.xp -= self.xp_to_next_level
+            self.level_up()
+
+    def level_up(self):
+        """Increase level and stats. Called automatically by gain_xp()."""
+        self.level += 1
+        self.max_hp += 5
+        self.attack += 3
+        self.defense += 2
+        self.hp = self.max_hp
+        self.xp_to_next_level = 10 + self.level * 5
+        self.try_evolve()
+
+    def try_evolve(self):
+        """Evolve this Pokemon if level requirement is met."""
+        if self.evolution_level is None or self.evolution_target is None:
+            return
+        if self.level >= self.evolution_level:
+            old_name = self.name
+            self.name = self.evolution_target
+            self.evolution_level = None
+            self.evolution_target = None
+            print(f"{old_name} evolved into {self.name}!")
+
     def to_dict(self):
         """Serialize this Pokemon to a dictionary for JSON storage.
 
@@ -73,6 +111,10 @@ class Pokemon:
             "defense": self.defense,
             "types": self.types,
             "sprite_path": self.sprite_path,
+            "xp": self.xp,
+            "xp_to_next_level": self.xp_to_next_level,
+            "evolution_level": self.evolution_level,
+            "evolution_target": self.evolution_target,
         }
 
     @classmethod
@@ -89,7 +131,7 @@ class Pokemon:
         Returns:
             Pokemon: A new Pokemon instance.
         """
-        return cls(
+        pokemon = cls(
             name=data["name"],
             hp=data["hp"],
             level=data.get("level", 5),
@@ -98,6 +140,12 @@ class Pokemon:
             types=data["types"],
             sprite_path=data.get("sprite_path", ""),
         )
+        # Restore XP fields if present (backward-compatible with old saves)
+        pokemon.xp = data.get("xp", 0)
+        pokemon.xp_to_next_level = data.get("xp_to_next_level", 10 + pokemon.level * 5)
+        pokemon.evolution_level = data.get("evolution_level", None)
+        pokemon.evolution_target = data.get("evolution_target", None)
+        return pokemon
 
     def __str__(self):
         """Return a readable string representation.
@@ -106,4 +154,4 @@ class Pokemon:
         automatically when you do print(pokemon) or str(pokemon).
         """
         types_str = "/".join(self.types)
-        return f"{self.name} (Lv.{self.level}) [{types_str}] HP:{self.hp}/{self.max_hp}"
+        return f"{self.name} (Lv.{self.level}) [{types_str}] HP:{self.hp}/{self.max_hp} XP:{self.xp}/{self.xp_to_next_level}"

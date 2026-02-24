@@ -21,6 +21,7 @@ class Combat:
     """
 
     MISS_CHANCE = 0.1  # 10% chance to miss
+    BASE_XP_REWARD = 20  # XP given to the winner
 
     def __init__(self, player_pokemon, opponent_pokemon, type_chart):
         """Create a new Combat instance.
@@ -162,6 +163,36 @@ class Combat:
         if not self.player_pokemon.is_alive():
             return self.player_pokemon.name
         return None
+
+    def award_xp_to_winner(self):
+        """Give XP to the winning Pokemon after battle ends.
+
+        Returns:
+            str: Message describing XP gained and level up if any.
+        """
+        winner_name = self.get_winner()
+        if winner_name is None:
+            return "No winner yet!"
+
+        loser_pokemon = (
+            self.opponent_pokemon
+            if winner_name == self.player_pokemon.name
+            else self.player_pokemon
+        )
+        winner_pokemon = (
+            self.player_pokemon
+            if winner_name == self.player_pokemon.name
+            else self.opponent_pokemon
+        )
+
+        xp_reward = self.BASE_XP_REWARD + loser_pokemon.level * 2
+        old_level = winner_pokemon.level
+        winner_pokemon.gain_xp(xp_reward)
+
+        message = f"{winner_pokemon.name} gained {xp_reward} XP!"
+        if winner_pokemon.level > old_level:
+            message += f" {winner_pokemon.name} reached level {winner_pokemon.level}!"
+        return message
 
     def register_to_pokedex(self, pokemon, pokedex):
         """Register a Pokemon in the Pokedex after an encounter.
