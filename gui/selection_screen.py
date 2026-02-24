@@ -1,10 +1,8 @@
 """Selection screen module -- choose a Pokemon for battle."""
 
-import os
-
 import pygame
 
-from game_state import GameState
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
 
@@ -37,17 +35,6 @@ class SelectionScreen(BaseScreen):
         self.confirm_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 80, Constants.SCREEN_HEIGHT - 60, 160, 40
         )
-
-    def _load_sprites(self):
-        """Load all available Pokemon sprites into memory."""
-        for pokemon in self.game.get_all_pokemon():
-            path = pokemon.sprite_path
-            if path and os.path.isfile(path):
-                try:
-                    img = pygame.image.load(path)
-                    self.sprites[pokemon.name] = pygame.transform.scale(img, (80, 80))
-                except pygame.error:
-                    pass
 
     def handle_events(self, events):
         """Handle clicks on Pokemon cards, back, and confirm buttons.
@@ -173,17 +160,13 @@ class SelectionScreen(BaseScreen):
             # Type badge(s)
             badge_y = y + 112
             total_width = sum(
-                self.font_stat.size(t)[0] + 16 for t in pokemon.types
-            ) + 4 * (len(pokemon.types) - 1)
+                self.font_stat.size(t)[0] + 20 for t in pokemon.types
+            )
             badge_x = x + Constants.CARD_WIDTH // 2 - total_width // 2
-            for ptype in pokemon.types:
-                color = Constants.TYPE_COLORS.get(ptype, Constants.GRAY)
-                tw, th = self.font_stat.size(ptype)
-                badge_rect = pygame.Rect(badge_x, badge_y, tw + 16, th + 4)
-                pygame.draw.rect(surface, color, badge_rect, border_radius=4)
-                type_surf = self.font_stat.render(ptype, True, Constants.WHITE)
-                surface.blit(type_surf, (badge_x + 8, badge_y + 2))
-                badge_x += tw + 20
+            self.draw_type_badges(
+                surface, self.font_stat, pokemon.types,
+                badge_x, badge_y, padding=20, pad_inner=16, radius=4,
+            )
 
             # Stats line
             stat_text = f"HP:{pokemon.hp} ATK:{pokemon.attack} DEF:{pokemon.defense}"

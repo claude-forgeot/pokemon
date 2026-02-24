@@ -123,7 +123,8 @@ Seuls les ajouts XP dans `pokemon.py` et `combat.py` etaient intacts.
 ### Sujet 3 : Scaling adversaires
 
 **Fichier modifie** : `main.py`
-- Fonction `_scale_pokemon_level()` ajuste level, HP, ATK, DEF proportionnellement.
+- Methode `Pokemon.scale_to_level()` (anciennement `_scale_pokemon_level()` standalone dans main.py)
+  ajuste level, HP, ATK, DEF proportionnellement.
 - Appliquee aux adversaires pour matcher le level moyen de l'equipe du joueur.
 
 ### Sujet 5 : Equipe de 6 + choix au KO
@@ -163,3 +164,81 @@ Seuls les ajouts XP dans `pokemon.py` et `combat.py` etaient intacts.
 10. **`.venv/` doublon supprime** : seul `venv/` est conserve.
 11. **`requirements.txt`** : pytest retire, ne contient plus que pygame-ce et requests.
 12. **`run.sh` + `run.bat`** : scripts de lancement (venv auto, install deps, lance le jeu).
+
+---
+
+## Bloc 5 pre-refactoring -- Architecture models/ (Claude)
+
+### Refactoring : package models/
+
+**Motivation** : la regle "1 fichier = 1 classe" etait respectee mais les 7 classes metier
+etaient en vrac a la racine du projet au lieu d'etre dans un package dedie. De plus,
+`_scale_pokemon_level()` etait une fonction standalone dans main.py alors que c'est
+de la logique Pokemon.
+
+**Fichiers deplaces** (git mv, historique conserve) :
+- `pokemon.py` -> `models/pokemon.py`
+- `move.py` -> `models/move.py`
+- `combat.py` -> `models/combat.py`
+- `game.py` -> `models/game.py`
+- `game_state.py` -> `models/game_state.py`
+- `pokedex.py` -> `models/pokedex.py`
+- `type_chart.py` -> `models/type_chart.py`
+
+**Fichier cree** : `models/__init__.py` (vide)
+
+**Methode deplacee** : `_scale_pokemon_level(pokemon, target_level)` de main.py
+-> `Pokemon.scale_to_level(self, target_level)` dans models/pokemon.py
+
+**Imports mis a jour** : 18 changements dans 12 fichiers (main.py, models/pokemon.py,
+models/game.py, 8 fichiers gui/, plus l'import inline dans models/game.py:load_game).
+
+---
+
+## Bloc 5 post-refactoring -- Nettoyage dead code + bug Mewtwo (Claude)
+
+### Artefacts supprimes
+
+- `tests/` (dossier + __pycache__), `.pytest_cache/`, `PLAN.md`, `assets/fonts/` (vide)
+- Tous les `__pycache__/` hors venv
+
+### Variables mortes supprimees
+
+- `main.py` : `selected_pokemon`, `opponent_pokemon` (jamais relues)
+- `gui/save_select_screen.py` : `mouse_pos` (jamais utilisee, collisions via `event.pos`)
+- `gui/combat_screen.py` : `old_name` dans le bloc `forced_switch` (jamais lue)
+- `scripts/populate_pokemon.py` : `seen_types` (vestige d'une logique abandonnee)
+
+### Imports inline redondants supprimes (models/game.py)
+
+- `import os` x3 (save_game, get_save_files, delete_save) -- deja en top-level
+- `from utils.file_handler import FileHandler` x2 (save_game, load_game) -- idem
+- `from models.pokemon import Pokemon` x1 (load_game) -- idem
+
+### Methodes mortes supprimees
+
+- `models/type_chart.py` : `load_from_api()`, `save_to_file()` (zero appelant)
+- `utils/api_client.py` : `fetch_pokemon_list()` (zero appelant)
+
+### Bug fix : Mewtwo jamais debloque
+
+**Probleme** : `try_evolve()` retournait un message mais personne n'appelait
+`game.record_evolution()` ni `game.unlock_pokemon()`. `evolution_count` restait a 0.
+
+**Fix** : `gui/combat_screen.py` `_finish_battle()` capture le nom du winner avant XP,
+puis detecte si le nom a change (evolution) et appelle `record_evolution()` +
+`unlock_pokemon()` sur le `game`.
+
+### Factorisation GUI (BaseScreen)
+
+- `_load_sprites(size)` : factorisee dans `BaseScreen`, appelee par `SelectionScreen`
+  (80x80) et `TeamSelectScreen` (64x64). Methodes locales supprimees.
+- `draw_type_badges()` : methode statique dans `BaseScreen`, remplace le code inline
+  dans `SelectionScreen`, `TeamSelectScreen`, `CombatScreen`, `PokedexScreen`.
+
+### Diagramme D2
+
+- `Pokemon` : ajout `evolution_level`, `evolution_target`
+- `TypeChart` : retire `load_from_api`, `save_to_file`
+- `ApiClient` : retire `fetch_pokemon_list`
+- `BaseScreen` : ajout `_load_sprites`, `draw_type_badges`

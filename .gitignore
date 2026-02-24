@@ -196,6 +196,7 @@ assets/sprites/*.png
 # Dev artifacts (pas partie du jeu)
 PLAN.md
 test_window.py
+tests/
 Ressources-projet/
 
 # Donnees generees au runtime (recreees par scripts ou gameplay)

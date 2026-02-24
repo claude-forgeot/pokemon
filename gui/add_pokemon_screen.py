@@ -2,10 +2,10 @@
 
 import pygame
 
-from game_state import GameState
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
-from type_chart import TypeChart
+from models.type_chart import TypeChart
 
 
 class AddPokemonScreen(BaseScreen):

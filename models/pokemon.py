@@ -1,6 +1,6 @@
 """Pokemon module -- represents a Pokemon creature with stats and types."""
 
-from move import Move
+from models.move import Move
 
 
 class Pokemon:
@@ -143,6 +143,25 @@ class Pokemon:
         self.evolution_target = None
         self.evolution_data = None
         return f"{old_name} evolved into {self.name}!"
+
+    def scale_to_level(self, target_level):
+        """Scale this Pokemon's stats to match a target level.
+
+        Adjusts HP, attack, and defense proportionally based on the level
+        difference from the Pokemon's current level.
+
+        Args:
+            target_level: Desired level.
+        """
+        if self.level == target_level:
+            return
+        diff = target_level - self.level
+        self.level = target_level
+        self.max_hp += diff * 5
+        self.hp = self.max_hp
+        self.attack += diff * 3
+        self.defense += diff * 2
+        self.xp_to_next_level = 10 + self.level * 5
 
     def to_dict(self):
         """Serialize this Pokemon to a dictionary for JSON storage.

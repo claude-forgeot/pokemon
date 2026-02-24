@@ -2,7 +2,7 @@
 
 import pygame
 
-from game_state import GameState
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
 
@@ -96,16 +96,10 @@ class PokedexScreen(BaseScreen):
             surface.blit(name_surf, (90, y + 8))
 
             # Types
-            badge_x = 90
-            badge_y = y + 32
-            for ptype in entry.get("types", []):
-                color = Constants.TYPE_COLORS.get(ptype, Constants.GRAY)
-                tw, th = self.font_stat.size(ptype)
-                badge_rect = pygame.Rect(badge_x, badge_y, tw + 10, th + 2)
-                pygame.draw.rect(surface, color, badge_rect, border_radius=3)
-                type_surf = self.font_stat.render(ptype, True, Constants.WHITE)
-                surface.blit(type_surf, (badge_x + 5, badge_y + 1))
-                badge_x += tw + 14
+            self.draw_type_badges(
+                surface, self.font_stat, entry.get("types", []),
+                90, y + 32, padding=14, pad_inner=10, radius=3,
+            )
 
             # Stats
             hp = entry.get("hp", "?")

@@ -89,14 +89,12 @@ def get_level_up_moves(pokemon_data, client, count=4):
 
     # Fetch details and keep only damaging moves
     result = []
-    seen_types = set()
     for _level, move_name in level_moves:
         if len(result) >= count:
             break
         move_info = fetch_move_data(client, move_name)
         if move_info is not None:
             result.append(move_info)
-            seen_types.add(move_info["move_type"])
 
     # If we don't have enough moves, add Tackle as fallback
     if len(result) == 0:

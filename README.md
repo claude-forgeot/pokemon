@@ -48,13 +48,15 @@ python3 main.py
 ```
 pokemonv1/
   main.py               -- Entry point (Pygame loop + state machine)
-  game_state.py          -- GameState enum
-  pokemon.py             -- Pokemon class (stats, XP, evolution, moves)
-  combat.py              -- Combat class (damage, types, moves, XP)
-  move.py                -- Move class (name, type, power, accuracy)
-  pokedex.py             -- Pokedex class (persistence + anti-duplicate)
-  type_chart.py          -- TypeChart class (18 types)
-  game.py                -- Game class (orchestrator, save/load, unlocks)
+  models/               -- Domain classes (1 file = 1 class)
+    __init__.py
+    game.py             -- Game class (orchestrator, save/load, unlocks)
+    game_state.py       -- GameState enum
+    pokemon.py          -- Pokemon class (stats, XP, evolution, moves, scaling)
+    combat.py           -- Combat class (damage, types, moves, XP)
+    move.py             -- Move class (name, type, power, accuracy)
+    pokedex.py          -- Pokedex class (persistence + anti-duplicate)
+    type_chart.py       -- TypeChart class (18 types)
   gui/
     base_screen.py       -- BaseScreen parent class
     constants.py         -- Constants (colors, dimensions)

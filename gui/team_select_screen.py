@@ -1,10 +1,8 @@
 """Team select screen -- lets the player build a team before fighting."""
 
-import os
-
 import pygame
 
-from game_state import GameState
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
 
@@ -32,7 +30,7 @@ class TeamSelectScreen(BaseScreen):
         self.selected_indices = []
         self.scroll_offset = 0
         self.sprites = {}
-        self._load_sprites()
+        self._load_sprites((64, 64))
 
         # Back button
         self.back_button = pygame.Rect(20, 20, 100, 36)
@@ -41,17 +39,6 @@ class TeamSelectScreen(BaseScreen):
             Constants.SCREEN_WIDTH // 2 - 80,
             Constants.SCREEN_HEIGHT - 55, 160, 40
         )
-
-    def _load_sprites(self):
-        """Load all available Pokemon sprites into memory."""
-        for pokemon in self.game.get_all_pokemon():
-            path = pokemon.sprite_path
-            if path and os.path.isfile(path):
-                try:
-                    img = pygame.image.load(path)
-                    self.sprites[pokemon.name] = pygame.transform.scale(img, (64, 64))
-                except pygame.error:
-                    pass
 
     def handle_events(self, events):
         """Clicks on Pokemon cards, back, and confirm buttons.
@@ -188,16 +175,12 @@ class TeamSelectScreen(BaseScreen):
 
             # Type badges
             badge_y = y + 93
-            total_w = sum(self.font_stat.size(t)[0] + 12 for t in pokemon.types)
+            total_w = sum(self.font_stat.size(t)[0] + 14 for t in pokemon.types)
             badge_x = x + card_w // 2 - total_w // 2
-            for ptype in pokemon.types:
-                color = Constants.TYPE_COLORS.get(ptype, Constants.GRAY)
-                tw, th = self.font_stat.size(ptype)
-                badge_rect = pygame.Rect(badge_x, badge_y, tw + 12, th + 2)
-                pygame.draw.rect(surface, color, badge_rect, border_radius=3)
-                type_surf = self.font_stat.render(ptype, True, Constants.WHITE)
-                surface.blit(type_surf, (badge_x + 6, badge_y + 1))
-                badge_x += tw + 14
+            self.draw_type_badges(
+                surface, self.font_stat, pokemon.types,
+                badge_x, badge_y, padding=14, pad_inner=12, radius=3,
+            )
 
             # Stats
             stat_text = f"HP:{pokemon.hp} ATK:{pokemon.attack}"

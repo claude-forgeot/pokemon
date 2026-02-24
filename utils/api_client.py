@@ -131,19 +131,3 @@ class ApiClient:
         response.raise_for_status()
         return response.json()
 
-    def fetch_pokemon_list(self, limit=20):
-        """Fetch a list of Pokemon names/URLs from PokeAPI.
-
-        Args:
-            limit: Number of Pokemon to fetch (default 20).
-
-        Returns:
-            list[dict]: List of dicts with 'name' and 'url' keys.
-
-        Raises:
-            requests.RequestException: If the API call fails.
-        """
-        url = f"{self.BASE_URL}/pokemon?limit={limit}"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        return response.json()["results"]

@@ -61,27 +61,6 @@ class TypeChart:
             result *= self.get_multiplier(attack_type, defend_type)
         return result
 
-    def load_from_api(self, api_client):
-        """Populate the chart by fetching all 18 types from PokeAPI.
-
-        Args:
-            api_client: An ApiClient instance to make requests.
-        """
-        self.chart = {}
-        for type_name in self.TYPES:
-            data = api_client.fetch_type_data(type_name)
-            relations = data["damage_relations"]
-            multipliers = {}
-            for t in self.TYPES:
-                multipliers[t] = 1.0
-            for entry in relations["double_damage_to"]:
-                multipliers[entry["name"]] = 2.0
-            for entry in relations["half_damage_to"]:
-                multipliers[entry["name"]] = 0.5
-            for entry in relations["no_damage_to"]:
-                multipliers[entry["name"]] = 0.0
-            self.chart[type_name] = multipliers
-
     def load_from_file(self, path="data/type_chart.json"):
         """Load the type chart from a local JSON file.
 
@@ -91,10 +70,3 @@ class TypeChart:
         if os.path.isfile(path):
             self.chart = FileHandler.load_json(path)
 
-    def save_to_file(self, path="data/type_chart.json"):
-        """Save the current chart to a local JSON file for caching.
-
-        Args:
-            path: Path where the file will be saved.
-        """
-        FileHandler.save_json(path, self.chart)

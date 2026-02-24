@@ -12,13 +12,15 @@ Mis a jour incrementalement a chaque bloc d'integration.
 ```
 pokemonv1/
   main.py              # Point d'entree, boucle Pygame, machine a etats
-  game.py              # Gestionnaire global (Game) : Pokemon, Pokedex, saves
-  game_state.py        # Enum des etats du jeu (GameState)
-  pokemon.py           # Classe Pokemon (stats, XP, evolution, moves)
-  combat.py            # Classe Combat (degats, types, XP, moves)
-  move.py              # Classe Move (attaque avec type, puissance, precision)
-  pokedex.py           # Classe Pokedex (collection de Pokemon rencontres)
-  type_chart.py        # Classe TypeChart (multiplicateurs de types)
+  models/              # Package des classes metier (1 fichier = 1 classe)
+    __init__.py
+    game.py            # Gestionnaire global (Game) : Pokemon, Pokedex, saves
+    game_state.py      # Enum des etats du jeu (GameState)
+    pokemon.py         # Classe Pokemon (stats, XP, evolution, moves, scaling)
+    combat.py          # Classe Combat (degats, types, XP, moves)
+    move.py            # Classe Move (attaque avec type, puissance, precision)
+    pokedex.py         # Classe Pokedex (collection de Pokemon rencontres)
+    type_chart.py      # Classe TypeChart (multiplicateurs de types)
   gui/
     base_screen.py     # Classe parente BaseScreen
     constants.py       # Constantes visuelles (couleurs, tailles)
@@ -74,7 +76,7 @@ C'est de la **composition** ("has-a") plutot que de l'heritage ("is-a").
 
 ## 2. Classes principales
 
-### Move (move.py)
+### Move (models/move.py)
 
 Represente une attaque Pokemon avec son type, sa puissance et sa precision.
 
@@ -87,7 +89,7 @@ Chaque Pokemon possede jusqu'a 4 moves charges depuis PokeAPI. Si un Pokemon
 n'a pas de moves (vieille sauvegarde), des moves par defaut sont generes
 automatiquement (Tackle + attaque du type principal).
 
-### Pokemon (pokemon.py)
+### Pokemon (models/pokemon.py)
 
 Represente un Pokemon avec ses stats, son systeme XP, ses moves et son
 statut de verrouillage.
@@ -104,9 +106,10 @@ locked (bool), evolution_data (dict)
   types et sprite depuis `evolution_data`. Efface les donnees d'evolution apres
   pour eviter les doubles evolutions.
 - `get_default_moves()` : genere Tackle + attaque du type si aucun move (backward compat)
+- `scale_to_level(target_level)` : ajuste stats proportionnellement pour matcher un niveau cible
 - `to_dict()` / `from_dict(data)` : serialisation JSON (inclut moves, locked, evolution_data)
 
-### Combat (combat.py)
+### Combat (models/combat.py)
 
 Gere un combat entre deux Pokemon avec systeme de moves.
 
@@ -127,7 +130,7 @@ Sans move (backward compat) : `max(1, int(attack * multiplier) - defense)`
 **Ajout XP** :
 - `award_xp_to_winner()` : attribue XP = 20 + 2 x niveau_perdant
 
-### Game (game.py)
+### Game (models/game.py)
 
 Gestionnaire global : charge les Pokemon, gere le Pokedex, les sauvegardes,
 les evolutions et le verrouillage.
@@ -196,7 +199,7 @@ les evolutions et le verrouillage.
 
 ### Scaling adversaires (Bloc 1b -- Claude)
 - Les adversaires sont ajustes au niveau moyen de l'equipe du joueur
-- Stats (HP, ATK, DEF) recalculees proportionnellement au nouveau niveau
+- Via `Pokemon.scale_to_level()` : stats (HP, ATK, DEF) recalculees proportionnellement
 
 ### Equipe de 6 + choix au KO (Bloc 1b -- Claude)
 - Equipe obligatoire de 6 Pokemon (au lieu de 3-6)
@@ -229,8 +232,8 @@ les evolutions et le verrouillage.
 ### C. Notions supplementaires (a expliquer si questionnees)
 | Notion | Ou | Explication simple |
 |--------|----|--------------------|
-| Enum | game_state.py | Constantes nommees pour eviter les erreurs de frappe |
-| @classmethod | pokemon.py (from_dict) | Constructeur alternatif qui recoit la classe |
+| Enum | models/game_state.py | Constantes nommees pour eviter les erreurs de frappe |
+| @classmethod | models/pokemon.py (from_dict) | Constructeur alternatif qui recoit la classe |
 | try/except | api_client.py, file_handler.py | Gestion d'erreurs reseau/fichier |
 | Type hints | Partout | Annotations de type pour la lisibilite |
 
@@ -295,4 +298,4 @@ attaque du type principal du Pokemon. Combat fonctionne sans et avec moves.
 
 ---
 
-*Document mis a jour incrementalement. Derniere mise a jour : Bloc 4 (Documentation publique).*
+*Document mis a jour incrementalement. Derniere mise a jour : Bloc 5 pre-refactoring (architecture models/).*

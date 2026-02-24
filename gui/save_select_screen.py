@@ -2,7 +2,7 @@
 
 import pygame
 
-from game_state import GameState
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
 
@@ -53,8 +53,6 @@ class SaveSelectScreen(BaseScreen):
         Returns:
             GameState or None: MENU to go back, or None to stay.
         """
-        mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 # Back button

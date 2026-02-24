@@ -40,6 +40,8 @@ Pokemon: {
   xp_to_next_level: int
   moves: "list[Move]"
   locked: bool
+  evolution_level: int
+  evolution_target: str
   evolution_data: dict
   take_damage(amount)
   is_alive(): bool
@@ -48,6 +50,7 @@ Pokemon: {
   level_up()
   try_evolve(): str
   get_default_moves(): list
+  scale_to_level(target_level)
   to_dict(): dict
   from_dict(data): Pokemon
 }
@@ -86,9 +89,7 @@ TypeChart: {
   chart: dict
   get_multiplier(atk_type, def_type): float
   get_combined_multiplier(atk_type, def_types): float
-  load_from_api(api_client)
   load_from_file(path)
-  save_to_file(path)
 }
 
 Game: {
@@ -119,6 +120,8 @@ BaseScreen: {
   handle_events(events)
   update()
   draw(surface)
+  _load_sprites(size)
+  draw_type_badges(surface, font, types, x, y)
 }
 
 MenuScreen: {
@@ -173,7 +176,6 @@ ApiClient: {
   fetch_move(name_or_id): dict
   fetch_type_data(type_name): dict
   download_sprite(url, path): str
-  fetch_pokemon_list(limit): list
 }
 
 Constants: {

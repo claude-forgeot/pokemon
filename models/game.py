@@ -3,9 +3,9 @@
 import os
 import random
 
-from pokemon import Pokemon
-from pokedex import Pokedex
-from type_chart import TypeChart
+from models.pokemon import Pokemon
+from models.pokedex import Pokedex
+from models.type_chart import TypeChart
 from utils.file_handler import FileHandler
 
 
@@ -166,7 +166,6 @@ class Game:
         Returns:
             str: The filename of the saved game.
         """
-        import os
         from datetime import datetime
 
         os.makedirs("saves", exist_ok=True)
@@ -181,7 +180,6 @@ class Game:
             "evolution_count": self.evolution_count,
         }
 
-        from utils.file_handler import FileHandler
         FileHandler.save_json(filepath, save_data)
         return filename
 
@@ -194,9 +192,6 @@ class Game:
         Args:
             filepath: Path to the save JSON file.
         """
-        from utils.file_handler import FileHandler
-        from pokemon import Pokemon
-
         data = FileHandler.load_json(filepath)
         self.pokemon_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
         self.evolution_count = data.get("evolution_count", 0)
@@ -211,8 +206,6 @@ class Game:
         Returns:
             list[dict]: Each dict has 'filename', 'filepath', 'date'.
         """
-        import os
-
         save_dir = "saves"
         if not os.path.isdir(save_dir):
             return []
@@ -236,7 +229,5 @@ class Game:
         Args:
             filepath: Path to the save file to delete.
         """
-        import os
-
         if os.path.isfile(filepath):
             os.remove(filepath)

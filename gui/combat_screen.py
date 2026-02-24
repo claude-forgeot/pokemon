@@ -5,8 +5,8 @@ import random
 
 import pygame
 
-from combat import Combat
-from game_state import GameState
+from models.combat import Combat
+from models.game_state import GameState
 from gui.base_screen import BaseScreen
 from gui.constants import Constants
 
@@ -124,7 +124,6 @@ class CombatScreen(BaseScreen):
                         if btn.collidepoint(event.pos):
                             if self.phase == "forced_switch":
                                 # Forced switch: just switch, no opponent counter
-                                old_name = self.player.name
                                 self.player_index = i
                                 self.player = self.player_team[i]
                                 self.combat = Combat(
@@ -244,10 +243,24 @@ class CombatScreen(BaseScreen):
         self.phase = "player_turn"
 
     def _finish_battle(self):
-        """Mark battle as finished and award XP to the winner."""
+        """Mark battle as finished, award XP, and track evolution."""
         self.phase = "finished"
+        # Identify winner Pokemon before XP/evolution changes its name
+        winner_name = self.combat.get_winner()
+        winner_pokemon = (
+            self.combat.player_pokemon
+            if winner_name == self.combat.player_pokemon.name
+            else self.combat.opponent_pokemon
+        )
+        old_name = winner_pokemon.name
         self.xp_message = self.combat.award_xp_to_winner()
         self._add_log(self.xp_message)
+        # If the Pokemon evolved (its name changed), record it
+        if winner_pokemon.name != old_name:
+            unlock_msg = self.game.record_evolution()
+            self.game.unlock_pokemon(winner_pokemon.name)
+            if unlock_msg:
+                self._add_log(unlock_msg)
 
     def _handle_player_faint(self):
         """Handle when current player Pokemon faints."""
@@ -434,15 +447,10 @@ class CombatScreen(BaseScreen):
         surface.blit(hp_surf, (info_x + bar_width + 8, bar_y - 1))
 
         type_y = bar_y + 24
-        badge_x = info_x
-        for ptype in pokemon.types:
-            color = Constants.TYPE_COLORS.get(ptype, Constants.GRAY)
-            tw, th = self.font_stat.size(ptype)
-            badge_rect = pygame.Rect(badge_x, type_y, tw + 12, th + 2)
-            pygame.draw.rect(surface, color, badge_rect, border_radius=4)
-            type_surf = self.font_stat.render(ptype, True, Constants.WHITE)
-            surface.blit(type_surf, (badge_x + 6, type_y + 1))
-            badge_x += tw + 16
+        self.draw_type_badges(
+            surface, self.font_stat, pokemon.types,
+            info_x, type_y, padding=16, pad_inner=12, radius=4,
+        )
 
         stat_y = type_y + 22
         stat_text = f"ATK:{pokemon.attack}  DEF:{pokemon.defense}  Lv.{pokemon.level}"
