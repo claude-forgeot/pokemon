@@ -81,6 +81,20 @@ class ApiClient:
             file.write(response.content)
         return save_path
 
+    def fetch_move(self, name_or_id):
+        """Fetch a single move's data from PokeAPI.
+
+        Args:
+            name_or_id: Move name (str) or ID (int).
+
+        Returns:
+            dict: Raw API response with move data.
+        """
+        url = f"{self.BASE_URL}/move/{str(name_or_id).lower()}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+
     def fetch_pokemon_list(self, limit=20):
         """Fetch a list of Pokemon names/URLs from PokeAPI.
 
