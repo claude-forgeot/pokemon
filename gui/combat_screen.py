@@ -41,6 +41,9 @@ class CombatScreen(BaseScreen):
         self.winner = None
         self.xp_message = ""
         self.show_switch = False
+        self.show_moves = False
+
+        self.font_move = pygame.font.SysFont("arial", 14, bold=True)
 
         # Buttons
         btn_y = Constants.SCREEN_HEIGHT - 75
@@ -50,6 +53,9 @@ class CombatScreen(BaseScreen):
         self.continue_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100, btn_y, 200, 45
         )
+
+        # Move buttons (built dynamically)
+        self.move_buttons = []
 
         # Switch menu buttons (built when needed)
         self.switch_buttons = []
@@ -101,21 +107,51 @@ class CombatScreen(BaseScreen):
                         self.combat.register_to_pokedex(p, self.game.pokedex)
                     return GameState.RESULT
 
+                # Move menu is open
+                if self.show_moves:
+                    for move, btn in self.move_buttons:
+                        if btn.collidepoint(event.pos):
+                            self.show_moves = False
+                            self._do_player_attack(move)
+                            return None
+                    # Click anywhere else closes move menu
+                    self.show_moves = False
+                    return None
+
                 # Switch menu is open
                 if self.show_switch:
                     for i, btn in self.switch_buttons:
                         if btn.collidepoint(event.pos):
-                            self._do_switch(i)
+                            if self.phase == "forced_switch":
+                                # Forced switch: just switch, no opponent counter
+                                old_name = self.player.name
+                                self.player_index = i
+                                self.player = self.player_team[i]
+                                self.combat = Combat(
+                                    self.player, self.opponent, self.game.type_chart
+                                )
+                                self.player_sprite = self._load_sprite(
+                                    self.player.sprite_path
+                                )
+                                self._add_log(f"Go, {self.player.name}!")
+                                self.phase = "player_turn"
+                            else:
+                                self._do_switch(i)
                             self.show_switch = False
                             return None
-                    # Click anywhere else closes switch menu
-                    self.show_switch = False
+                    # Forced switch: cannot close without choosing
+                    if self.phase != "forced_switch":
+                        self.show_switch = False
                     return None
 
                 # Player turn actions
                 if self.phase == "player_turn":
                     if self.attack_button.collidepoint(event.pos):
-                        self._do_player_attack()
+                        if self.player.moves:
+                            self.show_moves = True
+                            self._build_move_buttons()
+                        else:
+                            self._do_player_attack()
                     elif self.switch_button.collidepoint(event.pos):
                         alive = [(i, p) for i, p in enumerate(self.player_team)
                                  if p.is_alive() and i != self.player_index]
@@ -127,6 +163,30 @@ class CombatScreen(BaseScreen):
                         self.winner = self.opponent.name
                         self._finish_battle()
 
+        return None
+
+    def _build_move_buttons(self):
+        """Create button rectangles for the player's current Pokemon's moves."""
+        self.move_buttons = []
+        moves = self.player.moves
+        if not moves:
+            return
+        # 2x2 grid in the moves overlay area
+        btn_w = 200
+        btn_h = 38
+        start_x = Constants.SCREEN_WIDTH // 2 - btn_w - 5
+        start_y = 260
+        for idx, move in enumerate(moves[:4]):
+            col = idx % 2
+            row = idx // 2
+            x = start_x + col * (btn_w + 10)
+            y = start_y + row * (btn_h + 8)
+            self.move_buttons.append((move, pygame.Rect(x, y, btn_w, btn_h)))
+
+    def _pick_random_move(self, pokemon):
+        """Pick a random move for the AI, or None if no moves."""
+        if pokemon.moves:
+            return random.choice(pokemon.moves)
         return None
 
     def _build_switch_buttons(self, alive_list):
@@ -150,15 +210,16 @@ class CombatScreen(BaseScreen):
         self.player_sprite = self._load_sprite(self.player.sprite_path)
         self._add_log(f"You switched {old_name} for {self.player.name}!")
 
-        # Opponent attacks after switch
-        opp_result = self.combat.attack(self.opponent, self.player)
+        # Opponent attacks after switch (with a random move)
+        opp_move = self._pick_random_move(self.opponent)
+        opp_result = self.combat.attack(self.opponent, self.player, opp_move)
         self._add_log(opp_result["message"])
         if opp_result["ko"]:
             self._handle_player_faint()
 
-    def _do_player_attack(self):
-        """Execute player attack, then opponent attacks back."""
-        result = self.combat.attack(self.player, self.opponent)
+    def _do_player_attack(self, move=None):
+        """Execute player attack with a move, then opponent attacks back."""
+        result = self.combat.attack(self.player, self.opponent, move)
         self._add_log(result["message"])
 
         if result["ko"]:
@@ -170,9 +231,10 @@ class CombatScreen(BaseScreen):
             else:
                 self._next_alive_opponent()
 
-        # Opponent attacks back
+        # Opponent attacks back with a random move
         self.phase = "opponent_turn"
-        opp_result = self.combat.attack(self.opponent, self.player)
+        opp_move = self._pick_random_move(self.opponent)
+        opp_result = self.combat.attack(self.opponent, self.player, opp_move)
         self._add_log(opp_result["message"])
 
         if opp_result["ko"]:
@@ -194,16 +256,18 @@ class CombatScreen(BaseScreen):
             self._finish_battle()
             self._add_log("You lost the battle!")
         else:
-            # Auto-switch to next alive Pokemon
-            for i, p in enumerate(self.player_team):
-                if p.is_alive():
-                    self.player_index = i
-                    self.player = p
-                    self.combat = Combat(self.player, self.opponent, self.game.type_chart)
-                    self.player_sprite = self._load_sprite(self.player.sprite_path)
-                    self._add_log(f"Go, {self.player.name}!")
-                    self.phase = "player_turn"
-                    break
+            # Open switch menu (forced -- player must choose)
+            alive = [(i, p) for i, p in enumerate(self.player_team)
+                     if p.is_alive() and i != self.player_index]
+            if alive:
+                self._add_log("Choose your next Pokemon!")
+                self.phase = "forced_switch"
+                self.show_switch = True
+                self._build_switch_buttons(alive)
+            else:
+                # Should not happen (already checked _all_fainted)
+                self.winner = self.opponent.name
+                self._finish_battle()
 
     def update(self):
         """No frame update needed."""
@@ -276,6 +340,25 @@ class CombatScreen(BaseScreen):
                              border_radius=Constants.BUTTON_RADIUS)
             ff_label = self.font_button.render("Forfeit", True, Constants.WHITE)
             surface.blit(ff_label, ff_label.get_rect(center=self.forfeit_button.center))
+
+        # Move selection overlay
+        if self.show_moves:
+            overlay = pygame.Surface(
+                (Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), pygame.SRCALPHA
+            )
+            overlay.fill((0, 0, 0, 120))
+            surface.blit(overlay, (0, 0))
+
+            title = self.font_name.render("Choose a move:", True, Constants.WHITE)
+            surface.blit(title, (Constants.SCREEN_WIDTH // 2 - title.get_width() // 2, 220))
+
+            for move, btn in self.move_buttons:
+                # Color based on move type
+                move_color = Constants.TYPE_COLORS.get(move.move_type, Constants.BLUE)
+                pygame.draw.rect(surface, move_color, btn, border_radius=6)
+                move_text = f"{move.name} ({move.move_type}) PWR:{move.power}"
+                text_surf = self.font_move.render(move_text, True, Constants.WHITE)
+                surface.blit(text_surf, text_surf.get_rect(center=btn.center))
 
         # Switch menu overlay
         if self.show_switch:

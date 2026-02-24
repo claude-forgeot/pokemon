@@ -40,7 +40,7 @@ class SelectionScreen(BaseScreen):
 
     def _load_sprites(self):
         """Load all available Pokemon sprites into memory."""
-        for pokemon in self.game.get_available_pokemon():
+        for pokemon in self.game.get_all_pokemon():
             path = pokemon.sprite_path
             if path and os.path.isfile(path):
                 try:
@@ -66,8 +66,8 @@ class SelectionScreen(BaseScreen):
                     if self.confirm_button.collidepoint(event.pos):
                         return GameState.COMBAT
 
-                # Card click
-                pokemon_list = self.game.get_available_pokemon()
+                # Card click (only unlocked Pokemon can be selected)
+                pokemon_list = self.game.get_all_pokemon()
                 cols = 4
                 start_x = 40
                 start_y = 80 - self.scroll_offset
@@ -79,7 +79,7 @@ class SelectionScreen(BaseScreen):
                     card_rect = pygame.Rect(
                         x, y, Constants.CARD_WIDTH, Constants.CARD_HEIGHT
                     )
-                    if card_rect.collidepoint(event.pos):
+                    if card_rect.collidepoint(event.pos) and not _pokemon.locked:
                         self.selected_index = i
 
             if event.type == pygame.MOUSEWHEEL:
@@ -106,8 +106,8 @@ class SelectionScreen(BaseScreen):
         back_label = self.font_stat.render("< Back", True, Constants.WHITE)
         surface.blit(back_label, back_label.get_rect(center=self.back_button.center))
 
-        # Pokemon cards
-        pokemon_list = self.game.get_available_pokemon()
+        # Pokemon cards (includes locked, shown greyed out)
+        pokemon_list = self.game.get_all_pokemon()
         cols = 4
         start_x = 40
         start_y = 80 - self.scroll_offset
@@ -124,9 +124,18 @@ class SelectionScreen(BaseScreen):
 
             # Card background
             is_selected = i == self.selected_index
-            border_color = Constants.BLUE if is_selected else Constants.GRAY
+            is_locked = pokemon.locked
+            if is_locked:
+                bg_color = (200, 200, 200)
+                border_color = (160, 160, 160)
+            elif is_selected:
+                bg_color = Constants.LIGHT_GRAY
+                border_color = Constants.BLUE
+            else:
+                bg_color = Constants.LIGHT_GRAY
+                border_color = Constants.GRAY
             card_rect = pygame.Rect(x, y, Constants.CARD_WIDTH, Constants.CARD_HEIGHT)
-            pygame.draw.rect(surface, Constants.LIGHT_GRAY, card_rect, border_radius=6)
+            pygame.draw.rect(surface, bg_color, card_rect, border_radius=6)
             pygame.draw.rect(surface, border_color, card_rect, width=3, border_radius=6)
 
             # Sprite
@@ -140,8 +149,17 @@ class SelectionScreen(BaseScreen):
                     (x + Constants.CARD_WIDTH // 2, y + 45), 30,
                 )
 
+            # Locked overlay text
+            if is_locked:
+                lock_surf = self.font_stat.render("LOCKED", True, (120, 120, 120))
+                surface.blit(
+                    lock_surf,
+                    (x + Constants.CARD_WIDTH // 2 - lock_surf.get_width() // 2, y + 45),
+                )
+
             # Name
-            name_surf = self.font_name.render(pokemon.name, True, Constants.BLACK)
+            name_color = (160, 160, 160) if is_locked else Constants.BLACK
+            name_surf = self.font_name.render(pokemon.name, True, name_color)
             surface.blit(
                 name_surf,
                 (x + Constants.CARD_WIDTH // 2 - name_surf.get_width() // 2, y + 90),

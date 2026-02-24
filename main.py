@@ -27,6 +27,28 @@ from gui.selection_screen import SelectionScreen
 from gui.save_select_screen import SaveSelectScreen
 from gui.team_select_screen import TeamSelectScreen
 
+def _scale_pokemon_level(pokemon, target_level):
+    """Scale a Pokemon's stats to match a target level.
+
+    Adjusts HP, attack, and defense proportionally based on the level
+    difference from the Pokemon's base level (5).
+
+    Args:
+        pokemon: The Pokemon to scale.
+        target_level: Desired level.
+    """
+    if pokemon.level == target_level:
+        return
+    base_level = pokemon.level
+    diff = target_level - base_level
+    pokemon.level = target_level
+    pokemon.max_hp += diff * 5
+    pokemon.hp = pokemon.max_hp
+    pokemon.attack += diff * 3
+    pokemon.defense += diff * 2
+    pokemon.xp_to_next_level = 10 + pokemon.level * 5
+
+
 def main():
     """Run the Pygame main loop with state machine dispatch."""
     pygame.init()
@@ -70,22 +92,29 @@ def main():
                     from pokemon import Pokemon
                     player_team = []
                     opponent_team = []
+                    # Indices reference the full list (including locked)
+                    all_pokemon = game.get_all_pokemon()
+                    available = game.get_available_pokemon()
                     if hasattr(current_screen, "selected_indices") and current_screen.selected_indices:
-                        pokemon_list = game.get_available_pokemon()
                         for idx in current_screen.selected_indices:
-                            p = Pokemon.from_dict(pokemon_list[idx].to_dict())
+                            p = Pokemon.from_dict(all_pokemon[idx].to_dict())
                             player_team.append(p)
                         import random
                         opp_sources = random.sample(
-                            pokemon_list, min(len(player_team), len(pokemon_list))
+                            available, min(len(player_team), len(available))
                         )
                         for p in opp_sources:
                             opponent_team.append(Pokemon.from_dict(p.to_dict()))
+                        # Scale opponents to match player team average level
+                        avg_level = sum(p.level for p in player_team) // len(player_team)
+                        for opp in opponent_team:
+                            _scale_pokemon_level(opp, avg_level)
                     elif hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
-                        pokemon_list = game.get_available_pokemon()
-                        p = pokemon_list[current_screen.selected_index]
+                        p = all_pokemon[current_screen.selected_index]
                         player_team = [Pokemon.from_dict(p.to_dict())]
-                        opponent_team = [Pokemon.from_dict(game.get_random_opponent().to_dict())]
+                        opp = Pokemon.from_dict(game.get_random_opponent().to_dict())
+                        _scale_pokemon_level(opp, player_team[0].level)
+                        opponent_team = [opp]
                     if player_team and opponent_team:
                         current_screen = CombatScreen(
                             game, player_team, opponent_team

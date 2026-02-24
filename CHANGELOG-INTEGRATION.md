@@ -74,3 +74,61 @@ Seuls les ajouts XP dans `pokemon.py` et `combat.py` etaient intacts.
 
 **main.py** :
 - Passage du `xp_message` de CombatScreen a ResultScreen via la transition RESULT
+
+---
+
+## Bloc 1b -- Ameliorations gameplay (Claude)
+
+### Sujet 4 : 151 Pokemon + evolution complete
+
+**Fichiers modifies** :
+- `scripts/populate_pokemon.py` : reecrit pour fetcher les 151 Pokemon Gen 1 avec stats,
+  types, sprites, 4 moves (level-up depuis PokeAPI), chaines d'evolution, champ locked
+- `utils/api_client.py` : ajout `fetch_pokemon_species()`, `fetch_evolution_chain()`, `fetch_move()`
+- `pokemon.py` : ajout attributs `moves` (list[Move]), `locked` (bool), `evolution_data` (dict).
+  `try_evolve()` met a jour stats/types/sprite_path depuis evolution_data.
+  `from_dict()` restaure tous les nouveaux champs (backward-compatible).
+- `game.py` : `get_available_pokemon()` filtre les locked. Ajout `get_all_pokemon()`,
+  `unlock_pokemon()`, `record_evolution()`, `check_legendary_unlocks()`, `evolution_count`.
+  Save/load persiste `evolution_count`.
+- `gui/selection_screen.py` et `gui/team_select_screen.py` : affichent les Pokemon locked
+  en grise (non cliquables). Utilisent `get_all_pokemon()` pour les indices.
+- `main.py` : utilise `get_all_pokemon()` pour resoudre les indices de selection.
+
+**Regles de verrouillage** :
+- Stades 2+ des evolutions par niveau : locked (ex: Ivysaur, Charmeleon, Charizard)
+- Evolutions non-niveau (pierre, echange) : disponibles directement (ex: Raichu, Arcanine)
+- Mewtwo : locked, debloque apres 10 evolutions
+- Mew : locked, debloque quand le Pokedex est complet (151 entries)
+
+### Sujet 1 : Systeme de moves
+
+**Fichiers crees** :
+- `move.py` : classe Move (name, move_type, power, accuracy, to_dict, from_dict)
+
+**Fichiers modifies** :
+- `pokemon.py` : `self.moves = []` (list[Move]). `get_default_moves()` genere Tackle + move du type
+  si aucun move (backward compat vieux saves). Serialisation/deserialisation dans to_dict/from_dict.
+- `combat.py` : `attack()`, `calculate_damage()`, `get_type_multiplier()` acceptent `move=None`.
+  Si move fourni, utilise move.move_type et move.accuracy au lieu du type du Pokemon et miss chance.
+- `gui/combat_screen.py` : clic sur "Attack!" ouvre un overlay 2x2 de moves colores par type.
+  L'IA choisit un move aleatoire via `_pick_random_move()`.
+
+### Sujet 2 : Formule de degats
+
+**Fichier modifie** : `combat.py`
+- Avec move : `int(((2*level/5+2) * power * attack / defense) / 50 + 2) * type_multiplier`
+- Sans move (backward compat) : `max(1, int(attack * multiplier) - defense)`
+
+### Sujet 3 : Scaling adversaires
+
+**Fichier modifie** : `main.py`
+- Fonction `_scale_pokemon_level()` ajuste level, HP, ATK, DEF proportionnellement.
+- Appliquee aux adversaires pour matcher le level moyen de l'equipe du joueur.
+
+### Sujet 5 : Equipe de 6 + choix au KO
+
+**Fichiers modifies** :
+- `gui/team_select_screen.py` : MIN_TEAM = 6, MAX_TEAM = 6
+- `gui/combat_screen.py` : quand un Pokemon est KO, phase `forced_switch` qui ouvre le menu
+  switch (obligatoire). Le joueur ne peut pas fermer le menu sans choisir.

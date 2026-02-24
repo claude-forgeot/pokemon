@@ -28,6 +28,7 @@ class Game:
         self.type_chart.load_from_file(self.TYPE_CHART_PATH)
         self.pokedex = Pokedex()
         self.pokemon_list = []
+        self.evolution_count = 0
         self._load_pokemon()
 
     def _load_pokemon(self):
@@ -86,12 +87,71 @@ class Game:
         self._save_pokemon()
 
     def get_available_pokemon(self):
-        """Return the list of all available Pokemon.
+        """Return the list of unlocked (available) Pokemon.
 
         Returns:
-            list[Pokemon]: Current Pokemon roster.
+            list[Pokemon]: Pokemon that are not locked.
+        """
+        return [p for p in self.pokemon_list if not p.locked]
+
+    def get_all_pokemon(self):
+        """Return the full list including locked Pokemon (for display).
+
+        Returns:
+            list[Pokemon]: All Pokemon in the roster.
         """
         return list(self.pokemon_list)
+
+    def unlock_pokemon(self, name):
+        """Unlock a Pokemon by name (e.g. after evolution).
+
+        Args:
+            name: Name of the Pokemon to unlock.
+        """
+        for p in self.pokemon_list:
+            if p.name.lower() == name.lower() and p.locked:
+                p.locked = False
+                self._save_pokemon()
+                return
+
+    def record_evolution(self):
+        """Record that an evolution happened. Checks legendary unlocks.
+
+        Returns:
+            str or None: Unlock message if a legendary was unlocked.
+        """
+        self.evolution_count += 1
+        return self.check_legendary_unlocks()
+
+    def check_legendary_unlocks(self):
+        """Check if Mewtwo or Mew should be unlocked.
+
+        - Mewtwo: unlocked after 10 evolutions
+        - Mew: unlocked when Pokedex is complete (151 entries)
+
+        Returns:
+            str or None: Unlock message, or None.
+        """
+        messages = []
+
+        # Mewtwo: 10 evolutions
+        if self.evolution_count >= 10:
+            for p in self.pokemon_list:
+                if p.name.lower() == "mewtwo" and p.locked:
+                    p.locked = False
+                    messages.append("Mewtwo has been unlocked!")
+
+        # Mew: Pokedex complete
+        if self.pokedex.get_count() >= 151:
+            for p in self.pokemon_list:
+                if p.name.lower() == "mew" and p.locked:
+                    p.locked = False
+                    messages.append("Mew has been unlocked!")
+
+        if messages:
+            self._save_pokemon()
+            return " ".join(messages)
+        return None
 
     def _save_pokemon(self):
         """Persist the current Pokemon list to pokemon.json."""
@@ -118,6 +178,7 @@ class Game:
             "pokedex": self.pokedex.get_all_entries(),
             "pokemon_list": [p.to_dict() for p in self.pokemon_list],
             "save_date": timestamp,
+            "evolution_count": self.evolution_count,
         }
 
         from utils.file_handler import FileHandler
@@ -138,6 +199,7 @@ class Game:
 
         data = FileHandler.load_json(filepath)
         self.pokemon_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
+        self.evolution_count = data.get("evolution_count", 0)
         self.pokedex.reset()
         for entry in data["pokedex"]:
             self.pokedex._entries.append(entry)

@@ -81,6 +81,56 @@ class ApiClient:
             file.write(response.content)
         return save_path
 
+    def fetch_pokemon_species(self, name_or_id):
+        """Fetch species data (evolution chain info) from PokeAPI.
+
+        Args:
+            name_or_id: Pokemon name (str) or national dex number (int).
+
+        Returns:
+            dict: Raw API response with species data.
+
+        Raises:
+            requests.RequestException: If the API call fails.
+        """
+        url = f"{self.BASE_URL}/pokemon-species/{str(name_or_id).lower()}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+
+    def fetch_evolution_chain(self, chain_url):
+        """Fetch an evolution chain from PokeAPI.
+
+        Args:
+            chain_url: Full URL of the evolution chain endpoint.
+
+        Returns:
+            dict: Raw API response with evolution chain data.
+
+        Raises:
+            requests.RequestException: If the API call fails.
+        """
+        response = requests.get(chain_url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+
+    def fetch_move(self, name_or_id):
+        """Fetch a single move's data from PokeAPI.
+
+        Args:
+            name_or_id: Move name (str) or ID (int).
+
+        Returns:
+            dict: Raw API response with move data.
+
+        Raises:
+            requests.RequestException: If the API call fails.
+        """
+        url = f"{self.BASE_URL}/move/{str(name_or_id).lower()}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+
     def fetch_pokemon_list(self, limit=20):
         """Fetch a list of Pokemon names/URLs from PokeAPI.
 
