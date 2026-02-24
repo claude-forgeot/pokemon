@@ -20,7 +20,7 @@ pokemonv1/
   pokedex.py           # Classe Pokedex (collection de Pokemon rencontres)
   type_chart.py        # Classe TypeChart (multiplicateurs de types)
   gui/
-    base_screen.py     # Classe abstraite BaseScreen
+    base_screen.py     # Classe parente BaseScreen
     constants.py       # Constantes visuelles (couleurs, tailles)
     menu_screen.py     # Ecran menu principal
     selection_screen.py # Selection d'un Pokemon (1v1)
@@ -295,4 +295,4 @@ attaque du type principal du Pokemon. Combat fonctionne sans et avec moves.
 
 ---
 
-*Document mis a jour incrementalement. Derniere mise a jour : Bloc 2 (Bug fixes et nettoyage).*
+*Document mis a jour incrementalement. Derniere mise a jour : Bloc 4 (Documentation publique).*
