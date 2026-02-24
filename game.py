@@ -55,7 +55,7 @@ class Game:
             from scripts.populate_pokemon import populate
             populate()
         except Exception:
-            pass
+            print("Warning: populate failed, using default_pokemon.json")
 
     def new_game(self):
         """Reset the game state for a fresh start."""
@@ -202,7 +202,7 @@ class Game:
         self.evolution_count = data.get("evolution_count", 0)
         self.pokedex.reset()
         for entry in data["pokedex"]:
-            self.pokedex._entries.append(entry)
+            self.pokedex.add_raw_entry(entry)
         self.pokedex.save()
 
     def get_save_files(self):

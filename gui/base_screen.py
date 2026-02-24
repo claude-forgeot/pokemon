@@ -1,20 +1,15 @@
-"""Base screen module -- abstract base class for all game screens."""
-
-from abc import ABC, abstractmethod
+"""Base screen module -- parent class for all game screens."""
 
 
-class BaseScreen(ABC):
-    """Abstract base class for all game screens.
+class BaseScreen:
+    """Parent class for all game screens.
 
-    POO: ABSTRACT CLASS and INHERITANCE -- this class uses ABC (Abstract Base
-    Class) to define an interface that all screens MUST follow. The @abstractmethod
-    decorator marks methods that subclasses are REQUIRED to implement. You cannot
-    create a BaseScreen directly (BaseScreen() raises an error); you must create
-    a subclass like MenuScreen that implements all abstract methods.
+    POO: INHERITANCE -- this class defines the interface that all screens
+    follow. Each child class (MenuScreen, CombatScreen, etc.) inherits from
+    BaseScreen and implements these three methods. The child "is-a" BaseScreen.
 
-    INHERITANCE means a child class (MenuScreen) automatically gets everything
-    from its parent (BaseScreen) and can add or override behavior. The child
-    "is-a" BaseScreen.
+    The three methods (handle_events, update, draw) form the game loop pattern:
+    each frame, the main loop calls them in order on the current screen.
     """
 
     def __init__(self, game):
@@ -25,7 +20,6 @@ class BaseScreen(ABC):
         """
         self.game = game
 
-    @abstractmethod
     def handle_events(self, events):
         """Process Pygame events (clicks, keys, etc.).
 
@@ -36,18 +30,19 @@ class BaseScreen(ABC):
             GameState or None: The next state to transition to,
                 or None to stay on this screen.
         """
+        pass
 
-    @abstractmethod
     def update(self):
         """Update screen logic (animations, timers, etc.).
 
         Called once per frame before draw().
         """
+        pass
 
-    @abstractmethod
     def draw(self, surface):
         """Render this screen to the given surface.
 
         Args:
             surface: The pygame.Surface to draw on (usually the main window).
         """
+        pass

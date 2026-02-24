@@ -60,6 +60,14 @@ class Pokedex:
         """
         return list(self._entries)
 
+    def add_raw_entry(self, entry_dict):
+        """Add a raw dictionary entry to the Pokedex (used by save/load).
+
+        Args:
+            entry_dict: A dictionary with Pokemon data (name, types, hp, etc.).
+        """
+        self._entries.append(entry_dict)
+
     def get_count(self):
         """Return the number of registered Pokemon.
 

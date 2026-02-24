@@ -83,70 +83,69 @@ def main():
 
         # State transitions
         if next_state is not None and next_state != state:
-            match next_state:
-                case GameState.MENU:
-                    current_screen = MenuScreen(game)
-                case GameState.SELECTION:
-                    current_screen = SelectionScreen(game)
-                case GameState.COMBAT:
-                    from pokemon import Pokemon
-                    player_team = []
-                    opponent_team = []
-                    # Indices reference the full list (including locked)
-                    all_pokemon = game.get_all_pokemon()
-                    available = game.get_available_pokemon()
-                    if hasattr(current_screen, "selected_indices") and current_screen.selected_indices:
-                        for idx in current_screen.selected_indices:
-                            p = Pokemon.from_dict(all_pokemon[idx].to_dict())
-                            player_team.append(p)
-                        import random
-                        opp_sources = random.sample(
-                            available, min(len(player_team), len(available))
-                        )
-                        for p in opp_sources:
-                            opponent_team.append(Pokemon.from_dict(p.to_dict()))
-                        # Scale opponents to match player team average level
-                        avg_level = sum(p.level for p in player_team) // len(player_team)
-                        for opp in opponent_team:
-                            _scale_pokemon_level(opp, avg_level)
-                    elif hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
-                        p = all_pokemon[current_screen.selected_index]
-                        player_team = [Pokemon.from_dict(p.to_dict())]
-                        opp = Pokemon.from_dict(game.get_random_opponent().to_dict())
-                        _scale_pokemon_level(opp, player_team[0].level)
-                        opponent_team = [opp]
-                    if player_team and opponent_team:
-                        current_screen = CombatScreen(
-                            game, player_team, opponent_team
-                        )
-                    else:
-                        current_screen = MenuScreen(game)
-                        next_state = GameState.MENU
-                case GameState.RESULT:
-                    # Get winner/loser and XP message from combat screen
-                    xp_message = ""
-                    if hasattr(current_screen, "winner"):
-                        winner_name = current_screen.winner
-                        combat = current_screen.combat
-                        loser_name = combat.get_loser()
-                        xp_message = getattr(current_screen, "xp_message", "")
-                    game.save_game()
-                    current_screen = ResultScreen(
-                        game,
-                        winner_name or "Unknown",
-                        loser_name or "Unknown",
-                        xp_message,
+            if next_state == GameState.MENU:
+                current_screen = MenuScreen(game)
+            elif next_state == GameState.SELECTION:
+                current_screen = SelectionScreen(game)
+            elif next_state == GameState.COMBAT:
+                from pokemon import Pokemon
+                player_team = []
+                opponent_team = []
+                # Indices reference the full list (including locked)
+                all_pokemon = game.get_all_pokemon()
+                available = game.get_available_pokemon()
+                if hasattr(current_screen, "selected_indices") and current_screen.selected_indices:
+                    for idx in current_screen.selected_indices:
+                        p = Pokemon.from_dict(all_pokemon[idx].to_dict())
+                        player_team.append(p)
+                    import random
+                    opp_sources = random.sample(
+                        available, min(len(player_team), len(available))
                     )
-                case GameState.POKEDEX:
-                    current_screen = PokedexScreen(game)
-                case GameState.ADD_POKEMON:
-                    current_screen = AddPokemonScreen(game)
-                case GameState.SAVE_SELECT:
-                    current_screen = SaveSelectScreen(game)
-                case GameState.TEAM_SELECT:
-                    current_screen = TeamSelectScreen(game)        
-                case GameState.QUIT:
-                    running = False
+                    for p in opp_sources:
+                        opponent_team.append(Pokemon.from_dict(p.to_dict()))
+                    # Scale opponents to match player team average level
+                    avg_level = sum(p.level for p in player_team) // len(player_team)
+                    for opp in opponent_team:
+                        _scale_pokemon_level(opp, avg_level)
+                elif hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
+                    p = all_pokemon[current_screen.selected_index]
+                    player_team = [Pokemon.from_dict(p.to_dict())]
+                    opp = Pokemon.from_dict(game.get_random_opponent().to_dict())
+                    _scale_pokemon_level(opp, player_team[0].level)
+                    opponent_team = [opp]
+                if player_team and opponent_team:
+                    current_screen = CombatScreen(
+                        game, player_team, opponent_team
+                    )
+                else:
+                    current_screen = MenuScreen(game)
+                    next_state = GameState.MENU
+            elif next_state == GameState.RESULT:
+                # Get winner/loser and XP message from combat screen
+                xp_message = ""
+                if hasattr(current_screen, "winner"):
+                    winner_name = current_screen.winner
+                    combat = current_screen.combat
+                    loser_name = combat.get_loser()
+                    xp_message = getattr(current_screen, "xp_message", "")
+                game.save_game()
+                current_screen = ResultScreen(
+                    game,
+                    winner_name or "Unknown",
+                    loser_name or "Unknown",
+                    xp_message,
+                )
+            elif next_state == GameState.POKEDEX:
+                current_screen = PokedexScreen(game)
+            elif next_state == GameState.ADD_POKEMON:
+                current_screen = AddPokemonScreen(game)
+            elif next_state == GameState.SAVE_SELECT:
+                current_screen = SaveSelectScreen(game)
+            elif next_state == GameState.TEAM_SELECT:
+                current_screen = TeamSelectScreen(game)
+            elif next_state == GameState.QUIT:
+                running = False
             state = next_state
 
         # Update and draw

@@ -201,7 +201,6 @@ Ressources-projet/
 # Donnees generees au runtime (recreees par scripts ou gameplay)
 data/pokemon.json
 data/pokedex.json
-data/type_chart.json
 
 # Ruff stuff:
 .ruff_cache/

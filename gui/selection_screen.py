@@ -84,7 +84,12 @@ class SelectionScreen(BaseScreen):
 
             if event.type == pygame.MOUSEWHEEL:
                 self.scroll_offset -= event.y * 30
-                self.scroll_offset = max(0, self.scroll_offset)
+                pokemon_list = self.game.get_all_pokemon()
+                cols = 4
+                rows = (len(pokemon_list) + cols - 1) // cols
+                total_h = rows * (Constants.CARD_HEIGHT + Constants.CARD_PADDING)
+                max_scroll = max(0, total_h - Constants.SCREEN_HEIGHT + 120)
+                self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
         return None
 
     def update(self):

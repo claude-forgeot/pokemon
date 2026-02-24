@@ -234,6 +234,16 @@ les evolutions et le verrouillage.
 | try/except | api_client.py, file_handler.py | Gestion d'erreurs reseau/fichier |
 | Type hints | Partout | Annotations de type pour la lisibilite |
 
+**Note Bloc 2** : les notions `match/case` et `ABC/@abstractmethod` ont ete retirees du code
+et remplacees par des equivalents enseignes en cours (`if/elif/else` et heritage simple)
+pour reduire le risque en soutenance.
+
+### Lancement du jeu
+
+Deux scripts sont fournis pour lancer le jeu :
+- **Linux/Mac** : `./run.sh` -- cree le venv, installe les dependances, lance le jeu
+- **Windows** : `run.bat` -- idem pour Windows
+
 ---
 
 ## 5. Difficultes rencontrees
@@ -285,4 +295,4 @@ attaque du type principal du Pokemon. Combat fonctionne sans et avec moves.
 
 ---
 
-*Document mis a jour incrementalement. Derniere mise a jour : Bloc 1b (Ameliorations gameplay).*
+*Document mis a jour incrementalement. Derniere mise a jour : Bloc 2 (Bug fixes et nettoyage).*

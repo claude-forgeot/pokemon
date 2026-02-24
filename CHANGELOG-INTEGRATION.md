@@ -132,3 +132,34 @@ Seuls les ajouts XP dans `pokemon.py` et `combat.py` etaient intacts.
 - `gui/team_select_screen.py` : MIN_TEAM = 6, MAX_TEAM = 6
 - `gui/combat_screen.py` : quand un Pokemon est KO, phase `forced_switch` qui ouvre le menu
   switch (obligatoire). Le joueur ne peut pas fermer le menu sans choisir.
+
+---
+
+## Bloc 2 -- Bug fixes et nettoyage (Claude)
+
+### Bugs corriges
+
+1. **`type_chart.json` non track** : etait dans `.gitignore`, un clone frais n'avait pas le fichier.
+   Fix : retire du `.gitignore`, ajoute au repo.
+2. **`AI_CONTEXT.md` dans le repo** : fichier inutile track par git. Fix : `git rm`.
+3. **`test_window.py` et `.claude/`** : fichiers debug/config locaux. Fix : supprimes.
+4. **`_try_populate()` silencieux** : `except Exception: pass` masquait toutes les erreurs.
+   Fix : ajout `print("Warning: populate failed, using default_pokemon.json")`.
+5. **Scroll sans borne** : `SelectionScreen` et `TeamSelectScreen` pouvaient scroller indefiniment.
+   Fix : ajout borne max basee sur le nombre de Pokemon et la taille de l'ecran.
+6. **`load_game()` accedait `_entries` prive** : `self.pokedex._entries.append(entry)` violait
+   l'encapsulation. Fix : ajout methode publique `add_raw_entry()` dans `Pokedex`.
+
+### Simplification notions
+
+7. **`match/case` -> `if/elif/else`** : `main.py` utilisait `match/case` (Python 3.10+),
+   remplace par `if/elif/else` enseigne en cours (J3).
+8. **`ABC/@abstractmethod` -> heritage simple** : `base_screen.py` utilisait `from abc import ABC`,
+   remplace par une classe parente normale avec methodes `pass`.
+
+### Nettoyage repo
+
+9. **`tests/` supprime** : tests unitaires non requis pour le rendu.
+10. **`.venv/` doublon supprime** : seul `venv/` est conserve.
+11. **`requirements.txt`** : pytest retire, ne contient plus que pygame-ce et requests.
+12. **`run.sh` + `run.bat`** : scripts de lancement (venv auto, install deps, lance le jeu).
