@@ -1,6 +1,6 @@
 # Pokemon Battle
 
-A Pokemon battle game built with Python and Pygame. Features all 151 Gen 1 Pokemon, move-based combat, XP/evolution system, team battles, and save/load.
+A Pokemon battle game built with Python and Pygame. Features all 151 Gen 1 Pokemon with authentic sprites, custom backgrounds, move-based combat, XP/evolution system, team battles, and save/load functionality.
 
 ## Quick Start
 
@@ -34,15 +34,16 @@ python3 main.py
 
 ## Features
 
-- 151 Gen 1 Pokemon with stats, types, sprites, and moves
-- Move-based combat with type effectiveness (18 types)
-- XP system with level-up and evolution
-- Team battles (6v6) with manual switch on KO
-- Opponent scaling (matches player team level)
-- Save/load system with multiple slots
-- Pokedex tracking
-- Combat animations (shake, flash, HP bar interpolation)
-- Locked Pokemon system (evolve to unlock)
+- **151 Gen 1 Pokemon** with authentic sprites, stats, types, and moves
+- **Custom backgrounds** for all screens (main menu, pokedex lab, battle arena, team selection)
+- **Move-based combat** with type effectiveness (18 types)
+- **XP system** with level-up and evolution mechanics
+- **Team battles** (6v6) with manual switch on KO
+- **Opponent scaling** (matches player team level)
+- **Save/load system** with multiple slots
+- **Pokedex tracking** for all encountered Pokemon
+- **Combat animations** (shake, flash, HP bar interpolation)
+- **Locked Pokemon system** (evolve to unlock, legendary conditions)
 
 ## Project Structure
 
@@ -75,12 +76,22 @@ pokemonv1/
     pokemon.json         -- 151 Gen 1 Pokemon (stats, types, sprites, moves)
     type_chart.json      -- 18x18 type effectiveness table
     pokedex.json         -- Encountered Pokemon (runtime)
-  saves/                 -- Save files
-  assets/                -- Sprites
-  docs/                  -- Class diagram (D2)
+  saves/                 -- Save files (JSON)
+  assets/
+    sprites/             -- 151 authentic Pokemon sprites (PNG)
+    backgrounds/         -- Custom backgrounds (main_menu, pokedex_lab, battle_arena, team_arena)
+  docs/                  -- Architecture diagrams (D2/SVG), implementation plans
 ```
 
-## Class Diagram
+## Documentation
+
+The project includes comprehensive architecture documentation:
+
+- **Class Diagram** ([D2](docs/class_diagram.d2) | [SVG](docs/class_diagram.svg)) - Complete class structure
+- **Architecture Overview** ([D2](docs/architecture.d2) | [SVG](docs/architecture.svg)) - System architecture
+- **State Machine** ([D2](docs/state_machine.d2) | [SVG](docs/state_machine.svg)) - Game state transitions
+- **Combat Sequence** ([D2](docs/combat_sequence.d2) | [SVG](docs/combat_sequence.svg)) - Battle flow
+- **XP Flow** ([D2](docs/xp_flow.d2) | [SVG](docs/xp_flow.svg)) - Experience and evolution
 
 ![Class Diagram](docs/class_diagram.svg)
 
@@ -95,7 +106,29 @@ pokemonv1/
 - **AI**: Opponent picks a random move each turn
 - **XP reward**: 20 + 2 * opponent_level per victory
 
+## Visuals
+
+The game features custom high-quality backgrounds for each screen:
+- **Main Menu** - Welcoming entrance screen
+- **Pokedex Lab** - Scientific research environment
+- **Battle Arena** - Epic battle setting
+- **Team Arena** - Team selection stadium
+
+All 151 Gen 1 Pokemon have authentic pixel-art sprites.
+
 ## Technologies
 
 - Python 3.10+
 - Pygame-CE 2.5+
+
+## Development
+
+### Requirements
+- Python 3.10 or higher
+- pip (Python package manager)
+
+### Running the game
+Use the provided scripts (`run.sh` for Unix/Mac, `run.bat` for Windows) or follow the manual setup in Quick Start.
+
+### Project Documentation
+Implementation plans and design documents are available in `docs/plans/`.
