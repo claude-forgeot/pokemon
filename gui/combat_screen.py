@@ -181,11 +181,8 @@ class CombatScreen(BaseScreen):
                 # Player turn actions
                 if self.phase == "player_turn":
                     if self.attack_button.collidepoint(event.pos):
-                        if self.player.moves:
-                            self.show_moves = True
-                            self._build_move_buttons()
-                        else:
-                            self._do_player_attack()
+                        self.show_moves = True
+                        self._build_move_buttons()
                     elif self.switch_button.collidepoint(event.pos):
                         alive = [(i, p) for i, p in enumerate(self.player_team)
                                  if p.is_alive() and i != self.player_index]
@@ -336,15 +333,10 @@ class CombatScreen(BaseScreen):
             # Open switch menu (forced -- player must choose)
             alive = [(i, p) for i, p in enumerate(self.player_team)
                      if p.is_alive() and i != self.player_index]
-            if alive:
-                self._add_log("Choose your next Pokemon!")
-                self.phase = "forced_switch"
-                self.show_switch = True
-                self._build_switch_buttons(alive)
-            else:
-                # Should not happen (already checked _all_fainted)
-                self.winner = self.opponent.name
-                self._finish_battle()
+            self._add_log("Choose your next Pokemon!")
+            self.phase = "forced_switch"
+            self.show_switch = True
+            self._build_switch_buttons(alive)
 
     def update(self):
         """Update animations and opponent attack timer."""

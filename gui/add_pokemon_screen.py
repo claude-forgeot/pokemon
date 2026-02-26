@@ -57,7 +57,6 @@ class AddPokemonScreen(BaseScreen):
         )
 
         self.error_message = ""
-        self.success_message = ""
 
     def _build_type_buttons(self):
         """Pre-compute the position of each type toggle button."""
@@ -131,7 +130,6 @@ class AddPokemonScreen(BaseScreen):
     def _try_save(self):
         """Validate and save the new Pokemon. Returns MENU on success, None on error."""
         self.error_message = ""
-        self.success_message = ""
 
         name = self.fields["name"]["value"].strip()
         if not name:
@@ -164,7 +162,6 @@ class AddPokemonScreen(BaseScreen):
             "sprite_path": "",
         }
         self.game.add_pokemon(pokemon_data)
-        self.success_message = f"{name.capitalize()} added!"
         return GameState.MENU
 
     def update(self):
@@ -214,13 +211,10 @@ class AddPokemonScreen(BaseScreen):
             txt = self.font_small.render(btn["name"], True, Constants.WHITE)
             surface.blit(txt, txt.get_rect(center=btn["rect"].center))
 
-        # Error / success messages
+        # Error message
         if self.error_message:
             err = self.font_label.render(self.error_message, True, Constants.RED)
             surface.blit(err, (Constants.SCREEN_WIDTH // 2 - err.get_width() // 2, 460))
-        if self.success_message:
-            ok = self.font_label.render(self.success_message, True, Constants.GREEN)
-            surface.blit(ok, (Constants.SCREEN_WIDTH // 2 - ok.get_width() // 2, 460))
 
         # Save button
         pygame.draw.rect(
