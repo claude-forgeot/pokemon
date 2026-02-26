@@ -43,7 +43,6 @@ class CombatScreen(BaseScreen):
         self.phase = "player_turn"
         self.winner = None
         self.xp_message = ""
-        self.player_ko_count = 0
         self.player_original_indices = player_original_indices or []
         self.show_switch = False
         self.show_moves = False
@@ -223,6 +222,8 @@ class CombatScreen(BaseScreen):
 
     def _pick_random_move(self, pokemon):
         """Pick a random move for the AI."""
+        if not pokemon.moves:
+            pokemon.moves = pokemon.get_default_moves()
         return random.choice(pokemon.moves)
 
     def _build_switch_buttons(self, alive_list):
@@ -270,7 +271,6 @@ class CombatScreen(BaseScreen):
             )
 
         if result["ko"]:
-            self.player_ko_count += 1
             if self._all_fainted(self.opponent_team):
                 self.winner = self.player.name
                 self._finish_battle()

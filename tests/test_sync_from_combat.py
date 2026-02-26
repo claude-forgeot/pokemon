@@ -70,3 +70,19 @@ def test_sync_multiple_pokemon(tmp_path, monkeypatch):
 
     assert game.pokemon_list[0].xp == copy0.xp
     assert game.pokemon_list[1].xp == copy1.xp
+
+
+def test_sync_handles_evolution(tmp_path, monkeypatch):
+    """B3: evolved name and sprite should be synced back to original."""
+    game = _setup_game(tmp_path, monkeypatch)
+    assert game.pokemon_list[0].name == "Charmander"
+
+    copy = Pokemon.from_dict(game.pokemon_list[0].to_dict())
+    # Give enough XP to reach level 16+ and trigger evolution (needs ~660 XP)
+    copy.gain_xp(1000)
+    assert copy.name == "Charmeleon"
+
+    game.sync_from_combat([copy], [0])
+
+    assert game.pokemon_list[0].name == "Charmeleon"
+    assert game.pokemon_list[0].sprite_path == "assets/sprites/charmeleon.png"

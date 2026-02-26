@@ -176,6 +176,10 @@ class Combat:
     def award_xp_to_winner(self):
         """Give XP to the winning Pokemon after battle ends.
 
+        NOTE: This method is part of the 5 required methods for the assignment.
+        CombatScreen._finish_battle() uses cumulative XP calculation instead,
+        but this method is kept for API completeness.
+
         Returns:
             str: Message describing XP gained and level up if any.
         """
