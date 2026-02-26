@@ -70,10 +70,12 @@ def main():
                 from models.pokemon import Pokemon
                 player_team = []
                 opponent_team = []
+                player_indices = []
                 # Indices reference the full list (including locked)
                 all_pokemon = game.get_all_pokemon()
                 available = game.get_available_pokemon()
                 if hasattr(current_screen, "selected_indices") and current_screen.selected_indices:
+                    player_indices = list(current_screen.selected_indices)
                     for idx in current_screen.selected_indices:
                         p = Pokemon.from_dict(all_pokemon[idx].to_dict())
                         player_team.append(p)
@@ -88,14 +90,15 @@ def main():
                     for opp in opponent_team:
                         opp.scale_to_level(avg_level)
                 elif hasattr(current_screen, "selected_index") and current_screen.selected_index is not None:
+                    player_indices = [current_screen.selected_index]
                     p = all_pokemon[current_screen.selected_index]
                     player_team = [Pokemon.from_dict(p.to_dict())]
-                    opp = Pokemon.from_dict(game.get_random_opponent().to_dict())
+                    opp = game.get_random_opponent()
                     opp.scale_to_level(player_team[0].level)
                     opponent_team = [opp]
                 if player_team and opponent_team:
                     current_screen = CombatScreen(
-                        game, player_team, opponent_team
+                        game, player_team, opponent_team, player_indices
                     )
                 else:
                     current_screen = MenuScreen(game)
@@ -108,6 +111,12 @@ def main():
                     combat = current_screen.combat
                     loser_name = combat.get_loser()
                     xp_message = getattr(current_screen, "xp_message", "")
+                # B2/B3: sync combat copies back to originals
+                if hasattr(current_screen, "player_original_indices") and current_screen.player_original_indices:
+                    game.sync_from_combat(
+                        current_screen.player_team,
+                        current_screen.player_original_indices,
+                    )
                 game.save_game()
                 current_screen = ResultScreen(
                     game,
@@ -123,8 +132,6 @@ def main():
                 current_screen = SaveSelectScreen(game)
             elif next_state == GameState.TEAM_SELECT:
                 current_screen = TeamSelectScreen(game)
-            elif next_state == GameState.QUIT:
-                running = False
             state = next_state
 
         # Update and draw
