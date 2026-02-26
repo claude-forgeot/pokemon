@@ -18,7 +18,8 @@ class Game:
     needing to know about each other.
     """
 
-    POKEMON_PATH = "data/pokemon.json"
+    POKEMON_SOURCE_PATH = "data/pokemon.json"
+    POKEMON_RUNTIME_PATH = "data/pokemon_state.json"
     TYPE_CHART_PATH = "data/type_chart.json"
 
     def __init__(self):
@@ -31,12 +32,15 @@ class Game:
         self._load_pokemon()
 
     def _load_pokemon(self):
-        """Load available Pokemon from pokemon.json."""
-        if FileHandler.file_exists(self.POKEMON_PATH):
-            data = FileHandler.load_json(self.POKEMON_PATH)
-            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
+        """Load available Pokemon from runtime state, falling back to source."""
+        if FileHandler.file_exists(self.POKEMON_RUNTIME_PATH):
+            data = FileHandler.load_json(self.POKEMON_RUNTIME_PATH)
+        elif FileHandler.file_exists(self.POKEMON_SOURCE_PATH):
+            data = FileHandler.load_json(self.POKEMON_SOURCE_PATH)
         else:
             self.pokemon_list = []
+            return
+        self.pokemon_list = [Pokemon.from_dict(p) for p in data]
 
     def new_game(self):
         """Reset the game state for a fresh start."""
@@ -138,9 +142,9 @@ class Game:
         return None
 
     def _save_pokemon(self):
-        """Persist the current Pokemon list to pokemon.json."""
+        """Persist the current Pokemon list to the runtime state file."""
         data = [p.to_dict() for p in self.pokemon_list]
-        FileHandler.save_json(self.POKEMON_PATH, data)
+        FileHandler.save_json(self.POKEMON_RUNTIME_PATH, data)
 
     def save_game(self):
         """Save current game state to a JSON file in saves/ folder.
@@ -190,6 +194,7 @@ class Game:
         for entry in new_pokedex_entries:
             self.pokedex.add_raw_entry(entry)
         self.pokedex.save()
+        self._save_pokemon()
 
     def get_save_files(self):
         """Return a list of available save files, newest first.

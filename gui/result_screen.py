@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class ResultScreen(BaseScreen):
@@ -23,9 +23,9 @@ class ResultScreen(BaseScreen):
         self.winner_name = winner_name
         self.loser_name = loser_name
         self.xp_message = xp_message
-        self.font_title = pygame.font.SysFont("arial", 40, bold=True)
-        self.font_info = pygame.font.SysFont("arial", 22)
-        self.font_button = pygame.font.SysFont("arial", 22)
+        self.font_title = get_font(40, bold=True)
+        self.font_info = get_font(22)
+        self.font_button = get_font(22)
 
         self.menu_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100,

@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class PokedexScreen(BaseScreen):
@@ -17,10 +17,10 @@ class PokedexScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = pygame.font.SysFont("arial", 32, bold=True)
-        self.font_name = pygame.font.SysFont("arial", 20, bold=True)
-        self.font_stat = pygame.font.SysFont("arial", 15)
-        self.font_button = pygame.font.SysFont("arial", 18)
+        self.font_title = get_font(32, bold=True)
+        self.font_name = get_font(20, bold=True)
+        self.font_stat = get_font(15)
+        self.font_button = get_font(18)
         self.scroll_offset = 0
 
         self.back_button = pygame.Rect(20, 20, 100, 36)

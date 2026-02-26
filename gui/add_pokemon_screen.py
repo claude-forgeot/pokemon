@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 from models.type_chart import TypeChart
 
 
@@ -21,11 +21,11 @@ class AddPokemonScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = pygame.font.SysFont("arial", 32, bold=True)
-        self.font_label = pygame.font.SysFont("arial", 18)
-        self.font_input = pygame.font.SysFont("arial", 20)
-        self.font_button = pygame.font.SysFont("arial", 20)
-        self.font_small = pygame.font.SysFont("arial", 14)
+        self.font_title = get_font(32, bold=True)
+        self.font_label = get_font(18)
+        self.font_input = get_font(20)
+        self.font_button = get_font(20)
+        self.font_small = get_font(14)
 
         # Input fields: {field_name: {"value": str, "rect": Rect, "active": bool}}
         field_x = 300

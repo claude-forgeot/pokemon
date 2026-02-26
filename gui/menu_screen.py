@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class MenuScreen(BaseScreen):
@@ -13,9 +13,9 @@ class MenuScreen(BaseScreen):
     def __init__(self, game):
         """Initialize the menu screen."""
         super().__init__(game)
-        self.font_title = pygame.font.SysFont("arial", 48, bold=True)
-        self.font_button = pygame.font.SysFont("arial", 24)
-        self.font_small = pygame.font.SysFont("arial", 16)
+        self.font_title = get_font(48, bold=True)
+        self.font_button = get_font(24)
+        self.font_small = get_font(16)
         self.message = ""
         self.message_timer = 0
 

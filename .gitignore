@@ -200,6 +200,7 @@ Ressources-projet/
 
 # Donnees generees au runtime (recreees par scripts ou gameplay)
 data/pokedex.json
+data/pokemon_state.json
 
 # Diagrammes generes (source = docs/class_diagram.d2)
 docs/class_diagram.png

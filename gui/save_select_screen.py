@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class SaveSelectScreen(BaseScreen):
@@ -22,9 +22,9 @@ class SaveSelectScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = pygame.font.SysFont("arial", 36, bold=True)
-        self.font_item = pygame.font.SysFont("arial", 20)
-        self.font_small = pygame.font.SysFont("arial", 16)
+        self.font_title = get_font(36, bold=True)
+        self.font_item = get_font(20)
+        self.font_small = get_font(16)
         self.saves = game.get_save_files()
         self.selected_index = None
         self.scroll_offset = 0

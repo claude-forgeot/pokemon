@@ -9,7 +9,7 @@ from models.animation_manager import AnimationManager
 from models.combat import Combat
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class CombatScreen(BaseScreen):
@@ -32,10 +32,10 @@ class CombatScreen(BaseScreen):
         self.opponent = self.opponent_team[0]
         self.combat = Combat(self.player, self.opponent, game.type_chart)
 
-        self.font_name = pygame.font.SysFont("arial", 22, bold=True)
-        self.font_stat = pygame.font.SysFont("arial", 16)
-        self.font_log = pygame.font.SysFont("arial", 15)
-        self.font_button = pygame.font.SysFont("arial", 20, bold=True)
+        self.font_name = get_font(22, bold=True)
+        self.font_stat = get_font(16)
+        self.font_log = get_font(15)
+        self.font_button = get_font(20, bold=True)
 
         self.log_messages = []
         self.phase = "player_turn"
@@ -53,7 +53,7 @@ class CombatScreen(BaseScreen):
         self.opponent_attack_timer = 0
         self.waiting_for_opponent = False
 
-        self.font_move = pygame.font.SysFont("arial", 14, bold=True)
+        self.font_move = get_font(14, bold=True)
 
         # Buttons
         btn_y = 540

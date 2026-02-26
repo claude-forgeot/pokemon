@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants
+from gui.constants import Constants, get_font
 
 
 class TeamSelectScreen(BaseScreen):
@@ -21,11 +21,11 @@ class TeamSelectScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = pygame.font.SysFont("arial", 32, bold=True)
-        self.font_name = pygame.font.SysFont("arial", 16, bold=True)
-        self.font_stat = pygame.font.SysFont("arial", 13)
-        self.font_button = pygame.font.SysFont("arial", 20)
-        self.font_info = pygame.font.SysFont("arial", 16)
+        self.font_title = get_font(32, bold=True)
+        self.font_name = get_font(16, bold=True)
+        self.font_stat = get_font(13)
+        self.font_button = get_font(20)
+        self.font_info = get_font(16)
 
         self.selected_indices = []
         self.scroll_offset = 0

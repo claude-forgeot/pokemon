@@ -1,5 +1,22 @@
 """Constants module -- centralized game display constants."""
 
+import pygame
+
+
+def get_font(size, bold=False):
+    """Return a cross-platform font using pygame's built-in default font.
+
+    Args:
+        size: Font size in pixels.
+        bold: If True, use bold variant.
+
+    Returns:
+        pygame.font.Font: A font object guaranteed to work on all platforms.
+    """
+    font = pygame.font.Font(None, size)
+    font.set_bold(bold)
+    return font
+
 
 class Constants:
     """Centralized game display constants.
