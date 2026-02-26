@@ -60,6 +60,3 @@ class Move:
             accuracy=data.get("accuracy", 100),
         )
 
-    def __str__(self):
-        """Return a readable string representation."""
-        return f"{self.name} ({self.move_type}) PWR:{self.power} ACC:{self.accuracy}"

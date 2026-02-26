@@ -20,7 +20,6 @@ class Combat:
     Plus: register_to_pokedex(pokemon, pokedex)
     """
 
-    MISS_CHANCE = 0.1  # 10% chance to miss
     BASE_XP_REWARD = 20  # XP given to the winner
 
     def __init__(self, player_pokemon, opponent_pokemon, type_chart):
@@ -34,40 +33,30 @@ class Combat:
         self.player_pokemon = player_pokemon
         self.opponent_pokemon = opponent_pokemon
         self.type_chart = type_chart
-        self.turn_log = []
-
-    def get_type_multiplier(self, attacker, defender, move=None):
+    def get_type_multiplier(self, attacker, defender, move):
         """Get the type effectiveness multiplier for an attack.
-
-        If a move is provided, uses the move's type. Otherwise uses
-        the attacker's primary type (index 0).
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
+            move: Move instance.
 
         Returns:
             float: Combined type multiplier.
         """
-        if move is not None:
-            attack_type = move.move_type
-        else:
-            attack_type = attacker.types[0]
-        return self.type_chart.get_combined_multiplier(attack_type, defender.types)
+        return self.type_chart.get_combined_multiplier(move.move_type, defender.types)
 
-    def calculate_damage(self, attacker, defender, move=None, multiplier=None):
+    def calculate_damage(self, attacker, defender, move, multiplier=None):
         """Calculate damage dealt by attacker to defender.
 
-        If a move is provided, uses a Pokemon-like formula:
+        Uses a Pokemon-like formula:
             base = ((2 * level / 5 + 2) * power * attack / defense) / 50 + 2
             damage = int(base * type_multiplier)
-        Otherwise falls back to the simple formula for backward compatibility.
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
+            move: Move instance.
             multiplier: Pre-computed type multiplier (avoids redundant lookup).
 
         Returns:
@@ -78,27 +67,22 @@ class Combat:
         if multiplier == 0.0:
             return 0
 
-        if move is not None:
-            level = attacker.level
-            power = move.power
-            base = ((2 * level / 5 + 2) * power * attacker.attack / defender.defense) / 50 + 2
-            raw_damage = int(base * multiplier)
-        else:
-            raw_damage = int(attacker.attack * multiplier) - defender.defense
+        level = attacker.level
+        power = move.power
+        base = ((2 * level / 5 + 2) * power * attacker.attack / defender.defense) / 50 + 2
+        raw_damage = int(base * multiplier)
 
         return max(1, raw_damage)
 
-    def attack(self, attacker, defender, move=None):
+    def attack(self, attacker, defender, move):
         """Execute one attack from attacker to defender.
 
-        If a move is provided, uses the move's accuracy for hit check
-        and the move's type/power for damage. Otherwise uses the default
-        miss chance (10%) and simple formula.
+        Uses the move's accuracy for hit check and the move's type/power for damage.
 
         Args:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
-            move: Optional Move instance.
+            move: Move instance.
 
         Returns:
             dict: Result with keys:
@@ -110,13 +94,10 @@ class Combat:
                 - message (str): Human-readable description of the attack.
                 - move_name (str): Name of the move used.
         """
-        move_name = move.name if move else "Attack"
+        move_name = move.name
 
         # Check for miss
-        if move is not None:
-            miss = random.randint(1, 100) > move.accuracy
-        else:
-            miss = random.randint(1, 100) > 90
+        miss = random.randint(1, 100) > move.accuracy
 
         if miss:
             message = f"{attacker.name}'s {move_name} missed!"
@@ -129,7 +110,6 @@ class Combat:
                 "message": message,
                 "move_name": move_name,
             }
-            self.turn_log.append(result)
             return result
 
         multiplier = self.get_type_multiplier(attacker, defender, move)
@@ -167,7 +147,6 @@ class Combat:
             "message": message,
             "move_name": move_name,
         }
-        self.turn_log.append(result)
         return result
 
     def get_winner(self):

@@ -83,10 +83,6 @@ class Pokemon:
         """
         return self.hp > 0
 
-    def heal(self):
-        """Fully restore HP to max_hp."""
-        self.hp = self.max_hp
-
     def gain_xp(self, amount):
         """Add XP and handle level ups.
 
@@ -96,9 +92,9 @@ class Pokemon:
         self.xp += amount
         while self.xp >= self.xp_to_next_level:
             self.xp -= self.xp_to_next_level
-            self.level_up()
+            self._level_up()
 
-    def level_up(self):
+    def _level_up(self):
         """Increase level and stats. Called automatically by gain_xp().
 
         Returns:
@@ -110,9 +106,9 @@ class Pokemon:
         self.defense += 2
         self.hp = self.max_hp
         self.xp_to_next_level = 10 + self.level * 5
-        return self.try_evolve()
+        return self._try_evolve()
 
-    def try_evolve(self):
+    def _try_evolve(self):
         """Evolve this Pokemon if level requirement is met.
 
         Updates name and sprite path. Stats are kept as-is (accumulated
@@ -211,11 +207,3 @@ class Pokemon:
         pokemon.locked = data.get("locked", False)
         return pokemon
 
-    def __str__(self):
-        """Return a readable string representation.
-
-        POO: __str__ is a MAGIC METHOD (or dunder method). Python calls it
-        automatically when you do print(pokemon) or str(pokemon).
-        """
-        types_str = "/".join(self.types)
-        return f"{self.name} (Lv.{self.level}) [{types_str}] HP:{self.hp}/{self.max_hp} XP:{self.xp}/{self.xp_to_next_level}"
