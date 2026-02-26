@@ -11,7 +11,7 @@ class TeamSelectScreen(BaseScreen):
 
     """Screen where the player picks 3-6 Pokemon for their team."""
 
-    MIN_TEAM = 6
+    MIN_TEAM = 3
     MAX_TEAM = 6
 
     def __init__(self, game):
@@ -97,7 +97,7 @@ class TeamSelectScreen(BaseScreen):
         surface.fill(Constants.WHITE)
 
         # Title
-        title = self.font_title.render("Choose your team (6)", True, Constants.BLACK)
+        title = self.font_title.render("Choose your team (3-6)", True, Constants.BLACK)
         surface.blit(title, (Constants.SCREEN_WIDTH // 2 - title.get_width() // 2, 25))
 
         # Back button
@@ -117,6 +117,7 @@ class TeamSelectScreen(BaseScreen):
         card_h = 130
         padding = 10
 
+        surface.set_clip(pygame.Rect(0, 60, 800, 440))
         for i, pokemon in enumerate(pokemon_list):
             col = i % cols
             row = i // cols
@@ -135,10 +136,12 @@ class TeamSelectScreen(BaseScreen):
                 pygame.draw.rect(surface, (200, 200, 200), card_rect, border_radius=6)
             elif is_selected:
                 pygame.draw.rect(surface, Constants.BLUE, card_rect, border_radius=6)
-                # Show order number
+                # Show order number with background
                 order = self.selected_indices.index(i) + 1
                 order_surf = self.font_name.render(str(order), True, Constants.WHITE)
-                surface.blit(order_surf, (x + 5, y + 5))
+                order_bg = pygame.Rect(x + 3, y + 3, order_surf.get_width() + 8, order_surf.get_height() + 4)
+                pygame.draw.rect(surface, (30, 60, 160), order_bg, border_radius=4)
+                surface.blit(order_surf, (x + 7, y + 5))
             else:
                 pygame.draw.rect(surface, Constants.LIGHT_GRAY, card_rect, border_radius=6)
 
@@ -160,21 +163,24 @@ class TeamSelectScreen(BaseScreen):
                     (x + card_w // 2, y + 40), 24,
                 )
 
-            # Locked text
+            # Locked text with background
             if is_locked:
                 lock_surf = self.font_stat.render("LOCKED", True, (120, 120, 120))
-                surface.blit(lock_surf, (x + card_w // 2 - lock_surf.get_width() // 2, y + 40))
+                lock_x = x + card_w // 2 - lock_surf.get_width() // 2
+                lock_bg = pygame.Rect(lock_x - 4, y + 38, lock_surf.get_width() + 8, lock_surf.get_height() + 4)
+                pygame.draw.rect(surface, (200, 200, 200), lock_bg, border_radius=3)
+                surface.blit(lock_surf, (lock_x, y + 40))
 
             # Name
             name_color = (160, 160, 160) if is_locked else Constants.BLACK
             name_surf = self.font_name.render(pokemon.name, True, name_color)
             surface.blit(
                 name_surf,
-                (x + card_w // 2 - name_surf.get_width() // 2, y + 75),
+                (x + card_w // 2 - name_surf.get_width() // 2, y + 73),
             )
 
             # Type badges
-            badge_y = y + 93
+            badge_y = y + 96
             total_w = sum(self.font_stat.size(t)[0] + 14 for t in pokemon.types)
             badge_x = x + card_w // 2 - total_w // 2
             self.draw_type_badges(
@@ -189,6 +195,8 @@ class TeamSelectScreen(BaseScreen):
                 stat_surf,
                 (x + card_w // 2 - stat_surf.get_width() // 2, y + 112),
             )
+
+        surface.set_clip(None)
 
         # Info text
         count = len(self.selected_indices)

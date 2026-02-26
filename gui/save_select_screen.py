@@ -37,7 +37,7 @@ class SaveSelectScreen(BaseScreen):
         )
 
         # Load and Delete buttons
-        btn_y = Constants.SCREEN_HEIGHT - 70
+        btn_y = Constants.SCREEN_HEIGHT - 80
         self.load_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 210, btn_y,
             200, 50
@@ -94,7 +94,7 @@ class SaveSelectScreen(BaseScreen):
             # Scroll with mouse wheel
             if event.type == pygame.MOUSEWHEEL:
                 self.scroll_offset -= event.y * 30
-                max_scroll = max(0, len(self.saves) * 50 - 350)
+                max_scroll = max(0, len(self.saves) * 50 - 360)
                 self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
 
         return None
@@ -134,7 +134,7 @@ class SaveSelectScreen(BaseScreen):
         else:
             for i, save in enumerate(self.saves):
                 y = 100 + i * 50 - self.scroll_offset
-                if y < 80 or y > Constants.SCREEN_HEIGHT - 120:
+                if y < 80 or y > Constants.SCREEN_HEIGHT - 140:
                     continue
                 entry_rect = pygame.Rect(
                     100, y, Constants.SCREEN_WIDTH - 200, 40
@@ -183,6 +183,6 @@ class SaveSelectScreen(BaseScreen):
         if self.message:
             msg = self.font_small.render(self.message, True, Constants.BLUE)
             msg_rect = msg.get_rect(
-                center=(Constants.SCREEN_WIDTH // 2, Constants.SCREEN_HEIGHT - 20)
+                center=(Constants.SCREEN_WIDTH // 2, Constants.SCREEN_HEIGHT - 25)
             )
             surface.blit(msg, msg_rect)

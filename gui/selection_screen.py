@@ -141,24 +141,24 @@ class SelectionScreen(BaseScreen):
                     (x + Constants.CARD_WIDTH // 2, y + 45), 30,
                 )
 
-            # Locked overlay text
+            # Locked overlay text with background
             if is_locked:
                 lock_surf = self.font_stat.render("LOCKED", True, (120, 120, 120))
-                surface.blit(
-                    lock_surf,
-                    (x + Constants.CARD_WIDTH // 2 - lock_surf.get_width() // 2, y + 45),
-                )
+                lock_x = x + Constants.CARD_WIDTH // 2 - lock_surf.get_width() // 2
+                lock_bg = pygame.Rect(lock_x - 4, y + 43, lock_surf.get_width() + 8, lock_surf.get_height() + 4)
+                pygame.draw.rect(surface, (200, 200, 200), lock_bg, border_radius=3)
+                surface.blit(lock_surf, (lock_x, y + 45))
 
             # Name
             name_color = (160, 160, 160) if is_locked else Constants.BLACK
             name_surf = self.font_name.render(pokemon.name, True, name_color)
             surface.blit(
                 name_surf,
-                (x + Constants.CARD_WIDTH // 2 - name_surf.get_width() // 2, y + 90),
+                (x + Constants.CARD_WIDTH // 2 - name_surf.get_width() // 2, y + 87),
             )
 
             # Type badge(s)
-            badge_y = y + 112
+            badge_y = y + 114
             total_width = sum(
                 self.font_stat.size(t)[0] + 20 for t in pokemon.types
             )
@@ -168,13 +168,14 @@ class SelectionScreen(BaseScreen):
                 badge_x, badge_y, padding=20, pad_inner=16, radius=4,
             )
 
-            # Stats line
+            # Stats line (clipped to card width)
             stat_text = f"HP:{pokemon.hp} ATK:{pokemon.attack} DEF:{pokemon.defense}"
             stat_surf = self.font_stat.render(stat_text, True, Constants.DARK_GRAY)
-            surface.blit(
-                stat_surf,
-                (x + Constants.CARD_WIDTH // 2 - stat_surf.get_width() // 2, y + 135),
-            )
+            max_w = Constants.CARD_WIDTH - 8
+            stat_x = x + Constants.CARD_WIDTH // 2 - min(stat_surf.get_width(), max_w) // 2
+            if stat_surf.get_width() > max_w:
+                stat_surf = stat_surf.subsurface(pygame.Rect(0, 0, max_w, stat_surf.get_height()))
+            surface.blit(stat_surf, (stat_x, y + 137))
 
         # Confirm button
         if self.selected_index is not None:

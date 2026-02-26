@@ -21,6 +21,10 @@ class Move:
             power: Base power (int, higher = more damage).
             accuracy: Hit chance as percentage (1-100).
         """
+        if not name or not name.strip():
+            raise ValueError("Move name cannot be empty")
+        if not (0 <= accuracy <= 100):
+            raise ValueError("Accuracy must be between 0 and 100")
         self.name = name
         self.move_type = move_type
         self.power = power

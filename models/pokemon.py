@@ -46,7 +46,6 @@ class Pokemon:
         self.xp_to_next_level = 10 + level * 5
         self.evolution_level = None
         self.evolution_target = None
-        self.evolution_data = None
 
         # Moves (list of Move objects)
         self.moves = []
@@ -116,8 +115,8 @@ class Pokemon:
     def try_evolve(self):
         """Evolve this Pokemon if level requirement is met.
 
-        If evolution_data is available (from PokeAPI), updates stats, types,
-        and sprite_path to match the evolved form. Otherwise just changes name.
+        Updates name and sprite path. Stats are kept as-is (accumulated
+        from level ups).
 
         Returns:
             str or None: Evolution message if evolved, None otherwise.
@@ -129,19 +128,10 @@ class Pokemon:
 
         old_name = self.name
         self.name = self.evolution_target
-
-        # Update stats/types/sprite if evolution data is available
-        if self.evolution_data is not None:
-            self.max_hp = self.evolution_data.get("hp", self.max_hp)
-            self.hp = self.max_hp
-            self.attack = self.evolution_data.get("attack", self.attack)
-            self.defense = self.evolution_data.get("defense", self.defense)
-            self.types = self.evolution_data.get("types", self.types)
-            self.sprite_path = self.evolution_data.get("sprite_path", self.sprite_path)
-
+        # Derive sprite path from the new name
+        self.sprite_path = f"assets/sprites/{self.name.lower()}.png"
         self.evolution_level = None
         self.evolution_target = None
-        self.evolution_data = None
         return f"{old_name} evolved into {self.name}!"
 
     def scale_to_level(self, target_level):
@@ -157,10 +147,10 @@ class Pokemon:
             return
         diff = target_level - self.level
         self.level = target_level
-        self.max_hp += diff * 5
+        self.max_hp = max(1, self.max_hp + diff * 5)
+        self.attack = max(1, self.attack + diff * 3)
+        self.defense = max(1, self.defense + diff * 2)
         self.hp = self.max_hp
-        self.attack += diff * 3
-        self.defense += diff * 2
         self.xp_to_next_level = 10 + self.level * 5
 
     def to_dict(self):
@@ -181,7 +171,6 @@ class Pokemon:
             "xp_to_next_level": self.xp_to_next_level,
             "evolution_level": self.evolution_level,
             "evolution_target": self.evolution_target,
-            "evolution_data": self.evolution_data,
             "moves": [m.to_dict() if isinstance(m, Move) else m for m in self.moves],
             "locked": self.locked,
         }
@@ -201,12 +190,12 @@ class Pokemon:
             Pokemon: A new Pokemon instance.
         """
         pokemon = cls(
-            name=data["name"],
-            hp=data["hp"],
+            name=data.get("name", "Unknown"),
+            hp=data.get("hp", 20),
             level=data.get("level", 5),
-            attack=data["attack"],
-            defense=data["defense"],
-            types=data["types"],
+            attack=data.get("attack", 10),
+            defense=data.get("defense", 10),
+            types=data.get("types", ["normal"]),
             sprite_path=data.get("sprite_path", ""),
         )
         # Restore XP fields if present (backward-compatible with old saves)
@@ -214,7 +203,6 @@ class Pokemon:
         pokemon.xp_to_next_level = data.get("xp_to_next_level", 10 + pokemon.level * 5)
         pokemon.evolution_level = data.get("evolution_level", None)
         pokemon.evolution_target = data.get("evolution_target", None)
-        pokemon.evolution_data = data.get("evolution_data", None)
         raw_moves = data.get("moves", [])
         pokemon.moves = [Move.from_dict(m) for m in raw_moves] if raw_moves else []
         # Generate default moves if none (backward compat with old saves)

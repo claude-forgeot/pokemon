@@ -22,22 +22,19 @@ class MenuScreen(BaseScreen):
         center_x = Constants.SCREEN_WIDTH // 2 - Constants.BUTTON_WIDTH // 2
         self.buttons = {
             "new_game": pygame.Rect(
-                center_x, 180, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 200, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
             "load_save": pygame.Rect(
-                center_x, 245, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "battle": pygame.Rect(
-                center_x, 310, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 270, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
             "team_battle": pygame.Rect(
-                center_x, 375, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "add": pygame.Rect(
-                center_x, 440, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 340, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
             "pokedex": pygame.Rect(
-                center_x, 505, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+                center_x, 410, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+            ),
+            "add_pokemon": pygame.Rect(
+                center_x, 480, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
             ),
         }
         self.hover_button = None
@@ -54,23 +51,17 @@ class MenuScreen(BaseScreen):
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.buttons["new_game"].collidepoint(event.pos):
                     self.game.new_game()
-                    self.message = "New game started! Pokedex reset."
-                    self.message_timer = 120
-                    return None
+                    return GameState.SELECTION
                 if self.buttons["load_save"].collidepoint(event.pos):
                     return GameState.SAVE_SELECT
-                if self.buttons["battle"].collidepoint(event.pos):
-                    if len(self.game.get_available_pokemon()) < 2:
-                        return None
-                    return GameState.SELECTION
                 if self.buttons["team_battle"].collidepoint(event.pos):
                     if len(self.game.get_available_pokemon()) < 3:
                         return None
                     return GameState.TEAM_SELECT
-                if self.buttons["add"].collidepoint(event.pos):
-                    return GameState.ADD_POKEMON
                 if self.buttons["pokedex"].collidepoint(event.pos):
                     return GameState.POKEDEX
+                if self.buttons["add_pokemon"].collidepoint(event.pos):
+                    return GameState.ADD_POKEMON
         return None
 
     def update(self):
@@ -97,10 +88,9 @@ class MenuScreen(BaseScreen):
         labels = {
             "new_game": "New Game",
             "load_save": "Load Save",
-            "battle": "Start Battle",
             "team_battle": "Team Battle",
-            "add": "Add Pokemon",
             "pokedex": "Pokedex",
+            "add_pokemon": "Add Pokemon",
         }
         for key, rect in self.buttons.items():
             color = Constants.BLUE if self.hover_button == key else Constants.DARK_GRAY
@@ -117,17 +107,17 @@ class MenuScreen(BaseScreen):
             msg = f"{count} Pokemon available"
             msg_color = Constants.DARK_GRAY
         info = self.font_small.render(msg, True, msg_color)
-        info_rect = info.get_rect(center=(Constants.SCREEN_WIDTH // 2, 570))
+        info_rect = info.get_rect(center=(Constants.SCREEN_WIDTH // 2, 565))
         surface.blit(info, info_rect)
 
         pdex_msg = f"Pokedex: {self.game.pokedex.get_count()} encountered"
         pdex = self.font_small.render(pdex_msg, True, Constants.DARK_GRAY)
-        pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 588))
+        pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 585))
         surface.blit(pdex, pdex_rect)
 
         if self.message:
             msg_surf = self.font_small.render(self.message, True, Constants.GREEN)
             msg_rect = msg_surf.get_rect(
-                center=(Constants.SCREEN_WIDTH // 2, 558)
+                center=(Constants.SCREEN_WIDTH // 2, 520)
             )
             surface.blit(msg_surf, msg_rect)

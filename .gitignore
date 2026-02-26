@@ -203,6 +203,15 @@ Ressources-projet/
 data/pokemon.json
 data/pokedex.json
 
+# Diagrammes generes (source = docs/class_diagram.d2)
+docs/class_diagram.png
+docs/class_diagram.svg
+
+# OS-specific
+.DS_Store
+Thumbs.db
+Desktop.ini
+
 # Ruff stuff:
 .ruff_cache/
 
@@ -220,3 +229,5 @@ data/pokedex.json
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+CHANGELOG-INTEGRATION.md
+GUIDE-TECHNIQUE.md

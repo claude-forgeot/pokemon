@@ -29,7 +29,7 @@ class ResultScreen(BaseScreen):
 
         self.menu_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100,
-            Constants.SCREEN_HEIGHT - 120,
+            Constants.SCREEN_HEIGHT - 170,
             200, 50,
         )
 
@@ -54,35 +54,36 @@ class ResultScreen(BaseScreen):
 
         # Title
         title = self.font_title.render("Battle Over!", True, Constants.BLACK)
-        title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 120))
+        title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 80))
         surface.blit(title, title_rect)
 
         # Winner
         win_text = self.font_info.render(
             f"Winner: {self.winner_name}", True, Constants.GREEN
         )
-        win_rect = win_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 220))
+        win_rect = win_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 170))
         surface.blit(win_text, win_rect)
 
         # Loser
         lose_text = self.font_info.render(
             f"Defeated: {self.loser_name}", True, Constants.RED
         )
-        lose_rect = lose_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 270))
+        lose_rect = lose_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 220))
         surface.blit(lose_text, lose_rect)
 
         # XP message
         if self.xp_message:
             xp_text = self.font_info.render(self.xp_message, True, Constants.BLUE)
-            xp_rect = xp_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 320))
+            xp_rect = xp_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 270))
             surface.blit(xp_text, xp_rect)
 
         # Pokedex info
+        pdex_y = 320 if self.xp_message else 280
         pdex_text = self.font_info.render(
             f"Pokedex entries: {self.game.pokedex.get_count()}",
             True, Constants.DARK_GRAY,
         )
-        pdex_rect = pdex_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, 370))
+        pdex_rect = pdex_text.get_rect(center=(Constants.SCREEN_WIDTH // 2, pdex_y))
         surface.blit(pdex_text, pdex_rect)
 
         # Return button

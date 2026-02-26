@@ -37,7 +37,10 @@ class PokedexScreen(BaseScreen):
                     return GameState.MENU
             if event.type == pygame.MOUSEWHEEL:
                 self.scroll_offset -= event.y * 30
-                self.scroll_offset = max(0, self.scroll_offset)
+                entries = self.game.pokedex.get_all_entries()
+                row_height = 60
+                max_scroll = max(0, len(entries) * row_height - (Constants.SCREEN_HEIGHT - 140))
+                self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
         return None
 
     def update(self):
@@ -98,7 +101,7 @@ class PokedexScreen(BaseScreen):
             # Types
             self.draw_type_badges(
                 surface, self.font_stat, entry.get("types", []),
-                90, y + 32, padding=14, pad_inner=10, radius=3,
+                90, y + 36, padding=14, pad_inner=10, radius=3,
             )
 
             # Stats

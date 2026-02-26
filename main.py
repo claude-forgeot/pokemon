@@ -29,6 +29,9 @@ from gui.team_select_screen import TeamSelectScreen
 
 def main():
     """Run the Pygame main loop with state machine dispatch."""
+    # BUG-16: Ensure cwd is the script directory so relative paths work
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
     pygame.init()
     screen = pygame.display.set_mode(
         (Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT)

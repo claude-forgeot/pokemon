@@ -69,4 +69,6 @@ class TypeChart:
         """
         if os.path.isfile(path):
             self.chart = FileHandler.load_json(path)
+        else:
+            print(f"[WARN] Type chart file not found: {path}")
 

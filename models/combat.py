@@ -56,7 +56,7 @@ class Combat:
             attack_type = attacker.types[0]
         return self.type_chart.get_combined_multiplier(attack_type, defender.types)
 
-    def calculate_damage(self, attacker, defender, move=None):
+    def calculate_damage(self, attacker, defender, move=None, multiplier=None):
         """Calculate damage dealt by attacker to defender.
 
         If a move is provided, uses a Pokemon-like formula:
@@ -68,11 +68,13 @@ class Combat:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
             move: Optional Move instance.
+            multiplier: Pre-computed type multiplier (avoids redundant lookup).
 
         Returns:
             int: Damage amount (>= 0).
         """
-        multiplier = self.get_type_multiplier(attacker, defender, move)
+        if multiplier is None:
+            multiplier = self.get_type_multiplier(attacker, defender, move)
         if multiplier == 0.0:
             return 0
 
@@ -114,7 +116,7 @@ class Combat:
         if move is not None:
             miss = random.randint(1, 100) > move.accuracy
         else:
-            miss = random.random() < self.MISS_CHANCE
+            miss = random.randint(1, 100) > 90
 
         if miss:
             message = f"{attacker.name}'s {move_name} missed!"
@@ -131,7 +133,7 @@ class Combat:
             return result
 
         multiplier = self.get_type_multiplier(attacker, defender, move)
-        damage = self.calculate_damage(attacker, defender, move)
+        damage = self.calculate_damage(attacker, defender, move, multiplier=multiplier)
         defender.take_damage(damage)
 
         # Determine effectiveness label
@@ -202,16 +204,12 @@ class Combat:
         if winner_name is None:
             return "No winner yet!"
 
-        loser_pokemon = (
-            self.opponent_pokemon
-            if winner_name == self.player_pokemon.name
-            else self.player_pokemon
-        )
-        winner_pokemon = (
-            self.player_pokemon
-            if winner_name == self.player_pokemon.name
-            else self.opponent_pokemon
-        )
+        if not self.opponent_pokemon.is_alive():
+            winner_pokemon = self.player_pokemon
+            loser_pokemon = self.opponent_pokemon
+        else:
+            winner_pokemon = self.opponent_pokemon
+            loser_pokemon = self.player_pokemon
 
         xp_reward = self.BASE_XP_REWARD + loser_pokemon.level * 2
         old_level = winner_pokemon.level

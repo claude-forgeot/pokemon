@@ -91,4 +91,4 @@ class BaseScreen:
             pygame.draw.rect(surface, color, badge_rect, border_radius=radius)
             type_surf = font.render(ptype, True, Constants.WHITE)
             surface.blit(type_surf, (badge_x + pad_inner // 2, y + 1))
-            badge_x += tw + padding
+            badge_x += tw + pad_inner + 4

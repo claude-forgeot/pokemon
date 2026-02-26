@@ -19,7 +19,6 @@ class Game:
     """
 
     POKEMON_PATH = "data/pokemon.json"
-    DEFAULT_POKEMON_PATH = "data/default_pokemon.json"
     TYPE_CHART_PATH = "data/type_chart.json"
 
     def __init__(self):
@@ -32,34 +31,18 @@ class Game:
         self._load_pokemon()
 
     def _load_pokemon(self):
-        """Load available Pokemon from pokemon.json, with fallback.
-
-        If pokemon.json does not exist, tries to run the populate script.
-        If that fails, falls back to default_pokemon.json.
-        """
-        if not FileHandler.file_exists(self.POKEMON_PATH):
-            self._try_populate()
-
+        """Load available Pokemon from pokemon.json."""
         if FileHandler.file_exists(self.POKEMON_PATH):
             data = FileHandler.load_json(self.POKEMON_PATH)
-            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
-        elif FileHandler.file_exists(self.DEFAULT_POKEMON_PATH):
-            data = FileHandler.load_json(self.DEFAULT_POKEMON_PATH)
             self.pokemon_list = [Pokemon.from_dict(p) for p in data]
         else:
             self.pokemon_list = []
 
-    def _try_populate(self):
-        """Try to run the populate script to fetch Pokemon from PokeAPI."""
-        try:
-            from scripts.populate_pokemon import populate
-            populate()
-        except Exception:
-            print("Warning: populate failed, using default_pokemon.json")
-
     def new_game(self):
         """Reset the game state for a fresh start."""
         self.pokedex.reset()
+        self.evolution_count = 0
+        self._load_pokemon()
 
     def get_random_opponent(self):
         """Pick a random Pokemon from the full list as an opponent.
@@ -70,9 +53,10 @@ class Game:
         Returns:
             Pokemon: A new Pokemon instance with full HP, or None if list empty.
         """
-        if not self.pokemon_list:
+        available = self.get_available_pokemon()
+        if not available:
             return None
-        source = random.choice(self.pokemon_list)
+        source = random.choice(available)
         opponent = Pokemon.from_dict(source.to_dict())
         return opponent
 
@@ -157,6 +141,7 @@ class Game:
         """Persist the current Pokemon list to pokemon.json."""
         data = [p.to_dict() for p in self.pokemon_list]
         FileHandler.save_json(self.POKEMON_PATH, data)
+
     def save_game(self):
         """Save current game state to a JSON file in saves/ folder.
 
@@ -193,10 +178,16 @@ class Game:
             filepath: Path to the save JSON file.
         """
         data = FileHandler.load_json(filepath)
-        self.pokemon_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
-        self.evolution_count = data.get("evolution_count", 0)
+        try:
+            new_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
+            new_pokedex_entries = data["pokedex"]
+            new_evolution_count = data.get("evolution_count", 0)
+        except (KeyError, TypeError) as e:
+            raise ValueError(f"Invalid save file: {e}")
+        self.pokemon_list = new_list
+        self.evolution_count = new_evolution_count
         self.pokedex.reset()
-        for entry in data["pokedex"]:
+        for entry in new_pokedex_entries:
             self.pokedex.add_raw_entry(entry)
         self.pokedex.save()
 
