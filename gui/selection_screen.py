@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class SelectionScreen(BaseScreen):
@@ -13,6 +13,10 @@ class SelectionScreen(BaseScreen):
     Displays available Pokemon in a scrollable grid with sprites and stats.
     """
 
+    COLS = 4
+    CARD_START_X = 40
+    CARD_START_Y = 80
+
     def __init__(self, game):
         """Initialize the selection screen.
 
@@ -20,10 +24,10 @@ class SelectionScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = get_font(32, bold=True)
-        self.font_name = get_font(18, bold=True)
-        self.font_stat = get_font(14)
-        self.font_button = get_font(20)
+        self.font_title = self.constants.get_font(32, bold=True)
+        self.font_name = self.constants.get_font(18, bold=True)
+        self.font_stat = self.constants.get_font(14)
+        self.font_button = self.constants.get_font(20)
         self.selected_index = None
         self.scroll_offset = 0
         self.sprites = {}
@@ -55,9 +59,9 @@ class SelectionScreen(BaseScreen):
 
                 # Card click (only unlocked Pokemon can be selected)
                 pokemon_list = self.game.get_all_pokemon()
-                cols = 4
-                start_x = 40
-                start_y = 80 - self.scroll_offset
+                cols = self.COLS
+                start_x = self.CARD_START_X
+                start_y = self.CARD_START_Y - self.scroll_offset
                 for i, _pokemon in enumerate(pokemon_list):
                     col = i % cols
                     row = i // cols
@@ -72,15 +76,12 @@ class SelectionScreen(BaseScreen):
             if event.type == pygame.MOUSEWHEEL:
                 self.scroll_offset -= event.y * 30
                 pokemon_list = self.game.get_all_pokemon()
-                cols = 4
+                cols = self.COLS
                 rows = (len(pokemon_list) + cols - 1) // cols
                 total_h = rows * (Constants.CARD_HEIGHT + Constants.CARD_PADDING)
                 max_scroll = max(0, total_h - Constants.SCREEN_HEIGHT + 120)
                 self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
         return None
-
-    def update(self):
-        """Reload sprites if the list changed."""
 
     def draw(self, surface):
         """Draw the Pokemon selection grid."""
@@ -100,9 +101,9 @@ class SelectionScreen(BaseScreen):
 
         # Pokemon cards (includes locked, shown greyed out)
         pokemon_list = self.game.get_all_pokemon()
-        cols = 4
-        start_x = 40
-        start_y = 80 - self.scroll_offset
+        cols = self.COLS
+        start_x = self.CARD_START_X
+        start_y = self.CARD_START_Y - self.scroll_offset
 
         for i, pokemon in enumerate(pokemon_list):
             col = i % cols
@@ -121,7 +122,7 @@ class SelectionScreen(BaseScreen):
                 bg_color = (200, 200, 200)
                 border_color = (160, 160, 160)
             elif is_selected:
-                bg_color = Constants.LIGHT_GRAY
+                bg_color = Constants.SELECTED_BG
                 border_color = Constants.BLUE
             else:
                 bg_color = Constants.LIGHT_GRAY
@@ -159,13 +160,13 @@ class SelectionScreen(BaseScreen):
 
             # Type badge(s)
             badge_y = y + 114
-            total_width = sum(
-                self.font_stat.size(t)[0] + 20 for t in pokemon.types
-            )
+            total_width = 0
+            for t in pokemon.types:
+                total_width += self.font_stat.size(t)[0] + 20
             badge_x = x + Constants.CARD_WIDTH // 2 - total_width // 2
             self.draw_type_badges(
                 surface, self.font_stat, pokemon.types,
-                badge_x, badge_y, padding=20, pad_inner=16, radius=4,
+                badge_x, badge_y, padding=4, pad_inner=16, radius=4,
             )
 
             # Stats line (clipped to card width)

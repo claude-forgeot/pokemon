@@ -4,21 +4,7 @@ import random
 
 
 class Combat:
-    """Manages a battle between two Pokemon.
-
-    POO: This class demonstrates COMPOSITION -- it contains Pokemon objects
-    and a TypeChart object as attributes, rather than inheriting from them.
-    Composition means "has-a" (a Combat HAS two Pokemon), while inheritance
-    means "is-a" (a CombatScreen IS-A BaseScreen).
-
-    The 5 methods required by the assignment are:
-        1. get_type_multiplier(attacker, defender)
-        2. calculate_damage(attacker, defender)
-        3. attack(attacker, defender)
-        4. get_winner()
-        5. get_loser()
-    Plus: register_to_pokedex(pokemon, pokedex)
-    """
+    """Manages a battle between two Pokemon."""
 
     BASE_XP_REWARD = 20  # XP given to the winner
 
@@ -33,11 +19,11 @@ class Combat:
         self.player_pokemon = player_pokemon
         self.opponent_pokemon = opponent_pokemon
         self.type_chart = type_chart
-    def get_type_multiplier(self, attacker, defender, move):
+
+    def get_type_multiplier(self, defender, move):
         """Get the type effectiveness multiplier for an attack.
 
         Args:
-            attacker: The attacking Pokemon.
             defender: The defending Pokemon.
             move: Move instance.
 
@@ -46,7 +32,7 @@ class Combat:
         """
         return self.type_chart.get_combined_multiplier(move.move_type, defender.types)
 
-    def calculate_damage(self, attacker, defender, move, multiplier=None):
+    def calculate_damage(self, attacker, defender, move, multiplier):
         """Calculate damage dealt by attacker to defender.
 
         Uses a Pokemon-like formula:
@@ -57,13 +43,11 @@ class Combat:
             attacker: The attacking Pokemon.
             defender: The defending Pokemon.
             move: Move instance.
-            multiplier: Pre-computed type multiplier (avoids redundant lookup).
+            multiplier: Type effectiveness multiplier.
 
         Returns:
             int: Damage amount (>= 0).
         """
-        if multiplier is None:
-            multiplier = self.get_type_multiplier(attacker, defender, move)
         if multiplier == 0.0:
             return 0
 
@@ -112,7 +96,7 @@ class Combat:
             }
             return result
 
-        multiplier = self.get_type_multiplier(attacker, defender, move)
+        multiplier = self.get_type_multiplier(defender, move)
         damage = self.calculate_damage(attacker, defender, move, multiplier=multiplier)
         defender.take_damage(damage)
 
@@ -173,35 +157,23 @@ class Combat:
             return self.player_pokemon.name
         return None
 
-    def award_xp_to_winner(self):
-        """Give XP to the winning Pokemon after battle ends.
+    def award_xp(self, winner, opponent_team):
+        """Award XP to the winner based on all KO'd opponents.
 
-        NOTE: This method is part of the 5 required methods for the assignment.
-        CombatScreen._finish_battle() uses cumulative XP calculation instead,
-        but this method is kept for API completeness.
+        Args:
+            winner: The winning Pokemon.
+            opponent_team: List of opponent Pokemon.
 
         Returns:
-            str: Message describing XP gained and level up if any.
+            int: Total XP awarded.
         """
-        winner_name = self.get_winner()
-        if winner_name is None:
-            return "No winner yet!"
-
-        if not self.opponent_pokemon.is_alive():
-            winner_pokemon = self.player_pokemon
-            loser_pokemon = self.opponent_pokemon
-        else:
-            winner_pokemon = self.opponent_pokemon
-            loser_pokemon = self.player_pokemon
-
-        xp_reward = self.BASE_XP_REWARD + loser_pokemon.level * 2
-        old_level = winner_pokemon.level
-        winner_pokemon.gain_xp(xp_reward)
-
-        message = f"{winner_pokemon.name} gained {xp_reward} XP!"
-        if winner_pokemon.level > old_level:
-            message += f" {winner_pokemon.name} reached level {winner_pokemon.level}!"
-        return message
+        total_xp = 0
+        for opp in opponent_team:
+            if not opp.is_alive():
+                total_xp += self.BASE_XP_REWARD + opp.level * 2
+        if total_xp > 0:
+            winner.gain_xp(total_xp)
+        return total_xp
 
     def register_to_pokedex(self, pokemon, pokedex):
         """Register a Pokemon in the Pokedex after an encounter.

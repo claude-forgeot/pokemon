@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class MenuScreen(BaseScreen):
@@ -13,29 +13,63 @@ class MenuScreen(BaseScreen):
     def __init__(self, game):
         """Initialize the menu screen."""
         super().__init__(game)
-        self.font_title = get_font(48, bold=True)
-        self.font_button = get_font(24)
-        self.font_small = get_font(16)
+        self.font_title = self.constants.get_font(48, bold=True)
+        self.font_button = self.constants.get_font(24)
+        self.font_small = self.constants.get_font(16)
 
-        center_x = Constants.SCREEN_WIDTH // 2 - Constants.BUTTON_WIDTH // 2
-        self.buttons = {
-            "new_game": pygame.Rect(
-                center_x, 200, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "load_save": pygame.Rect(
-                center_x, 270, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "team_battle": pygame.Rect(
-                center_x, 340, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "pokedex": pygame.Rect(
-                center_x, 410, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-            "add_pokemon": pygame.Rect(
-                center_x, 480, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
-            ),
-        }
+        self.save_message = ""
+        self.save_message_timer = 0
+
+        self._build_buttons()
         self.hover_button = None
+
+    def _build_buttons(self):
+        """Build the button dict with dynamic Y positions based on visibility."""
+        center_x = Constants.SCREEN_WIDTH // 2 - Constants.BUTTON_WIDTH // 2
+        spacing = 60
+        y = 200
+
+        self.buttons = {}
+        self.labels = {}
+
+        # Continuer -- only if a save exists
+        if self.game.has_save():
+            self.buttons["continue_game"] = pygame.Rect(
+                center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+            )
+            self.labels["continue_game"] = "Continue"
+            y += spacing
+
+        self.buttons["new_game"] = pygame.Rect(
+            center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+        )
+        self.labels["new_game"] = "New Game"
+        y += spacing
+
+        self.buttons["save_game"] = pygame.Rect(
+            center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+        )
+        self.labels["save_game"] = "Save Game"
+        y += spacing
+
+        # Team Battle -- only if >= 3 available
+        if len(self.game.get_available_pokemon()) >= 3:
+            self.buttons["team_battle"] = pygame.Rect(
+                center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+            )
+            self.labels["team_battle"] = "Team Battle"
+            y += spacing
+
+        self.buttons["pokedex"] = pygame.Rect(
+            center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+        )
+        self.labels["pokedex"] = "Pokedex"
+        y += spacing
+
+        self.buttons["add_pokemon"] = pygame.Rect(
+            center_x, y, Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT
+        )
+        self.labels["add_pokemon"] = "Add Pokemon"
 
     def handle_events(self, events):
         """Handle mouse clicks on menu buttons."""
@@ -47,14 +81,18 @@ class MenuScreen(BaseScreen):
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if "continue_game" in self.buttons and self.buttons["continue_game"].collidepoint(event.pos):
+                    return GameState.SELECTION
                 if self.buttons["new_game"].collidepoint(event.pos):
                     self.game.new_game()
                     return GameState.SELECTION
-                if self.buttons["load_save"].collidepoint(event.pos):
-                    return GameState.SAVE_SELECT
-                if self.buttons["team_battle"].collidepoint(event.pos):
-                    if len(self.game.get_available_pokemon()) < 3:
-                        return None
+                if self.buttons["save_game"].collidepoint(event.pos):
+                    self.game.save_game()
+                    self.save_message = "Game saved!"
+                    self.save_message_timer = 120  # ~2s at 60 FPS
+                    self._build_buttons()  # Rebuild to show "Continuer" if first save
+                    return None
+                if "team_battle" in self.buttons and self.buttons["team_battle"].collidepoint(event.pos):
                     return GameState.TEAM_SELECT
                 if self.buttons["pokedex"].collidepoint(event.pos):
                     return GameState.POKEDEX
@@ -63,7 +101,11 @@ class MenuScreen(BaseScreen):
         return None
 
     def update(self):
-        """No update logic needed."""
+        """Update save message timer."""
+        if self.save_message_timer > 0:
+            self.save_message_timer -= 1
+            if self.save_message_timer == 0:
+                self.save_message = ""
 
     def draw(self, surface):
         """Draw the menu."""
@@ -79,21 +121,18 @@ class MenuScreen(BaseScreen):
         sub_rect = subtitle.get_rect(center=(Constants.SCREEN_WIDTH // 2, 140))
         surface.blit(subtitle, sub_rect)
 
-        labels = {
-            "new_game": "New Game",
-            "load_save": "Load Save",
-            "team_battle": "Team Battle",
-            "pokedex": "Pokedex",
-            "add_pokemon": "Add Pokemon",
-        }
         for key, rect in self.buttons.items():
-            if key == "team_battle" and len(self.game.get_available_pokemon()) < 3:
-                continue
             color = Constants.BLUE if self.hover_button == key else Constants.DARK_GRAY
             pygame.draw.rect(surface, color, rect, border_radius=Constants.BUTTON_RADIUS)
-            label = self.font_button.render(labels[key], True, Constants.WHITE)
+            label = self.font_button.render(self.labels[key], True, Constants.WHITE)
             label_rect = label.get_rect(center=rect.center)
             surface.blit(label, label_rect)
+
+        # Save confirmation message
+        if self.save_message:
+            msg = self.font_button.render(self.save_message, True, Constants.GREEN)
+            msg_rect = msg.get_rect(center=(Constants.SCREEN_WIDTH // 2, 170))
+            surface.blit(msg, msg_rect)
 
         count = len(self.game.get_available_pokemon())
         if count < 2:
@@ -110,4 +149,3 @@ class MenuScreen(BaseScreen):
         pdex = self.font_small.render(pdex_msg, True, Constants.DARK_GRAY)
         pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 585))
         surface.blit(pdex, pdex_rect)
-

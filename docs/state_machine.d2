@@ -1,0 +1,65 @@
+direction: right
+
+# ============================================================
+# Machine a etats -- Pokemon Project
+# ============================================================
+
+start: {
+  shape: circle
+  style.fill: "#333"
+  width: 30
+  height: 30
+}
+
+MENU: {
+  style.fill: "#d4edda"
+  style.font-size: 16
+  style.bold: true
+}
+
+SELECTION: {
+  style.fill: "#e8f4f8"
+}
+
+TEAM_SELECT: {
+  label: "TEAM_SELECT"
+  style.fill: "#e8f4f8"
+}
+
+COMBAT: {
+  style.fill: "#f8d7da"
+  style.font-size: 16
+  style.bold: true
+}
+
+RESULT: {
+  style.fill: "#fff3cd"
+}
+
+POKEDEX: {
+  style.fill: "#f0e8f8"
+}
+
+ADD_POKEMON: {
+  label: "ADD_POKEMON"
+  style.fill: "#f0e8f8"
+}
+
+# -- Transitions --
+
+start -> MENU
+
+MENU -> SELECTION: "1v1 Battle"
+MENU -> TEAM_SELECT: "Team Battle (>= 3 Pokemon)"
+MENU -> POKEDEX: "Pokedex"
+MENU -> ADD_POKEMON: "Add Pokemon"
+
+SELECTION -> COMBAT: "picks 1 Pokemon"
+TEAM_SELECT -> COMBAT: "picks 3-6 Pokemon"
+
+COMBAT -> RESULT: "Continue (sync XP + Pokedex)"
+
+RESULT -> MENU: "Return (auto-save)"
+
+POKEDEX -> MENU: "Back"
+ADD_POKEMON -> MENU: "Submit / Cancel"

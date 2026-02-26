@@ -1,0 +1,57 @@
+direction: down
+
+# ============================================================
+# Architecture packages -- Pokemon Project
+# ============================================================
+
+main: {
+  label: "main.py"
+  shape: rectangle
+  style.fill: "#d4edda"
+  style.font-size: 18
+  style.bold: true
+}
+
+models: {
+  label: "models/"
+  style.fill: "#e8f4f8"
+
+  Pokemon
+  Move
+  Combat
+  TypeChart
+  Pokedex
+  Game
+  GameState
+}
+
+gui: {
+  label: "gui/"
+  style.fill: "#f0e8f8"
+
+  BaseScreen
+  MenuScreen
+  SelectionScreen
+  TeamSelectScreen
+  CombatScreen
+  ResultScreen
+  PokedexScreen
+  AddPokemonScreen
+}
+
+utils: {
+  label: "utils/"
+  style.fill: "#f8f0e0"
+
+  FileHandler
+  Constants
+  AnimationManager
+}
+
+# -- Relations --
+
+main -> models: "cree Game, gere transitions"
+main -> gui: "instancie screens"
+gui -> models: "utilise classes metier"
+models -> utils: "FileHandler pour JSON"
+gui -> utils: "Constants, AnimationManager"

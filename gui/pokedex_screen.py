@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class PokedexScreen(BaseScreen):
@@ -17,10 +17,9 @@ class PokedexScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = get_font(32, bold=True)
-        self.font_name = get_font(20, bold=True)
-        self.font_stat = get_font(15)
-        self.font_button = get_font(18)
+        self.font_title = self.constants.get_font(32, bold=True)
+        self.font_name = self.constants.get_font(20, bold=True)
+        self.font_stat = self.constants.get_font(15)
         self.scroll_offset = 0
 
         self.back_button = pygame.Rect(20, 20, 100, 36)
@@ -42,9 +41,6 @@ class PokedexScreen(BaseScreen):
                 max_scroll = max(0, len(entries) * row_height - (Constants.SCREEN_HEIGHT - 140))
                 self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
         return None
-
-    def update(self):
-        """No update logic needed."""
 
     def draw(self, surface):
         """Draw the Pokedex list with entries."""
@@ -101,7 +97,7 @@ class PokedexScreen(BaseScreen):
             # Types
             self.draw_type_badges(
                 surface, self.font_stat, entry.get("types", []),
-                90, y + 36, padding=14, pad_inner=10, radius=3,
+                90, y + 36, padding=4, pad_inner=10, radius=3,
             )
 
             # Stats

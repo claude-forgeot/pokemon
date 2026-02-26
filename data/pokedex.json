@@ -1,0 +1,126 @@
+[
+  {
+    "name": "Ivysaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "hp": 60,
+    "attack": 62,
+    "defense": 63
+  },
+  {
+    "name": "Staryu",
+    "types": [
+      "water"
+    ],
+    "hp": 30,
+    "attack": 45,
+    "defense": 55
+  },
+  {
+    "name": "Bulbasaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "hp": 45,
+    "attack": 49,
+    "defense": 49
+  },
+  {
+    "name": "Charmander",
+    "types": [
+      "fire"
+    ],
+    "hp": 39,
+    "attack": 52,
+    "defense": 43
+  },
+  {
+    "name": "Caterpie",
+    "types": [
+      "bug"
+    ],
+    "hp": 45,
+    "attack": 30,
+    "defense": 35
+  },
+  {
+    "name": "Squirtle",
+    "types": [
+      "water"
+    ],
+    "hp": 44,
+    "attack": 48,
+    "defense": 65
+  },
+  {
+    "name": "Weedle",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "hp": 40,
+    "attack": 35,
+    "defense": 30
+  },
+  {
+    "name": "Ekans",
+    "types": [
+      "poison"
+    ],
+    "hp": 35,
+    "attack": 60,
+    "defense": 44
+  },
+  {
+    "name": "Farfetchd",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "hp": 52,
+    "attack": 90,
+    "defense": 55
+  },
+  {
+    "name": "Tentacool",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "hp": 40,
+    "attack": 40,
+    "defense": 35
+  },
+  {
+    "name": "Starmie",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "hp": 60,
+    "attack": 75,
+    "defense": 85
+  },
+  {
+    "name": "Pikachu",
+    "types": [
+      "electric"
+    ],
+    "hp": 35,
+    "attack": 55,
+    "defense": 40
+  },
+  {
+    "name": "Gastly",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "hp": 30,
+    "attack": 35,
+    "defense": 30
+  }
+]

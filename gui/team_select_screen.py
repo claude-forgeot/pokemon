@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class TeamSelectScreen(BaseScreen):
@@ -13,6 +13,12 @@ class TeamSelectScreen(BaseScreen):
 
     MIN_TEAM = 3
     MAX_TEAM = 6
+    COLS = 5
+    CARD_START_X = 30
+    CARD_START_Y = 75
+    CARD_W = 140
+    CARD_H = 130
+    CARD_PAD = 10
 
     def __init__(self, game):
         """Initialize the team select screen.
@@ -21,11 +27,11 @@ class TeamSelectScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = get_font(32, bold=True)
-        self.font_name = get_font(16, bold=True)
-        self.font_stat = get_font(13)
-        self.font_button = get_font(20)
-        self.font_info = get_font(16)
+        self.font_title = self.constants.get_font(32, bold=True)
+        self.font_name = self.constants.get_font(16, bold=True)
+        self.font_stat = self.constants.get_font(13)
+        self.font_button = self.constants.get_font(20)
+        self.font_info = self.constants.get_font(16)
 
         self.selected_indices = []
         self.scroll_offset = 0
@@ -59,12 +65,12 @@ class TeamSelectScreen(BaseScreen):
 
                 # Card click
                 pokemon_list = self.game.get_all_pokemon()
-                cols = 5
-                start_x = 30
-                start_y = 75 - self.scroll_offset
-                card_w = 140
-                card_h = 130
-                padding = 10
+                cols = self.COLS
+                start_x = self.CARD_START_X
+                start_y = self.CARD_START_Y - self.scroll_offset
+                card_w = self.CARD_W
+                card_h = self.CARD_H
+                padding = self.CARD_PAD
                 for i, _pokemon in enumerate(pokemon_list):
                     col = i % cols
                     row = i // cols
@@ -80,17 +86,14 @@ class TeamSelectScreen(BaseScreen):
             if event.type == pygame.MOUSEWHEEL:
                 self.scroll_offset -= event.y * 30
                 pokemon_list = self.game.get_all_pokemon()
-                cols = 5
-                card_h = 130
-                padding = 10
+                cols = self.COLS
+                card_h = self.CARD_H
+                padding = self.CARD_PAD
                 rows = (len(pokemon_list) + cols - 1) // cols
                 total_h = rows * (card_h + padding)
                 max_scroll = max(0, total_h - Constants.SCREEN_HEIGHT + 120)
                 self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
         return None
-
-    def update(self):
-        """No update logic needed."""
 
     def draw(self, surface):
         """Draw the team selection grid."""
@@ -110,12 +113,12 @@ class TeamSelectScreen(BaseScreen):
 
         # Pokemon cards (includes locked, shown greyed out)
         pokemon_list = self.game.get_all_pokemon()
-        cols = 5
-        start_x = 30
-        start_y = 75 - self.scroll_offset
-        card_w = 140
-        card_h = 130
-        padding = 10
+        cols = self.COLS
+        start_x = self.CARD_START_X
+        start_y = self.CARD_START_Y - self.scroll_offset
+        card_w = self.CARD_W
+        card_h = self.CARD_H
+        padding = self.CARD_PAD
 
         surface.set_clip(pygame.Rect(0, 60, 800, 440))
         for i, pokemon in enumerate(pokemon_list):
@@ -181,11 +184,13 @@ class TeamSelectScreen(BaseScreen):
 
             # Type badges
             badge_y = y + 96
-            total_w = sum(self.font_stat.size(t)[0] + 14 for t in pokemon.types)
+            total_w = 0
+            for t in pokemon.types:
+                total_w += self.font_stat.size(t)[0] + 14
             badge_x = x + card_w // 2 - total_w // 2
             self.draw_type_badges(
                 surface, self.font_stat, pokemon.types,
-                badge_x, badge_y, padding=14, pad_inner=12, radius=3,
+                badge_x, badge_y, padding=4, pad_inner=12, radius=3,
             )
 
             # Stats

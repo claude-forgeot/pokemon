@@ -9,11 +9,16 @@ from models.animation_manager import AnimationManager
 from models.combat import Combat
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class CombatScreen(BaseScreen):
     """Battle screen with team support, switch, and forfeit options."""
+
+    PHASE_PLAYER_TURN = "player_turn"
+    PHASE_OPPONENT_TURN = "opponent_turn"
+    PHASE_FORCED_SWITCH = "forced_switch"
+    PHASE_FINISHED = "finished"
 
     def __init__(self, game, player_team, opponent_team, player_original_indices=None):
         """Initialize combat with two teams of Pokemon.
@@ -34,13 +39,13 @@ class CombatScreen(BaseScreen):
         self.opponent = self.opponent_team[0]
         self.combat = Combat(self.player, self.opponent, game.type_chart)
 
-        self.font_name = get_font(22, bold=True)
-        self.font_stat = get_font(16)
-        self.font_log = get_font(15)
-        self.font_button = get_font(20, bold=True)
+        self.font_name = self.constants.get_font(22, bold=True)
+        self.font_stat = self.constants.get_font(16)
+        self.font_log = self.constants.get_font(15)
+        self.font_button = self.constants.get_font(20, bold=True)
 
         self.log_messages = []
-        self.phase = "player_turn"
+        self.phase = self.PHASE_PLAYER_TURN
         self.winner = None
         self.xp_message = ""
         self.player_original_indices = player_original_indices or []
@@ -56,7 +61,7 @@ class CombatScreen(BaseScreen):
         self.opponent_attack_timer = 0
         self.waiting_for_opponent = False
 
-        self.font_move = get_font(14, bold=True)
+        self.font_move = self.constants.get_font(14, bold=True)
 
         # Buttons
         btn_y = 540
@@ -128,7 +133,10 @@ class CombatScreen(BaseScreen):
 
     def _all_fainted(self, team):
         """Check if all Pokemon in a team are KO."""
-        return all(not p.is_alive() for p in team)
+        for p in team:
+            if p.is_alive():
+                return False
+        return True
 
     def handle_events(self, events):
         """Handle button clicks for attack, switch, forfeit."""
@@ -140,7 +148,7 @@ class CombatScreen(BaseScreen):
                     return None
 
                 # Finished state - click continue
-                if self.phase == "finished":
+                if self.phase == self.PHASE_FINISHED:
                     for p in self.player_team:
                         self.combat.register_to_pokedex(p, self.game.pokedex)
                     for p in self.opponent_team:
@@ -162,7 +170,7 @@ class CombatScreen(BaseScreen):
                 if self.show_switch:
                     for i, btn in self.switch_buttons:
                         if btn.collidepoint(event.pos):
-                            if self.phase == "forced_switch":
+                            if self.phase == self.PHASE_FORCED_SWITCH:
                                 # Forced switch: just switch, no opponent counter
                                 self.player_index = i
                                 self.player = self.player_team[i]
@@ -173,24 +181,26 @@ class CombatScreen(BaseScreen):
                                     self.player.sprite_path
                                 )
                                 self._add_log(f"Go, {self.player.name}!")
-                                self.phase = "player_turn"
+                                self.phase = self.PHASE_PLAYER_TURN
                             else:
                                 self._do_switch(i)
                             self.show_switch = False
                             return None
                     # Forced switch: cannot close without choosing
-                    if self.phase != "forced_switch":
+                    if self.phase != self.PHASE_FORCED_SWITCH:
                         self.show_switch = False
                     return None
 
                 # Player turn actions
-                if self.phase == "player_turn":
+                if self.phase == self.PHASE_PLAYER_TURN:
                     if self.attack_button.collidepoint(event.pos):
                         self.show_moves = True
                         self._build_move_buttons()
                     elif self.switch_button.collidepoint(event.pos):
-                        alive = [(i, p) for i, p in enumerate(self.player_team)
-                                 if p.is_alive() and i != self.player_index]
+                        alive = []
+                        for i, p in enumerate(self.player_team):
+                            if p.is_alive() and i != self.player_index:
+                                alive.append((i, p))
                         if alive:
                             self.show_switch = True
                             self._build_switch_buttons(alive)
@@ -250,7 +260,7 @@ class CombatScreen(BaseScreen):
         self.player_anim.current_hp_ratio = self.player.hp / self.player.max_hp if self.player.max_hp > 0 else 1.0
 
         # Schedule opponent attack after delay
-        self.phase = "opponent_turn"
+        self.phase = self.PHASE_OPPONENT_TURN
         self.waiting_for_opponent = True
         self.opponent_attack_timer = pygame.time.get_ticks()
 
@@ -279,11 +289,11 @@ class CombatScreen(BaseScreen):
             else:
                 self._next_alive_opponent()
                 self._add_log("Your turn!")
-                self.phase = "player_turn"
+                self.phase = self.PHASE_PLAYER_TURN
                 return
 
         # Schedule opponent attack after delay
-        self.phase = "opponent_turn"
+        self.phase = self.PHASE_OPPONENT_TURN
         self.waiting_for_opponent = True
         self.opponent_attack_timer = pygame.time.get_ticks()
 
@@ -309,13 +319,13 @@ class CombatScreen(BaseScreen):
             self._handle_player_faint()
             return
 
-        self.phase = "player_turn"
+        self.phase = self.PHASE_PLAYER_TURN
 
     def _finish_battle(self):
         """Mark battle as finished, award cumulative XP for all KOs."""
-        self.phase = "finished"
+        self.phase = self.PHASE_FINISHED
 
-        # B5: forfeit -- both alive, winner already set by forfeit handler
+        # Forfeit: both alive, no XP awarded
         if self.player.is_alive() and self.opponent.is_alive():
             self.xp_message = "You forfeited - no XP gained."
             return
@@ -325,23 +335,19 @@ class CombatScreen(BaseScreen):
             self.xp_message = ""
             return
 
-        # B6: cumulative XP for all KO'd opponents
-        total_xp = 0
-        for opp in self.opponent_team:
-            if not opp.is_alive():
-                total_xp += Combat.BASE_XP_REWARD + opp.level * 2
+        # Award cumulative XP for all KO'd opponents
+        old_name = self.player.name
+        old_level = self.player.level
+        total_xp = self.combat.award_xp(self.player, self.opponent_team)
 
         if total_xp > 0:
-            old_name = self.player.name
-            old_level = self.player.level
-            self.player.gain_xp(total_xp)
 
             self.xp_message = f"{self.player.name} gained {total_xp} XP!"
             if self.player.level > old_level:
                 self.xp_message += f" Reached level {self.player.level}!"
             self._add_log(self.xp_message)
 
-            # Track evolution (B3)
+            # Track evolution and unlock evolved form
             if self.player.name != old_name:
                 unlock_msg = self.game.record_evolution()
                 self.game.unlock_pokemon(self.player.name)
@@ -358,10 +364,12 @@ class CombatScreen(BaseScreen):
             self._add_log("You lost the battle!")
         else:
             # Open switch menu (forced -- player must choose)
-            alive = [(i, p) for i, p in enumerate(self.player_team)
-                     if p.is_alive() and i != self.player_index]
+            alive = []
+            for i, p in enumerate(self.player_team):
+                if p.is_alive() and i != self.player_index:
+                    alive.append((i, p))
             self._add_log("Choose your next Pokemon!")
-            self.phase = "forced_switch"
+            self.phase = self.PHASE_FORCED_SWITCH
             self.show_switch = True
             self._build_switch_buttons(alive)
 
@@ -425,7 +433,7 @@ class CombatScreen(BaseScreen):
             surface.blit(msg_surf, (32, log_y + 8 + i * 20))
 
         # Buttons
-        if self.phase == "finished":
+        if self.phase == self.PHASE_FINISHED:
             pygame.draw.rect(
                 surface, Constants.BLUE, self.continue_button,
                 border_radius=Constants.BUTTON_RADIUS,
@@ -433,14 +441,17 @@ class CombatScreen(BaseScreen):
             btn_label = self.font_button.render("Continue", True, Constants.WHITE)
             surface.blit(btn_label, btn_label.get_rect(center=self.continue_button.center))
         else:
-            color = Constants.RED if self.phase == "player_turn" else Constants.GRAY
+            color = Constants.RED if self.phase == self.PHASE_PLAYER_TURN else Constants.GRAY
             pygame.draw.rect(surface, color, self.attack_button,
                              border_radius=Constants.BUTTON_RADIUS)
             atk_label = self.font_button.render("Attack!", True, Constants.WHITE)
             surface.blit(atk_label, atk_label.get_rect(center=self.attack_button.center))
 
-            has_alive = any(p.is_alive() and i != self.player_index
-                           for i, p in enumerate(self.player_team))
+            has_alive = False
+            for i, p in enumerate(self.player_team):
+                if p.is_alive() and i != self.player_index:
+                    has_alive = True
+                    break
             sw_color = Constants.BLUE if has_alive else Constants.GRAY
             pygame.draw.rect(surface, sw_color, self.switch_button,
                              border_radius=Constants.BUTTON_RADIUS)
@@ -568,7 +579,7 @@ class CombatScreen(BaseScreen):
         type_y = bar_y + 22
         self.draw_type_badges(
             surface, self.font_stat, pokemon.types,
-            ix, type_y, padding=16, pad_inner=12, radius=4,
+            ix, type_y, padding=4, pad_inner=12, radius=4,
         )
 
         # Stats

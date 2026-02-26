@@ -41,6 +41,7 @@ python3 main.py
 - Opponent scaling (matches player team level)
 - Save/load system with multiple slots
 - Pokedex tracking
+- Combat animations (shake, flash, HP bar interpolation)
 - Locked Pokemon system (evolve to unlock)
 
 ## Project Structure
@@ -57,6 +58,7 @@ pokemonv1/
     move.py             -- Move class (name, type, power, accuracy)
     pokedex.py          -- Pokedex class (persistence + anti-duplicate)
     type_chart.py       -- TypeChart class (18 types)
+    animation_manager.py -- AnimationManager (combat animations)
   gui/
     base_screen.py       -- BaseScreen parent class
     constants.py         -- Constants (colors, dimensions)
@@ -65,7 +67,6 @@ pokemonv1/
     team_select_screen.py -- Team selection (6 Pokemon)
     combat_screen.py     -- Combat screen (moves, switch, forced switch)
     result_screen.py     -- Battle results + XP
-    save_select_screen.py -- Save file selection
     pokedex_screen.py    -- Pokedex viewer
     add_pokemon_screen.py -- Add Pokemon
   utils/
@@ -81,7 +82,7 @@ pokemonv1/
 
 ## Class Diagram
 
-![Class Diagram](docs/class_diagram.png)
+![Class Diagram](docs/class_diagram.svg)
 
 ## Combat Mechanics
 

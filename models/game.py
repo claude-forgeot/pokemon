@@ -10,53 +10,42 @@ from utils.file_handler import FileHandler
 
 
 class Game:
-    """Top-level game state manager.
-
-    POO: This class AGGREGATES other objects (Pokedex, list of Pokemon,
-    TypeChart). Aggregation is a form of composition where the Game
-    coordinates between different parts of the program without those parts
-    needing to know about each other.
-    """
+    """Top-level game state manager."""
 
     POKEMON_SOURCE_PATH = "data/pokemon.json"
-    POKEMON_RUNTIME_PATH = "data/pokemon_state.json"
+    SAVE_PATH = "saves/save.json"
     TYPE_CHART_PATH = "data/type_chart.json"
+    POKEDEX_PATH = "data/pokedex.json"
 
     def __init__(self):
-        """Initialize the game: load type chart, pokemon list, and pokedex."""
+        """Initialize the game: load type chart, then restore save or load source."""
+        self.file_handler = FileHandler()
         self.type_chart = TypeChart()
         self.type_chart.load_from_file(self.TYPE_CHART_PATH)
         self.pokedex = Pokedex()
         self.pokemon_list = []
         self.evolution_count = 0
-        self._load_pokemon()
+        if self.file_handler.file_exists(self.SAVE_PATH):
+            self.load_game()
+        else:
+            self._load_from_source()
 
-    def _load_pokemon(self):
-        """Load available Pokemon from runtime state, falling back to source."""
-        if FileHandler.file_exists(self.POKEMON_RUNTIME_PATH):
-            data = FileHandler.load_json(self.POKEMON_RUNTIME_PATH)
-        elif FileHandler.file_exists(self.POKEMON_SOURCE_PATH):
-            data = FileHandler.load_json(self.POKEMON_SOURCE_PATH)
+    def _load_from_source(self):
+        """Load Pokemon from the immutable source file (data/pokemon.json)."""
+        if self.file_handler.file_exists(self.POKEMON_SOURCE_PATH):
+            data = self.file_handler.load_json(self.POKEMON_SOURCE_PATH)
+            self.pokemon_list = []
+            for p in data:
+                self.pokemon_list.append(Pokemon(data=p))
         else:
             self.pokemon_list = []
-            return
-        # Handle both formats: list (legacy) and dict (new)
-        if isinstance(data, list):
-            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
-        else:
-            self.pokemon_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
-            self.evolution_count = data.get("evolution_count", 0)
 
     def new_game(self):
         """Reset the game state for a fresh start."""
         self.pokedex.reset()
         self.evolution_count = 0
-        if FileHandler.file_exists(self.POKEMON_SOURCE_PATH):
-            data = FileHandler.load_json(self.POKEMON_SOURCE_PATH)
-            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
-        else:
-            self.pokemon_list = []
-        self._save_pokemon()
+        self._load_from_source()
+        self.save_game()
 
     def get_random_opponent(self):
         """Pick a random Pokemon from the full list as an opponent.
@@ -71,11 +60,11 @@ class Game:
         if not available:
             return None
         source = random.choice(available)
-        opponent = Pokemon.from_dict(source.to_dict())
+        opponent = Pokemon(data=source.to_dict())
         return opponent
 
     def add_pokemon(self, pokemon_data):
-        """Add a new Pokemon to the available list and persist it.
+        """Add a new Pokemon to the available list.
 
         Args:
             pokemon_data: Dictionary with Pokemon attributes.
@@ -87,9 +76,8 @@ class Game:
         for p in self.pokemon_list:
             if p.name.lower() == name:
                 return False
-        new_pokemon = Pokemon.from_dict(pokemon_data)
+        new_pokemon = Pokemon(data=pokemon_data)
         self.pokemon_list.append(new_pokemon)
-        self._save_pokemon()
         return True
 
     def get_available_pokemon(self):
@@ -98,7 +86,11 @@ class Game:
         Returns:
             list[Pokemon]: Pokemon that are not locked.
         """
-        return [p for p in self.pokemon_list if not p.locked]
+        available = []
+        for p in self.pokemon_list:
+            if not p.locked:
+                available.append(p)
+        return available
 
     def get_all_pokemon(self):
         """Return the full list including locked Pokemon (for display).
@@ -117,14 +109,13 @@ class Game:
         for p in self.pokemon_list:
             if p.name.lower() == name.lower() and p.locked:
                 p.locked = False
-                self._save_pokemon()
                 return
 
     def sync_from_combat(self, player_team, original_indices):
         """Synchronize combat copies back to the original roster.
 
         After combat, the copies may have gained XP, levels, evolved, etc.
-        This method copies those changes back to the originals and persists.
+        This method copies those changes back to the originals.
 
         Args:
             player_team: List of Pokemon copies used during combat.
@@ -146,7 +137,6 @@ class Game:
             original.evolution_level = copy.evolution_level
             original.evolution_target = copy.evolution_target
             original.moves = copy.moves
-        self._save_pokemon()
 
     def record_evolution(self):
         """Record that an evolution happened. Checks legendary unlocks.
@@ -192,51 +182,44 @@ class Game:
                     messages.append("Mew has been unlocked!")
 
         if messages:
-            self._save_pokemon()
             return " ".join(messages)
         return None
 
-    def _save_pokemon(self):
-        """Persist the current Pokemon list and evolution count to runtime state."""
-        data = {
-            "pokemon_list": [p.to_dict() for p in self.pokemon_list],
-            "evolution_count": self.evolution_count,
-        }
-        FileHandler.save_json(self.POKEMON_RUNTIME_PATH, data)
+    def has_save(self):
+        """Check if a save file exists.
+
+        Returns:
+            bool: True if saves/save.json exists.
+        """
+        return self.file_handler.file_exists(self.SAVE_PATH)
 
     def save_game(self):
-        """Save current game state to a JSON file in saves/ folder.
-
-        POO: SERIALIZATION -- converting objects in memory to a format
-        (JSON) that can be stored on disk and loaded back later.
-        """
-        from datetime import datetime
-
-        os.makedirs("saves", exist_ok=True)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"save_{timestamp}.json"
-        filepath = os.path.join("saves", filename)
-
+        """Save current game state to saves/save.json."""
+        save_dir = os.path.dirname(self.SAVE_PATH)
+        if save_dir:
+            os.makedirs(save_dir, exist_ok=True)
+        pokemon_dicts = []
+        for p in self.pokemon_list:
+            pokemon_dicts.append(p.to_dict())
         save_data = {
-            "pokedex": self.pokedex.get_all_entries(),
-            "pokemon_list": [p.to_dict() for p in self.pokemon_list],
+            "pokemon_list": pokemon_dicts,
             "evolution_count": self.evolution_count,
+            "pokedex": self.pokedex.get_all_entries(),
         }
+        self.file_handler.save_json(self.SAVE_PATH, save_data)
+        self.save_pokedex()
 
-        FileHandler.save_json(filepath, save_data)
+    def save_pokedex(self):
+        """Write the pokedex to data/pokedex.json."""
+        self.file_handler.save_json(self.POKEDEX_PATH, self.pokedex.get_all_entries())
 
-    def load_game(self, filepath):
-        """Load game state from a save file.
-
-        POO: DESERIALIZATION -- the reverse of save: reading JSON from
-        disk and reconstructing Python objects from it.
-
-        Args:
-            filepath: Path to the save JSON file.
-        """
-        data = FileHandler.load_json(filepath)
+    def load_game(self):
+        """Load game state from saves/save.json."""
+        data = self.file_handler.load_json(self.SAVE_PATH)
         try:
-            new_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
+            new_list = []
+            for p in data["pokemon_list"]:
+                new_list.append(Pokemon(data=p))
             new_pokedex_entries = data["pokedex"]
             new_evolution_count = data.get("evolution_count", 0)
         except (KeyError, TypeError) as e:
@@ -246,37 +229,4 @@ class Game:
         self.pokedex.reset()
         for entry in new_pokedex_entries:
             self.pokedex.add_raw_entry(entry)
-        self.pokedex.save()
-        self._save_pokemon()
-
-    def get_save_files(self):
-        """Return a list of available save files, newest first.
-
-        Returns:
-            list[dict]: Each dict has 'filename', 'filepath', 'date'.
-        """
-        save_dir = "saves"
-        if not os.path.isdir(save_dir):
-            return []
-
-        saves = []
-        for f in os.listdir(save_dir):
-            if f.startswith("save_") and f.endswith(".json"):
-                filepath = os.path.join(save_dir, f)
-                date_str = f.replace("save_", "").replace(".json", "")
-                saves.append({
-                    "filename": f,
-                    "filepath": filepath,
-                    "date": date_str,
-                })
-        saves.sort(key=lambda s: s["date"], reverse=True)
-        return saves
-
-    def delete_save(self, filepath):
-        """Delete a save file.
-
-        Args:
-            filepath: Path to the save file to delete.
-        """
-        if os.path.isfile(filepath):
-            os.remove(filepath)
+        self.save_pokedex()

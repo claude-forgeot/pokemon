@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 from models.type_chart import TypeChart
 
 
@@ -21,11 +21,11 @@ class AddPokemonScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
-        self.font_title = get_font(32, bold=True)
-        self.font_label = get_font(18)
-        self.font_input = get_font(20)
-        self.font_button = get_font(20)
-        self.font_small = get_font(14)
+        self.font_title = self.constants.get_font(32, bold=True)
+        self.font_label = self.constants.get_font(18)
+        self.font_input = self.constants.get_font(20)
+        self.font_button = self.constants.get_font(20)
+        self.font_small = self.constants.get_font(14)
 
         # Input fields: {field_name: {"value": str, "rect": Rect, "active": bool}}
         field_x = 300
@@ -166,9 +166,6 @@ class AddPokemonScreen(BaseScreen):
             return None
         return GameState.MENU
 
-    def update(self):
-        """No update logic needed."""
-
     def draw(self, surface):
         """Draw the add Pokemon form."""
         surface.fill(Constants.WHITE)
@@ -204,7 +201,10 @@ class AddPokemonScreen(BaseScreen):
             color = Constants.TYPE_COLORS.get(btn["name"], Constants.GRAY)
             if not is_selected:
                 # Dim the color
-                color = tuple(min(255, c + 100) for c in color)
+                r = min(255, color[0] + 100)
+                g = min(255, color[1] + 100)
+                b = min(255, color[2] + 100)
+                color = (r, g, b)
             pygame.draw.rect(surface, color, btn["rect"], border_radius=4)
             if is_selected:
                 pygame.draw.rect(

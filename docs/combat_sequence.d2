@@ -1,0 +1,39 @@
+shape: sequence_diagram
+
+# ============================================================
+# Sequence de combat -- Pokemon Project
+# ============================================================
+
+Player
+CombatScreen
+Combat
+AnimationManager
+
+# -- Tour joueur --
+
+Player -> CombatScreen: "click Attack"
+CombatScreen -> CombatScreen: "open move menu"
+Player -> CombatScreen: "pick move"
+CombatScreen -> Combat: "attack(player, opponent, move)"
+Combat -> Combat: "get_type_multiplier()\ncalculate_damage()"
+Combat -> CombatScreen: "result {hit, damage, effective, ko}"
+CombatScreen -> AnimationManager: "start_shake + start_flash\n+ start_hp_animation"
+
+# -- Delai --
+
+CombatScreen -> CombatScreen: "1500ms delay"
+
+# -- Tour adversaire --
+
+CombatScreen -> Combat: "attack(opponent, player, random_move)"
+Combat -> CombatScreen: "result {hit, damage, effective, ko}"
+CombatScreen -> AnimationManager: "animations adversaire"
+
+# -- Fin de tour --
+
+CombatScreen -> CombatScreen: "si KO: PHASE_FORCED_SWITCH\nou PHASE_FINISHED"
+
+# -- Victoire --
+
+CombatScreen -> Combat: "si victoire:\naward_xp(winner, opponent_team)"
+Combat -> CombatScreen: "xp_gained"

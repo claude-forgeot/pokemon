@@ -197,13 +197,8 @@ PLAN.md
 test_window.py
 Ressources-projet/
 
-# Donnees generees au runtime (recreees par scripts ou gameplay)
-data/pokedex.json
-data/pokemon_state.json
 
-# Diagrammes generes (source = docs/class_diagram.d2)
-docs/class_diagram.png
-docs/class_diagram.svg
+
 
 # OS-specific
 .DS_Store
@@ -229,3 +224,4 @@ marimo/_lsp/
 __marimo__/
 CHANGELOG-INTEGRATION.md
 GUIDE-TECHNIQUE.md
+docs/notions-poo.md

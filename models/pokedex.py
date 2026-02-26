@@ -1,31 +1,15 @@
-"""Pokedex module -- records encountered Pokemon, persisted to JSON."""
-
-import json
-import os
-
-from utils.file_handler import FileHandler
+"""Pokedex module -- records encountered Pokemon (in-memory only)."""
 
 
 class Pokedex:
-    """Records encountered Pokemon, persisted to JSON.
+    """Records encountered Pokemon in memory.
 
-    POO: This class demonstrates ENCAPSULATION -- the internal list of entries
-    (self._entries) is managed through public methods (add_entry, get_all_entries),
-    not accessed directly from outside. The underscore prefix (_entries) is a
-    Python convention meaning "this attribute is private, don't touch it directly."
-    This protects data integrity: you can't accidentally add duplicates because
-    add_entry() checks for you.
+    Persistence is handled externally by Game.save_game().
     """
 
-    def __init__(self, file_path="data/pokedex.json"):
-        """Create a Pokedex, optionally loading existing data from disk.
-
-        Args:
-            file_path: Path to the JSON persistence file.
-        """
-        self.file_path = file_path
+    def __init__(self):
+        """Create an empty Pokedex."""
         self._entries = []
-        self.load()
 
     def add_entry(self, pokemon):
         """Add a Pokemon to the Pokedex if not already registered.
@@ -47,9 +31,7 @@ class Pokedex:
             "hp": pokemon.max_hp,
             "attack": pokemon.attack,
             "defense": pokemon.defense,
-            "level": pokemon.level,
         })
-        self.save()
         return True
 
     def get_all_entries(self):
@@ -63,9 +45,15 @@ class Pokedex:
     def add_raw_entry(self, entry_dict):
         """Add a raw dictionary entry to the Pokedex (used by save/load).
 
+        Skips duplicates based on name (case-insensitive).
+
         Args:
             entry_dict: A dictionary with Pokemon data (name, types, hp, etc.).
         """
+        name = entry_dict.get("name", "")
+        for entry in self._entries:
+            if entry.get("name", "").lower() == name.lower():
+                return
         self._entries.append(entry_dict)
 
     def get_count(self):
@@ -76,31 +64,6 @@ class Pokedex:
         """
         return len(self._entries)
 
-    def save(self):
-        """Persist the current entries to the JSON file."""
-        FileHandler.save_json(self.file_path, self._entries)
-
-    def load(self):
-        """Load entries from the JSON file if it exists.
-
-        If the file is corrupted, creates a backup and resets to empty.
-        If the file does not exist, starts with an empty list.
-        """
-        if not os.path.isfile(self.file_path):
-            self._entries = []
-            return
-        try:
-            data = FileHandler.load_json(self.file_path)
-            if isinstance(data, list):
-                self._entries = data
-            else:
-                self._entries = []
-        except (json.JSONDecodeError, KeyError):
-            FileHandler.create_backup(self.file_path)
-            self._entries = []
-            self.save()
-
     def reset(self):
-        """Clear all entries and save the empty state."""
+        """Clear all entries."""
         self._entries = []
-        self.save()

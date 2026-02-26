@@ -10,10 +10,6 @@ from gui.constants import Constants
 class BaseScreen:
     """Parent class for all game screens.
 
-    POO: INHERITANCE -- this class defines the interface that all screens
-    follow. Each child class (MenuScreen, CombatScreen, etc.) inherits from
-    BaseScreen and implements these three methods. The child "is-a" BaseScreen.
-
     The three methods (handle_events, update, draw) form the game loop pattern:
     each frame, the main loop calls them in order on the current screen.
     """
@@ -25,6 +21,7 @@ class BaseScreen:
             game: The Game instance holding all game state.
         """
         self.game = game
+        self.constants = Constants()
 
     def handle_events(self, events):
         """Process Pygame events (clicks, keys, etc.).
@@ -69,8 +66,7 @@ class BaseScreen:
                 except pygame.error:
                     pass
 
-    @staticmethod
-    def draw_type_badges(surface, font, types, x, y, padding=16, pad_inner=12, radius=4):
+    def draw_type_badges(self, surface, font, types, x, y, padding=4, pad_inner=12, radius=4):
         """Draw colored type badges starting at (x, y).
 
         Args:
@@ -91,4 +87,4 @@ class BaseScreen:
             pygame.draw.rect(surface, color, badge_rect, border_radius=radius)
             type_surf = font.render(ptype, True, Constants.WHITE)
             surface.blit(type_surf, (badge_x + pad_inner // 2, y + 1))
-            badge_x += tw + pad_inner + 4
+            badge_x += tw + pad_inner + padding

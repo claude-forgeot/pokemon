@@ -8,13 +8,7 @@ from utils.file_handler import FileHandler
 class TypeChart:
     """18-type effectiveness lookup table.
 
-    POO: This class holds a CLASS ATTRIBUTE (TYPES) shared by all instances,
-    and an INSTANCE ATTRIBUTE (self.chart) unique to each instance.
-    Class attributes are defined directly in the class body; instance
-    attributes are assigned in __init__ using self.
-
-    Source: official Pokemon type chart via PokeAPI.
-    Fallback: local data/type_chart.json
+    Data source: local data/type_chart.json (18x18 type matrix).
     """
 
     TYPES = [
@@ -25,9 +19,10 @@ class TypeChart:
 
     def __init__(self):
         """Initialize an empty type chart. Call load_from_file() to populate."""
+        self.file_handler = FileHandler()
         self.chart = {}
 
-    def get_multiplier(self, attack_type, defend_type):
+    def _get_multiplier(self, attack_type, defend_type):
         """Get the damage multiplier for one attack type vs one defense type.
 
         Args:
@@ -58,7 +53,7 @@ class TypeChart:
         """
         result = 1.0
         for defend_type in defend_types:
-            result *= self.get_multiplier(attack_type, defend_type)
+            result *= self._get_multiplier(attack_type, defend_type)
         return result
 
     def load_from_file(self, path="data/type_chart.json"):
@@ -68,7 +63,7 @@ class TypeChart:
             path: Path to the JSON file.
         """
         if os.path.isfile(path):
-            self.chart = FileHandler.load_json(path)
+            self.chart = self.file_handler.load_json(path)
         else:
             print(f"[WARN] Type chart file not found: {path}")
 

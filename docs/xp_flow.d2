@@ -1,0 +1,80 @@
+direction: down
+
+# ============================================================
+# Flux XP / Evolution -- Pokemon Project
+# ============================================================
+
+source: {
+  label: "game.pokemon_list[i]"
+  shape: rectangle
+  style.fill: "#d4edda"
+}
+
+copy: {
+  label: "to_dict() -> copie profonde"
+  shape: rectangle
+  style.fill: "#e8f4f8"
+}
+
+combat_team: {
+  label: "player_team[i] (CombatScreen)"
+  shape: rectangle
+  style.fill: "#e8f4f8"
+}
+
+combat_actions: {
+  label: "Combat: attack(), gain_xp(),\n_level_up(), _try_evolve()"
+  shape: rectangle
+  style.fill: "#f8d7da"
+}
+
+won_check: {
+  label: "Player won?"
+  shape: diamond
+  style.fill: "#fff3cd"
+}
+
+award: {
+  label: "award_xp(winner, opponent_team)"
+  shape: rectangle
+  style.fill: "#d4edda"
+}
+
+no_xp: {
+  label: "Pas d'XP"
+  shape: rectangle
+  style.fill: "#f8d7da"
+}
+
+sync: {
+  label: "sync_from_combat(team, indices)"
+  shape: rectangle
+  style.fill: "#d4edda"
+}
+
+updated: {
+  label: "game.pokemon_list[i] mis a jour"
+  shape: rectangle
+  style.fill: "#d4edda"
+}
+
+save: {
+  label: "save_game()"
+  shape: rectangle
+  style.fill: "#d4edda"
+  style.bold: true
+}
+
+# -- Flow --
+
+source -> copy
+copy -> combat_team
+combat_team -> combat_actions
+combat_actions -> won_check
+
+won_check -> award: "oui"
+won_check -> no_xp: "non"
+
+award -> sync
+sync -> updated
+updated -> save

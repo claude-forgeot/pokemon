@@ -3,29 +3,8 @@
 import pygame
 
 
-def get_font(size, bold=False):
-    """Return a cross-platform font using pygame's built-in default font.
-
-    Args:
-        size: Font size in pixels.
-        bold: If True, use bold variant.
-
-    Returns:
-        pygame.font.Font: A font object guaranteed to work on all platforms.
-    """
-    font = pygame.font.Font(None, size)
-    font.set_bold(bold)
-    return font
-
-
 class Constants:
-    """Centralized game display constants.
-
-    POO: CLASS ATTRIBUTES vs INSTANCE ATTRIBUTES -- these values are defined
-    directly on the class (not inside __init__), so they are shared across
-    all instances. You access them with Constants.SCREEN_WIDTH, without
-    creating an object first. This is useful for values that never change.
-    """
+    """Centralized game display constants."""
 
     # Window dimensions
     SCREEN_WIDTH = 800
@@ -41,6 +20,7 @@ class Constants:
     GRAY = (180, 180, 180)
     LIGHT_GRAY = (220, 220, 220)
     DARK_GRAY = (100, 100, 100)
+    SELECTED_BG = (200, 220, 255)
 
     # HP bar colors
     HP_GREEN = (34, 139, 34)
@@ -76,3 +56,17 @@ class Constants:
         "steel": (184, 184, 208),
         "fairy": (238, 153, 172),
     }
+
+    def get_font(self, size, bold=False):
+        """Return a cross-platform font using pygame's built-in default font.
+
+        Args:
+            size: Font size in pixels.
+            bold: If True, use bold variant.
+
+        Returns:
+            A font object guaranteed to work on all platforms.
+        """
+        font = pygame.font.Font(None, size)
+        font.set_bold(bold)
+        return font

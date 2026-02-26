@@ -1,230 +1,268 @@
 direction: down
 
-# -- Data classes --
+# ============================================================
+# Diagramme de classes -- Pokemon Project
+# ============================================================
 
-GameState: {
-  shape: class
-  label: "GameState (Enum)"
-  MENU
-  SELECTION
-  COMBAT
-  RESULT
-  POKEDEX
-  ADD_POKEMON
-  SAVE_SELECT
-  TEAM_SELECT
-  QUIT
+# -- Models layer --
+Models: {
+  label: "Models"
+  style.fill: "#e8f4f8"
+
+  GameState: {
+    shape: class
+    label: "GameState (Enum)"
+    MENU
+    SELECTION
+    COMBAT
+    RESULT
+    POKEDEX
+    ADD_POKEMON
+    TEAM_SELECT
+  }
+
+  Move: {
+    shape: class
+    name: str
+    move_type: str
+    power: int
+    accuracy: int
+    to_dict(): dict
+  }
+
+  Pokemon: {
+    shape: class
+    name: str
+    hp: int
+    max_hp: int
+    level: int
+    attack: int
+    defense: int
+    types: list
+    sprite_path: str
+    xp: int
+    xp_to_next_level: int
+    moves: "list[Move]"
+    locked: bool
+    evolution_level: int
+    evolution_target: str
+    take_damage(amount)
+    is_alive(): bool
+    gain_xp(amount)
+    _level_up()
+    _try_evolve(): str
+    get_default_moves(): list
+    scale_to_level(target_level)
+    to_dict(): dict
+  }
+
+  Combat: {
+    shape: class
+    BASE_XP_REWARD: int
+    player_pokemon: Pokemon
+    opponent_pokemon: Pokemon
+    type_chart: TypeChart
+    get_type_multiplier(def, move): float
+    calculate_damage(atk, def, move, mult): int
+    attack(atk, def, move): dict
+    get_winner(): str
+    get_loser(): str
+    award_xp(winner, opponent_team): int
+    register_to_pokedex(pokemon, pokedex): bool
+  }
+
+  Pokedex: {
+    shape: class
+    _entries: list
+    add_entry(pokemon): bool
+    add_raw_entry(entry_dict)
+    get_all_entries(): list
+    get_count(): int
+    reset()
+  }
+
+  TypeChart: {
+    shape: class
+    TYPES: list
+    chart: dict
+    _get_multiplier(atk_type, def_type): float
+    get_combined_multiplier(atk_type, def_types): float
+    load_from_file(path)
+  }
+
+  Game: {
+    shape: class
+    POKEMON_SOURCE_PATH: str
+    SAVE_PATH: str
+    TYPE_CHART_PATH: str
+    POKEDEX_PATH: str
+    file_handler: FileHandler
+    type_chart: TypeChart
+    pokedex: Pokedex
+    pokemon_list: list
+    evolution_count: int
+    new_game()
+    _load_from_source()
+    get_random_opponent(): Pokemon
+    add_pokemon(data)
+    get_available_pokemon(): list
+    get_all_pokemon(): list
+    unlock_pokemon(name)
+    sync_from_combat(team, indices)
+    record_evolution()
+    _check_legendary_unlocks()
+    has_save(): bool
+    save_game()
+    save_pokedex()
+    load_game()
+  }
 }
 
-Move: {
-  shape: class
-  name: str
-  move_type: str
-  power: int
-  accuracy: int
-  to_dict(): dict
-  from_dict(data): Move
+# -- GUI layer --
+GUI: {
+  label: "GUI (Screens)"
+  style.fill: "#f0e8f8"
+
+  BaseScreen: {
+    shape: class
+    game: Game
+    constants: Constants
+    handle_events(events)
+    update()
+    draw(surface)
+    _load_sprites(size)
+    draw_type_badges(surface, font, types, x, y)
+  }
+
+  MenuScreen: {
+    shape: class
+  }
+
+  SelectionScreen: {
+    shape: class
+  }
+
+  TeamSelectScreen: {
+    shape: class
+    MIN_TEAM: int
+    MAX_TEAM: int
+  }
+
+  CombatScreen: {
+    shape: class
+  }
+
+  ResultScreen: {
+    shape: class
+  }
+
+  PokedexScreen: {
+    shape: class
+  }
+
+  AddPokemonScreen: {
+    shape: class
+  }
+
+  # -- Inheritance --
+  BaseScreen <-- MenuScreen
+  BaseScreen <-- SelectionScreen
+  BaseScreen <-- TeamSelectScreen
+  BaseScreen <-- CombatScreen
+  BaseScreen <-- ResultScreen
+  BaseScreen <-- PokedexScreen
+  BaseScreen <-- AddPokemonScreen
 }
 
-Pokemon: {
-  shape: class
-  name: str
-  hp: int
-  max_hp: int
-  level: int
-  attack: int
-  defense: int
-  types: list
-  sprite_path: str
-  xp: int
-  xp_to_next_level: int
-  moves: "list[Move]"
-  locked: bool
-  evolution_level: int
-  evolution_target: str
-  evolution_data: dict
-  take_damage(amount)
-  is_alive(): bool
-  heal()
-  gain_xp(amount)
-  level_up()
-  try_evolve(): str
-  get_default_moves(): list
-  scale_to_level(target_level)
-  to_dict(): dict
-  from_dict(data): Pokemon
+# -- Utils layer --
+Utils: {
+  label: "Utils"
+  style.fill: "#f8f0e0"
+
+  FileHandler: {
+    shape: class
+    load_json(path): dict
+    save_json(path, data)
+    file_exists(path): bool
+  }
+
+  Constants: {
+    shape: class
+    SCREEN_WIDTH: int
+    SCREEN_HEIGHT: int
+    FPS: int
+    TYPE_COLORS: dict
+    "# + 12 couleurs (WHITE, BLACK, RED, ...)"
+    get_font(size, bold): Font
+  }
+
+  AnimationManager: {
+    shape: class
+    SHAKE_AMPLITUDE: int
+    HP_ANIM_SPEED: float
+    HP_ANIM_THRESHOLD: float
+    shake_frames_remaining: int
+    flash_frames_remaining: int
+    animating_hp: bool
+    current_hp_ratio: float
+    start_shake(duration)
+    start_flash(color, duration)
+    start_hp_animation(current_ratio, target_ratio)
+    update()
+    get_shake_offset(): tuple
+    get_flash_color(): tuple
+    is_animating(): bool
+  }
 }
 
-Combat: {
-  shape: class
-  player_pokemon: Pokemon
-  opponent_pokemon: Pokemon
-  type_chart: TypeChart
-  turn_log: list
-  get_type_multiplier(atk, def, move): float
-  calculate_damage(atk, def, move): int
-  attack(atk, def, move): dict
-  get_winner(): str
-  get_loser(): str
-  award_xp_to_winner(): str
-  register_to_pokedex(pokemon, pokedex): bool
-}
-
-Pokedex: {
-  shape: class
-  _entries: list
-  file_path: str
-  add_entry(pokemon): bool
-  add_raw_entry(entry_dict)
-  get_all_entries(): list
-  get_count(): int
-  save()
-  load()
-  reset()
-}
-
-TypeChart: {
-  shape: class
-  TYPES: list
-  chart: dict
-  get_multiplier(atk_type, def_type): float
-  get_combined_multiplier(atk_type, def_types): float
-  load_from_file(path)
-}
-
-Game: {
-  shape: class
-  type_chart: TypeChart
-  pokedex: Pokedex
-  pokemon_list: list
-  evolution_count: int
-  new_game()
-  get_random_opponent(): Pokemon
-  add_pokemon(data)
-  get_available_pokemon(): list
-  get_all_pokemon(): list
-  unlock_pokemon(name)
-  record_evolution()
-  check_legendary_unlocks()
-  save_game()
-  load_game(filepath)
-  get_save_files(): list
-  delete_save(filepath)
-}
-
-# -- GUI classes --
-
-BaseScreen: {
-  shape: class
-  game: Game
-  handle_events(events)
-  update()
-  draw(surface)
-  _load_sprites(size)
-  draw_type_badges(surface, font, types, x, y)
-}
-
-MenuScreen: {
-  shape: class
-}
-
-SelectionScreen: {
-  shape: class
-}
-
-TeamSelectScreen: {
-  shape: class
-}
-
-CombatScreen: {
-  shape: class
-}
-
-ResultScreen: {
-  shape: class
-}
-
-PokedexScreen: {
-  shape: class
-}
-
-AddPokemonScreen: {
-  shape: class
-}
-
-SaveSelectScreen: {
-  shape: class
-}
-
-# -- Utility classes --
-
-FileHandler: {
-  shape: class
-  load_json(path): dict
-  save_json(path, data)
-  file_exists(path): bool
-  create_backup(path): str
-}
-
-ApiClient: {
-  shape: class
-  BASE_URL: str
-  cache_dir: str
-  fetch_pokemon(name_or_id): dict
-  fetch_pokemon_species(name_or_id): dict
-  fetch_evolution_chain(chain_url): dict
-  fetch_move(name_or_id): dict
-  fetch_type_data(type_name): dict
-  download_sprite(url, path): str
-}
-
-Constants: {
-  shape: class
-  SCREEN_WIDTH: int
-  SCREEN_HEIGHT: int
-  FPS: int
-  TYPE_COLORS: dict
-}
-
-# -- Relationships --
+# ============================================================
+# Relations inter-couches
+# ============================================================
 
 # Composition (Game owns these)
-Game -- TypeChart: has {
+Models.Game -- Models.TypeChart: has {
   source-arrowhead.shape: diamond
 }
-Game -- Pokedex: has {
+Models.Game -- Models.Pokedex: has {
   source-arrowhead.shape: diamond
 }
 
 # Aggregation (Game references Pokemon list)
-Game -- Pokemon: contains {
+Models.Game -- Models.Pokemon: "contains (0..*)" {
   source-arrowhead.shape: diamond
   style.stroke-dash: 3
 }
 
 # Pokemon has moves
-Pokemon -- Move: has {
+Models.Pokemon -- Models.Move: "has (0..4)" {
   source-arrowhead.shape: diamond
 }
 
 # Combat uses Pokemon and TypeChart
-Combat -- Pokemon: uses
-Combat -- TypeChart: uses
+Models.Combat -- Models.Pokemon: uses
+Models.Combat -- Models.TypeChart: uses
+Models.Combat -- Models.Pokedex: uses
 
-# Pokedex uses FileHandler
-Pokedex -- FileHandler: uses {
+# CombatScreen uses Combat
+GUI.CombatScreen -- Models.Combat: uses
+
+# CombatScreen has two AnimationManagers
+GUI.CombatScreen -- Utils.AnimationManager: "has (x2)" {
+  source-arrowhead.shape: diamond
+}
+
+# Game uses FileHandler (static calls)
+Models.Game -- Utils.FileHandler: uses {
   style.stroke-dash: 3
 }
 
-# Inheritance (Screens)
-BaseScreen <-- MenuScreen
-BaseScreen <-- SelectionScreen
-BaseScreen <-- TeamSelectScreen
-BaseScreen <-- CombatScreen
-BaseScreen <-- ResultScreen
-BaseScreen <-- PokedexScreen
-BaseScreen <-- AddPokemonScreen
-BaseScreen <-- SaveSelectScreen
+# TypeChart uses FileHandler
+Models.TypeChart -- Utils.FileHandler: uses {
+  style.stroke-dash: 3
+}
 
-# CombatScreen uses Combat
-CombatScreen -- Combat: uses
+# BaseScreen holds Game reference
+GUI.BaseScreen -- Models.Game: uses
+
+# AddPokemonScreen reads TypeChart.TYPES
+GUI.AddPokemonScreen -- Models.TypeChart: reads

@@ -4,7 +4,7 @@ import pygame
 
 from models.game_state import GameState
 from gui.base_screen import BaseScreen
-from gui.constants import Constants, get_font
+from gui.constants import Constants
 
 
 class ResultScreen(BaseScreen):
@@ -23,9 +23,9 @@ class ResultScreen(BaseScreen):
         self.winner_name = winner_name
         self.loser_name = loser_name
         self.xp_message = xp_message
-        self.font_title = get_font(40, bold=True)
-        self.font_info = get_font(22)
-        self.font_button = get_font(22)
+        self.font_title = self.constants.get_font(40, bold=True)
+        self.font_info = self.constants.get_font(22)
+        self.font_button = self.constants.get_font(22)
 
         self.menu_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100,
@@ -44,9 +44,6 @@ class ResultScreen(BaseScreen):
                 if self.menu_button.collidepoint(event.pos):
                     return GameState.MENU
         return None
-
-    def update(self):
-        """No update logic needed."""
 
     def draw(self, surface):
         """Draw the result screen with winner/loser info."""
