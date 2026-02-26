@@ -1,5 +1,6 @@
 """Selection screen module -- choose a Pokemon for battle."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -24,6 +25,11 @@ class SelectionScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
+
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "battle_arena.png")
+        self.background = pygame.image.load(bg_path).convert()
+
         self.font_title = self.constants.get_font(32, bold=True)
         self.font_name = self.constants.get_font(18, bold=True)
         self.font_stat = self.constants.get_font(14)
@@ -85,7 +91,7 @@ class SelectionScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the Pokemon selection grid."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         # Title
         title = self.font_title.render("Choose your Pokemon", True, Constants.BLACK)

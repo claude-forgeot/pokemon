@@ -1,5 +1,6 @@
 """Add Pokemon screen module -- form to create and add a custom Pokemon."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -21,6 +22,11 @@ class AddPokemonScreen(BaseScreen):
             game: The Game instance.
         """
         super().__init__(game)
+
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "pokedex_lab.png")
+        self.background = pygame.image.load(bg_path).convert()
+
         self.font_title = self.constants.get_font(32, bold=True)
         self.font_label = self.constants.get_font(18)
         self.font_input = self.constants.get_font(20)
@@ -168,7 +174,7 @@ class AddPokemonScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the add Pokemon form."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         # Title
         title = self.font_title.render("Add a Pokemon", True, Constants.BLACK)

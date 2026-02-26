@@ -1,5 +1,6 @@
 """Menu screen module -- main menu with game options."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -16,6 +17,10 @@ class MenuScreen(BaseScreen):
         self.font_title = self.constants.get_font(48, bold=True)
         self.font_button = self.constants.get_font(24)
         self.font_small = self.constants.get_font(16)
+
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "main_menu.png")
+        self.background = pygame.image.load(bg_path).convert()
 
         self.save_message = ""
         self.save_message_timer = 0
@@ -109,7 +114,7 @@ class MenuScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the menu."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         title = self.font_title.render("Pokemon Battle", True, Constants.BLACK)
         title_rect = title.get_rect(center=(Constants.SCREEN_WIDTH // 2, 90))

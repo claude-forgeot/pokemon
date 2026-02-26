@@ -1,5 +1,6 @@
 """Pokedex screen module -- displays encountered Pokemon."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -21,6 +22,10 @@ class PokedexScreen(BaseScreen):
         self.font_name = self.constants.get_font(20, bold=True)
         self.font_stat = self.constants.get_font(15)
         self.scroll_offset = 0
+
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "pokedex_lab.png")
+        self.background = pygame.image.load(bg_path).convert()
 
         self.back_button = pygame.Rect(20, 20, 100, 36)
 
@@ -44,7 +49,7 @@ class PokedexScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the Pokedex list with entries."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         # Back button
         pygame.draw.rect(

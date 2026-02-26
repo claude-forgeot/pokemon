@@ -1,5 +1,6 @@
 """Team select screen -- lets the player build a team before fighting."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -32,6 +33,10 @@ class TeamSelectScreen(BaseScreen):
         self.font_stat = self.constants.get_font(13)
         self.font_button = self.constants.get_font(20)
         self.font_info = self.constants.get_font(16)
+
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "team_arena.png")
+        self.background = pygame.image.load(bg_path).convert()
 
         self.selected_indices = []
         self.scroll_offset = 0
@@ -97,7 +102,7 @@ class TeamSelectScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the team selection grid."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         # Title
         title = self.font_title.render("Choose your team (3-6)", True, Constants.BLACK)

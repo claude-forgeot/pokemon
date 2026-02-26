@@ -1,5 +1,6 @@
 """Result screen module -- displays battle outcome."""
 
+import os
 import pygame
 
 from models.game_state import GameState
@@ -27,6 +28,10 @@ class ResultScreen(BaseScreen):
         self.font_info = self.constants.get_font(22)
         self.font_button = self.constants.get_font(22)
 
+        # Load background image
+        bg_path = os.path.join("assets", "backgrounds", "pokedex_lab.png")
+        self.background = pygame.image.load(bg_path).convert()
+
         self.menu_button = pygame.Rect(
             Constants.SCREEN_WIDTH // 2 - 100,
             Constants.SCREEN_HEIGHT - 170,
@@ -47,7 +52,7 @@ class ResultScreen(BaseScreen):
 
     def draw(self, surface):
         """Draw the result screen with winner/loser info."""
-        surface.fill(Constants.WHITE)
+        surface.blit(self.background, (0, 0))
 
         # Title
         title = self.font_title.render("Battle Over!", True, Constants.BLACK)
