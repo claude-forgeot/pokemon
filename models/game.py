@@ -40,13 +40,23 @@ class Game:
         else:
             self.pokemon_list = []
             return
-        self.pokemon_list = [Pokemon.from_dict(p) for p in data]
+        # Handle both formats: list (legacy) and dict (new)
+        if isinstance(data, list):
+            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
+        else:
+            self.pokemon_list = [Pokemon.from_dict(p) for p in data["pokemon_list"]]
+            self.evolution_count = data.get("evolution_count", 0)
 
     def new_game(self):
         """Reset the game state for a fresh start."""
         self.pokedex.reset()
         self.evolution_count = 0
-        self._load_pokemon()
+        if FileHandler.file_exists(self.POKEMON_SOURCE_PATH):
+            data = FileHandler.load_json(self.POKEMON_SOURCE_PATH)
+            self.pokemon_list = [Pokemon.from_dict(p) for p in data]
+        else:
+            self.pokemon_list = []
+        self._save_pokemon()
 
     def get_random_opponent(self):
         """Pick a random Pokemon from the full list as an opponent.
@@ -69,10 +79,18 @@ class Game:
 
         Args:
             pokemon_data: Dictionary with Pokemon attributes.
+
+        Returns:
+            bool: True if added, False if a Pokemon with this name exists.
         """
+        name = pokemon_data.get("name", "").lower()
+        for p in self.pokemon_list:
+            if p.name.lower() == name:
+                return False
         new_pokemon = Pokemon.from_dict(pokemon_data)
         self.pokemon_list.append(new_pokemon)
         self._save_pokemon()
+        return True
 
     def get_available_pokemon(self):
         """Return the list of unlocked (available) Pokemon.
@@ -109,9 +127,9 @@ class Game:
             str or None: Unlock message if a legendary was unlocked.
         """
         self.evolution_count += 1
-        return self.check_legendary_unlocks()
+        return self._check_legendary_unlocks()
 
-    def check_legendary_unlocks(self):
+    def _check_legendary_unlocks(self):
         """Check if Mewtwo or Mew should be unlocked.
 
         - Mewtwo: unlocked after 10 evolutions
@@ -120,17 +138,26 @@ class Game:
         Returns:
             str or None: Unlock message, or None.
         """
+        # Early return if both already unlocked
+        mewtwo_locked = False
+        mew_locked = False
+        for p in self.pokemon_list:
+            if p.name.lower() == "mewtwo" and p.locked:
+                mewtwo_locked = True
+            if p.name.lower() == "mew" and p.locked:
+                mew_locked = True
+        if not mewtwo_locked and not mew_locked:
+            return None
+
         messages = []
 
-        # Mewtwo: 10 evolutions
-        if self.evolution_count >= 10:
+        if self.evolution_count >= 10 and mewtwo_locked:
             for p in self.pokemon_list:
                 if p.name.lower() == "mewtwo" and p.locked:
                     p.locked = False
                     messages.append("Mewtwo has been unlocked!")
 
-        # Mew: Pokedex complete
-        if self.pokedex.get_count() >= 151:
+        if self.pokedex.get_count() >= 151 and mew_locked:
             for p in self.pokemon_list:
                 if p.name.lower() == "mew" and p.locked:
                     p.locked = False
@@ -142,8 +169,11 @@ class Game:
         return None
 
     def _save_pokemon(self):
-        """Persist the current Pokemon list to the runtime state file."""
-        data = [p.to_dict() for p in self.pokemon_list]
+        """Persist the current Pokemon list and evolution count to runtime state."""
+        data = {
+            "pokemon_list": [p.to_dict() for p in self.pokemon_list],
+            "evolution_count": self.evolution_count,
+        }
         FileHandler.save_json(self.POKEMON_RUNTIME_PATH, data)
 
     def save_game(self):
@@ -151,9 +181,6 @@ class Game:
 
         POO: SERIALIZATION -- converting objects in memory to a format
         (JSON) that can be stored on disk and loaded back later.
-
-        Returns:
-            str: The filename of the saved game.
         """
         from datetime import datetime
 
@@ -165,12 +192,10 @@ class Game:
         save_data = {
             "pokedex": self.pokedex.get_all_entries(),
             "pokemon_list": [p.to_dict() for p in self.pokemon_list],
-            "save_date": timestamp,
             "evolution_count": self.evolution_count,
         }
 
         FileHandler.save_json(filepath, save_data)
-        return filename
 
     def load_game(self, filepath):
         """Load game state from a save file.
