@@ -225,3 +225,5 @@ __marimo__/
 CHANGELOG-INTEGRATION.md
 GUIDE-TECHNIQUE.md
 docs/notions-poo.md
+presentation.html
+build_presentation.py
