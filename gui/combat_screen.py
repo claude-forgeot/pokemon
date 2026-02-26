@@ -15,13 +15,15 @@ from gui.constants import Constants, get_font
 class CombatScreen(BaseScreen):
     """Battle screen with team support, switch, and forfeit options."""
 
-    def __init__(self, game, player_team, opponent_team):
+    def __init__(self, game, player_team, opponent_team, player_original_indices=None):
         """Initialize combat with two teams of Pokemon.
 
         Args:
             game: The Game instance.
             player_team: List of player's Pokemon.
             opponent_team: List of opponent's Pokemon.
+            player_original_indices: List of indices mapping each player Pokemon
+                back to its position in game.pokemon_list (for post-combat sync).
         """
         super().__init__(game)
         self.player_team = player_team
@@ -41,6 +43,8 @@ class CombatScreen(BaseScreen):
         self.phase = "player_turn"
         self.winner = None
         self.xp_message = ""
+        self.player_ko_count = 0
+        self.player_original_indices = player_original_indices or []
         self.show_switch = False
         self.show_moves = False
 
@@ -138,6 +142,8 @@ class CombatScreen(BaseScreen):
 
                 # Finished state - click continue
                 if self.phase == "finished":
+                    for p in self.player_team:
+                        self.combat.register_to_pokedex(p, self.game.pokedex)
                     for p in self.opponent_team:
                         self.combat.register_to_pokedex(p, self.game.pokedex)
                     return GameState.RESULT
@@ -216,10 +222,8 @@ class CombatScreen(BaseScreen):
             self.move_buttons.append((move, pygame.Rect(x, y, btn_w, btn_h)))
 
     def _pick_random_move(self, pokemon):
-        """Pick a random move for the AI, or None if no moves."""
-        if pokemon.moves:
-            return random.choice(pokemon.moves)
-        return None
+        """Pick a random move for the AI."""
+        return random.choice(pokemon.moves)
 
     def _build_switch_buttons(self, alive_list):
         """Create button rectangles for the switch menu."""
@@ -249,7 +253,7 @@ class CombatScreen(BaseScreen):
         self.waiting_for_opponent = True
         self.opponent_attack_timer = pygame.time.get_ticks()
 
-    def _do_player_attack(self, move=None):
+    def _do_player_attack(self, move):
         """Execute player attack, trigger animations, schedule opponent."""
         result = self.combat.attack(self.player, self.opponent, move)
         self._add_log(result["message"])
@@ -266,6 +270,7 @@ class CombatScreen(BaseScreen):
             )
 
         if result["ko"]:
+            self.player_ko_count += 1
             if self._all_fainted(self.opponent_team):
                 self.winner = self.player.name
                 self._finish_battle()
@@ -273,8 +278,11 @@ class CombatScreen(BaseScreen):
                 return
             else:
                 self._next_alive_opponent()
+                self._add_log("Your turn!")
+                self.phase = "player_turn"
+                return
 
-        # Schedule opponent attack after delay (instead of attacking immediately)
+        # Schedule opponent attack after delay
         self.phase = "opponent_turn"
         self.waiting_for_opponent = True
         self.opponent_attack_timer = pygame.time.get_ticks()
@@ -304,24 +312,43 @@ class CombatScreen(BaseScreen):
         self.phase = "player_turn"
 
     def _finish_battle(self):
-        """Mark battle as finished, award XP, and track evolution."""
+        """Mark battle as finished, award cumulative XP for all KOs."""
         self.phase = "finished"
-        # Identify winner Pokemon before XP/evolution changes its name
-        winner_name = self.combat.get_winner()
-        winner_pokemon = (
-            self.combat.player_pokemon
-            if winner_name == self.combat.player_pokemon.name
-            else self.combat.opponent_pokemon
-        )
-        old_name = winner_pokemon.name
-        self.xp_message = self.combat.award_xp_to_winner()
-        self._add_log(self.xp_message)
-        # If the PLAYER's Pokemon evolved (its name changed), record it
-        if winner_pokemon.name != old_name and winner_pokemon is self.combat.player_pokemon:
-            unlock_msg = self.game.record_evolution()
-            self.game.unlock_pokemon(winner_pokemon.name)
-            if unlock_msg:
-                self._add_log(unlock_msg)
+
+        # B5: forfeit -- both alive, winner already set by forfeit handler
+        if self.player.is_alive() and self.opponent.is_alive():
+            self.xp_message = "You forfeited - no XP gained."
+            return
+
+        # Only award XP if the player won
+        if self.winner != self.player.name:
+            self.xp_message = ""
+            return
+
+        # B6: cumulative XP for all KO'd opponents
+        total_xp = 0
+        for opp in self.opponent_team:
+            if not opp.is_alive():
+                total_xp += Combat.BASE_XP_REWARD + opp.level * 2
+
+        if total_xp > 0:
+            old_name = self.player.name
+            old_level = self.player.level
+            self.player.gain_xp(total_xp)
+
+            self.xp_message = f"{self.player.name} gained {total_xp} XP!"
+            if self.player.level > old_level:
+                self.xp_message += f" Reached level {self.player.level}!"
+            self._add_log(self.xp_message)
+
+            # Track evolution (B3)
+            if self.player.name != old_name:
+                unlock_msg = self.game.record_evolution()
+                self.game.unlock_pokemon(self.player.name)
+                if unlock_msg:
+                    self._add_log(unlock_msg)
+        else:
+            self.xp_message = ""
 
     def _handle_player_faint(self):
         """Handle when current player Pokemon faints."""
