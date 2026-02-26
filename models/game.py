@@ -120,6 +120,34 @@ class Game:
                 self._save_pokemon()
                 return
 
+    def sync_from_combat(self, player_team, original_indices):
+        """Synchronize combat copies back to the original roster.
+
+        After combat, the copies may have gained XP, levels, evolved, etc.
+        This method copies those changes back to the originals and persists.
+
+        Args:
+            player_team: List of Pokemon copies used during combat.
+            original_indices: List of indices into self.pokemon_list,
+                matching each copy to its original.
+        """
+        for team_idx, orig_idx in enumerate(original_indices):
+            copy = player_team[team_idx]
+            original = self.pokemon_list[orig_idx]
+            original.xp = copy.xp
+            original.level = copy.level
+            original.xp_to_next_level = copy.xp_to_next_level
+            original.max_hp = copy.max_hp
+            original.hp = copy.max_hp  # Full heal after combat
+            original.attack = copy.attack
+            original.defense = copy.defense
+            original.name = copy.name
+            original.sprite_path = copy.sprite_path
+            original.evolution_level = copy.evolution_level
+            original.evolution_target = copy.evolution_target
+            original.moves = copy.moves
+        self._save_pokemon()
+
     def record_evolution(self):
         """Record that an evolution happened. Checks legendary unlocks.
 
