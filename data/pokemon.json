@@ -1,0 +1,6328 @@
+[
+  {
+    "name": "Bulbasaur",
+    "hp": 45,
+    "level": 5,
+    "attack": 49,
+    "defense": 49,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/bulbasaur.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Ivysaur",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Ivysaur",
+    "hp": 60,
+    "level": 5,
+    "attack": 62,
+    "defense": 63,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/ivysaur.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 32,
+    "evolution_target": "Venusaur",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Seed Bomb",
+        "move_type": "grass",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Venusaur",
+    "hp": 80,
+    "level": 5,
+    "attack": 82,
+    "defense": 83,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/venusaur.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Power Whip",
+        "move_type": "grass",
+        "power": 120,
+        "accuracy": 85
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Charmander",
+    "hp": 39,
+    "level": 5,
+    "attack": 52,
+    "defense": 43,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/charmander.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Charmeleon",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Dragon Breath",
+        "move_type": "dragon",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Metal Claw",
+        "move_type": "steel",
+        "power": 50,
+        "accuracy": 95
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Charmeleon",
+    "hp": 58,
+    "level": 5,
+    "attack": 64,
+    "defense": 58,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/charmeleon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 36,
+    "evolution_target": "Charizard",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Dragon Breath",
+        "move_type": "dragon",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Metal Claw",
+        "move_type": "steel",
+        "power": 50,
+        "accuracy": 95
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Charizard",
+    "hp": 78,
+    "level": 5,
+    "attack": 84,
+    "defense": 78,
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/charizard.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Metal Claw",
+        "move_type": "steel",
+        "power": 50,
+        "accuracy": 95
+      },
+      {
+        "name": "Crunch",
+        "move_type": "dark",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Squirtle",
+    "hp": 44,
+    "level": 5,
+    "attack": 48,
+    "defense": 65,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/squirtle.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Wartortle",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Wartortle",
+    "hp": 59,
+    "level": 5,
+    "attack": 63,
+    "defense": 80,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/wartortle.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 36,
+    "evolution_target": "Blastoise",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Blastoise",
+    "hp": 79,
+    "level": 5,
+    "attack": 83,
+    "defense": 100,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/blastoise.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fake Out",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Caterpie",
+    "hp": 45,
+    "level": 5,
+    "attack": 30,
+    "defense": 35,
+    "types": [
+      "bug"
+    ],
+    "sprite_path": "assets/sprites/caterpie.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 7,
+    "evolution_target": "Metapod",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bug Bite",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Metapod",
+    "hp": 50,
+    "level": 5,
+    "attack": 20,
+    "defense": 55,
+    "types": [
+      "bug"
+    ],
+    "sprite_path": "assets/sprites/metapod.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 10,
+    "evolution_target": "Butterfree",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Butterfree",
+    "hp": 60,
+    "level": 5,
+    "attack": 45,
+    "defense": 50,
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/butterfree.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Bug Bite",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Weedle",
+    "hp": 40,
+    "level": 5,
+    "attack": 35,
+    "defense": 30,
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/weedle.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 7,
+    "evolution_target": "Kakuna",
+    "moves": [
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Bug Bite",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Kakuna",
+    "hp": 45,
+    "level": 5,
+    "attack": 25,
+    "defense": 50,
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/kakuna.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 10,
+    "evolution_target": "Beedrill",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Beedrill",
+    "hp": 65,
+    "level": 5,
+    "attack": 90,
+    "defense": 40,
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/beedrill.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Fury Attack",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Bug Bite",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Pidgey",
+    "hp": 40,
+    "level": 5,
+    "attack": 45,
+    "defense": 40,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/pidgey.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 18,
+    "evolution_target": "Pidgeotto",
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Twister",
+        "move_type": "dragon",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Pidgeotto",
+    "hp": 63,
+    "level": 5,
+    "attack": 60,
+    "defense": 55,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/pidgeotto.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 36,
+    "evolution_target": "Pidgeot",
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Twister",
+        "move_type": "dragon",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Pidgeot",
+    "hp": 83,
+    "level": 5,
+    "attack": 80,
+    "defense": 75,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/pidgeot.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Sky Attack",
+        "move_type": "flying",
+        "power": 140,
+        "accuracy": 90
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Rattata",
+    "hp": 30,
+    "level": 5,
+    "attack": 56,
+    "defense": 35,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/rattata.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 20,
+    "evolution_target": "Raticate",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Hyper Fang",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Raticate",
+    "hp": 55,
+    "level": 5,
+    "attack": 81,
+    "defense": 60,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/raticate.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Swipes",
+        "move_type": "normal",
+        "power": 18,
+        "accuracy": 80
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Spearow",
+    "hp": 40,
+    "level": 5,
+    "attack": 60,
+    "defense": 30,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/spearow.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 20,
+    "evolution_target": "Fearow",
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Attack",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Wing Attack",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Fearow",
+    "hp": 65,
+    "level": 5,
+    "attack": 90,
+    "defense": 65,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/fearow.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Sky Attack",
+        "move_type": "flying",
+        "power": 140,
+        "accuracy": 90
+      },
+      {
+        "name": "Pluck",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Ekans",
+    "hp": 35,
+    "level": 5,
+    "attack": 60,
+    "defense": 44,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/ekans.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 22,
+    "evolution_target": "Arbok",
+    "moves": [
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Jab",
+        "move_type": "poison",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Arbok",
+    "hp": 60,
+    "level": 5,
+    "attack": 95,
+    "defense": 69,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/arbok.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Sucker Punch",
+        "move_type": "dark",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Fang",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 95
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Pikachu",
+    "hp": 35,
+    "level": 5,
+    "attack": 55,
+    "defense": 40,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/pikachu.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Kick",
+        "move_type": "fighting",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Slam",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 75
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Raichu",
+    "hp": 60,
+    "level": 5,
+    "attack": 90,
+    "defense": 55,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/raichu.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Thunder Punch",
+        "move_type": "electric",
+        "power": 75,
+        "accuracy": 100
+      },
+      {
+        "name": "Slam",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 75
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunderbolt",
+        "move_type": "electric",
+        "power": 90,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Sandshrew",
+    "hp": 50,
+    "level": 5,
+    "attack": 75,
+    "defense": 85,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/sandshrew.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 22,
+    "evolution_target": "Sandslash",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rapid Spin",
+        "move_type": "normal",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Slash",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Bulldoze",
+        "move_type": "ground",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Sandslash",
+    "hp": 75,
+    "level": 5,
+    "attack": 100,
+    "defense": 110,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/sandslash.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rapid Spin",
+        "move_type": "normal",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Slash",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Bulldoze",
+        "move_type": "ground",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Nidoran-f",
+    "hp": 55,
+    "level": 5,
+    "attack": 47,
+    "defense": 52,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/nidoran-f.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Nidorina",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Nidorina",
+    "hp": 70,
+    "level": 5,
+    "attack": 62,
+    "defense": 67,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/nidorina.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Nidoqueen",
+    "hp": 90,
+    "level": 5,
+    "attack": 92,
+    "defense": 87,
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/nidoqueen.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Body Slam",
+        "move_type": "normal",
+        "power": 85,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Nidoran-m",
+    "hp": 46,
+    "level": 5,
+    "attack": 57,
+    "defense": 40,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/nidoran-m.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Nidorino",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Nidorino",
+    "hp": 61,
+    "level": 5,
+    "attack": 72,
+    "defense": 57,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/nidorino.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Nidoking",
+    "hp": 81,
+    "level": 5,
+    "attack": 102,
+    "defense": 77,
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/nidoking.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Attack",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thrash",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Clefairy",
+    "hp": 70,
+    "level": 5,
+    "attack": 45,
+    "defense": 48,
+    "types": [
+      "fairy"
+    ],
+    "sprite_path": "assets/sprites/clefairy.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Disarming Voice",
+        "move_type": "fairy",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fairy Wind",
+        "move_type": "fairy",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Clefable",
+    "hp": 95,
+    "level": 5,
+    "attack": 70,
+    "defense": 73,
+    "types": [
+      "fairy"
+    ],
+    "sprite_path": "assets/sprites/clefable.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Meteor Mash",
+        "move_type": "steel",
+        "power": 90,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Vulpix",
+    "hp": 38,
+    "level": 5,
+    "attack": 41,
+    "defense": 40,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/vulpix.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Flame Wheel",
+        "move_type": "fire",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Ninetales",
+    "hp": 73,
+    "level": 5,
+    "attack": 76,
+    "defense": 75,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/ninetales.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Flamethrower",
+        "move_type": "fire",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Jigglypuff",
+    "hp": 115,
+    "level": 5,
+    "attack": 45,
+    "defense": 20,
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "sprite_path": "assets/sprites/jigglypuff.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Echoed Voice",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Covet",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Round",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Wigglytuff",
+    "hp": 140,
+    "level": 5,
+    "attack": 70,
+    "defense": 45,
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "sprite_path": "assets/sprites/wigglytuff.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Body Slam",
+        "move_type": "normal",
+        "power": 85,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Zubat",
+    "hp": 40,
+    "level": 5,
+    "attack": 45,
+    "defense": 35,
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/zubat.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 22,
+    "evolution_target": "Golbat",
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Leech Life",
+        "move_type": "bug",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Astonish",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Golbat",
+    "hp": 75,
+    "level": 5,
+    "attack": 80,
+    "defense": 70,
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/golbat.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Crunch",
+        "move_type": "dark",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Oddish",
+    "hp": 45,
+    "level": 5,
+    "attack": 50,
+    "defense": 55,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/oddish.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 21,
+    "evolution_target": "Gloom",
+    "moves": [
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Razor Leaf",
+        "move_type": "grass",
+        "power": 55,
+        "accuracy": 95
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Gloom",
+    "hp": 60,
+    "level": 5,
+    "attack": 65,
+    "defense": 70,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/gloom.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Razor Leaf",
+        "move_type": "grass",
+        "power": 55,
+        "accuracy": 95
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Vileplume",
+    "hp": 75,
+    "level": 5,
+    "attack": 80,
+    "defense": 85,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/vileplume.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Petal Dance",
+        "move_type": "grass",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Paras",
+    "hp": 35,
+    "level": 5,
+    "attack": 70,
+    "defense": 55,
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "sprite_path": "assets/sprites/paras.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 24,
+    "evolution_target": "Parasect",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Swipes",
+        "move_type": "normal",
+        "power": 18,
+        "accuracy": 80
+      },
+      {
+        "name": "Venoshock",
+        "move_type": "poison",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Parasect",
+    "hp": 60,
+    "level": 5,
+    "attack": 95,
+    "defense": 80,
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "sprite_path": "assets/sprites/parasect.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Leech Life",
+        "move_type": "bug",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Cross Poison",
+        "move_type": "poison",
+        "power": 70,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Venonat",
+    "hp": 60,
+    "level": 5,
+    "attack": 55,
+    "defense": 50,
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/venonat.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 31,
+    "evolution_target": "Venomoth",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Struggle Bug",
+        "move_type": "bug",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Venomoth",
+    "hp": 70,
+    "level": 5,
+    "attack": 65,
+    "defense": 60,
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/venomoth.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Air Slash",
+        "move_type": "flying",
+        "power": 75,
+        "accuracy": 95
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Leech Life",
+        "move_type": "bug",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Diglett",
+    "hp": 10,
+    "level": 5,
+    "attack": 55,
+    "defense": 25,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/diglett.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 26,
+    "evolution_target": "Dugtrio",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Astonish",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Bulldoze",
+        "move_type": "ground",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Dig",
+        "move_type": "ground",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Dugtrio",
+    "hp": 35,
+    "level": 5,
+    "attack": 100,
+    "defense": 50,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/dugtrio.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Dig",
+        "move_type": "ground",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Tri Attack",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Night Slash",
+        "move_type": "dark",
+        "power": 70,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Meowth",
+    "hp": 40,
+    "level": 5,
+    "attack": 45,
+    "defense": 35,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/meowth.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 28,
+    "evolution_target": "Persian",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Pay Day",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Feint Attack",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Persian",
+    "hp": 65,
+    "level": 5,
+    "attack": 70,
+    "defense": 60,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/persian.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Play Rough",
+        "move_type": "fairy",
+        "power": 90,
+        "accuracy": 90
+      },
+      {
+        "name": "Pay Day",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Psyduck",
+    "hp": 50,
+    "level": 5,
+    "attack": 52,
+    "defense": 48,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/psyduck.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 33,
+    "evolution_target": "Golduck",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Pulse",
+        "move_type": "water",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Golduck",
+    "hp": 80,
+    "level": 5,
+    "attack": 82,
+    "defense": 78,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/golduck.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Aqua Jet",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Mankey",
+    "hp": 40,
+    "level": 5,
+    "attack": 80,
+    "defense": 35,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/mankey.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 28,
+    "evolution_target": "Primeape",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Covet",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Pursuit",
+        "move_type": "dark",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Primeape",
+    "hp": 65,
+    "level": 5,
+    "attack": 105,
+    "defense": 60,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/primeape.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Karate Chop",
+        "move_type": "fighting",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Swipes",
+        "move_type": "normal",
+        "power": 18,
+        "accuracy": 80
+      },
+      {
+        "name": "Covet",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Growlithe",
+    "hp": 55,
+    "level": 5,
+    "attack": 70,
+    "defense": 45,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/growlithe.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fire Fang",
+        "move_type": "fire",
+        "power": 65,
+        "accuracy": 95
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Arcanine",
+    "hp": 90,
+    "level": 5,
+    "attack": 110,
+    "defense": 80,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/arcanine.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Poliwag",
+    "hp": 40,
+    "level": 5,
+    "attack": 50,
+    "defense": 40,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/poliwag.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 25,
+    "evolution_target": "Poliwhirl",
+    "moves": [
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Poliwhirl",
+    "hp": 65,
+    "level": 5,
+    "attack": 65,
+    "defense": 65,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/poliwhirl.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Poliwrath",
+    "hp": 90,
+    "level": 5,
+    "attack": 95,
+    "defense": 95,
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/poliwrath.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Body Slam",
+        "move_type": "normal",
+        "power": 85,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Abra",
+    "hp": 25,
+    "level": 5,
+    "attack": 20,
+    "defense": 15,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/abra.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 16,
+    "evolution_target": "Kadabra",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Kadabra",
+    "hp": 40,
+    "level": 5,
+    "attack": 35,
+    "defense": 30,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/kadabra.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Zen Headbutt",
+        "move_type": "psychic",
+        "power": 80,
+        "accuracy": 90
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Psyshock",
+        "move_type": "psychic",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Alakazam",
+    "hp": 55,
+    "level": 5,
+    "attack": 50,
+    "defense": 45,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/alakazam.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Zen Headbutt",
+        "move_type": "psychic",
+        "power": 80,
+        "accuracy": 90
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Psyshock",
+        "move_type": "psychic",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Machop",
+    "hp": 70,
+    "level": 5,
+    "attack": 80,
+    "defense": 50,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/machop.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 28,
+    "evolution_target": "Machoke",
+    "moves": [
+      {
+        "name": "Karate Chop",
+        "move_type": "fighting",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rock Smash",
+        "move_type": "fighting",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bullet Punch",
+        "move_type": "steel",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Machoke",
+    "hp": 80,
+    "level": 5,
+    "attack": 100,
+    "defense": 70,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/machoke.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Karate Chop",
+        "move_type": "fighting",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rock Smash",
+        "move_type": "fighting",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bullet Punch",
+        "move_type": "steel",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Machamp",
+    "hp": 90,
+    "level": 5,
+    "attack": 130,
+    "defense": 80,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/machamp.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Strength",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Karate Chop",
+        "move_type": "fighting",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rock Smash",
+        "move_type": "fighting",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Bellsprout",
+    "hp": 50,
+    "level": 5,
+    "attack": 75,
+    "defense": 35,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/bellsprout.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 21,
+    "evolution_target": "Weepinbell",
+    "moves": [
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Knock Off",
+        "move_type": "dark",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Weepinbell",
+    "hp": 65,
+    "level": 5,
+    "attack": 90,
+    "defense": 50,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/weepinbell.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Knock Off",
+        "move_type": "dark",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Victreebel",
+    "hp": 80,
+    "level": 5,
+    "attack": 105,
+    "defense": 65,
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/victreebel.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Slam",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 75
+      },
+      {
+        "name": "Vine Whip",
+        "move_type": "grass",
+        "power": 45,
+        "accuracy": 100
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Razor Leaf",
+        "move_type": "grass",
+        "power": 55,
+        "accuracy": 95
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Tentacool",
+    "hp": 40,
+    "level": 5,
+    "attack": 40,
+    "defense": 35,
+    "types": [
+      "water",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/tentacool.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 30,
+    "evolution_target": "Tentacruel",
+    "moves": [
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Tentacruel",
+    "hp": 80,
+    "level": 5,
+    "attack": 70,
+    "defense": 65,
+    "types": [
+      "water",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/tentacruel.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Acid",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Sting",
+        "move_type": "poison",
+        "power": 15,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Geodude",
+    "hp": 40,
+    "level": 5,
+    "attack": 80,
+    "defense": 100,
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/geodude.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 25,
+    "evolution_target": "Graveler",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Rock Throw",
+        "move_type": "rock",
+        "power": 50,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Graveler",
+    "hp": 55,
+    "level": 5,
+    "attack": 95,
+    "defense": 115,
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/graveler.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Rock Throw",
+        "move_type": "rock",
+        "power": 50,
+        "accuracy": 90
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Golem",
+    "hp": 80,
+    "level": 5,
+    "attack": 120,
+    "defense": 130,
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/golem.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Mega Punch",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Ponyta",
+    "hp": 50,
+    "level": 5,
+    "attack": 85,
+    "defense": 55,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/ponyta.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 40,
+    "evolution_target": "Rapidash",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Hit",
+        "move_type": "normal",
+        "power": 35,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Rapidash",
+    "hp": 65,
+    "level": 5,
+    "attack": 100,
+    "defense": 70,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/rapidash.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Smart Strike",
+        "move_type": "steel",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Slowpoke",
+    "hp": 90,
+    "level": 5,
+    "attack": 65,
+    "defense": 65,
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/slowpoke.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 37,
+    "evolution_target": "Slowbro",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Pulse",
+        "move_type": "water",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Slowbro",
+    "hp": 95,
+    "level": 5,
+    "attack": 75,
+    "defense": 110,
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/slowbro.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Magnemite",
+    "hp": 25,
+    "level": 5,
+    "attack": 35,
+    "defense": 70,
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "sprite_path": "assets/sprites/magnemite.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 30,
+    "evolution_target": "Magneton",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunderbolt",
+        "move_type": "electric",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Magneton",
+    "hp": 50,
+    "level": 5,
+    "attack": 60,
+    "defense": 95,
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "sprite_path": "assets/sprites/magneton.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunderbolt",
+        "move_type": "electric",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Farfetchd",
+    "hp": 52,
+    "level": 5,
+    "attack": 90,
+    "defense": 55,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/farfetchd.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Poison Jab",
+        "move_type": "poison",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Cut",
+        "move_type": "normal",
+        "power": 50,
+        "accuracy": 95
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Doduo",
+    "hp": 35,
+    "level": 5,
+    "attack": 85,
+    "defense": 45,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/doduo.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 31,
+    "evolution_target": "Dodrio",
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Pursuit",
+        "move_type": "dark",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Wing Attack",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Dodrio",
+    "hp": 60,
+    "level": 5,
+    "attack": 110,
+    "defense": 70,
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/dodrio.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Fury Attack",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Pursuit",
+        "move_type": "dark",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Seel",
+    "hp": 65,
+    "level": 5,
+    "attack": 45,
+    "defense": 55,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/seel.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 34,
+    "evolution_target": "Dewgong",
+    "moves": [
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Icy Wind",
+        "move_type": "ice",
+        "power": 55,
+        "accuracy": 95
+      },
+      {
+        "name": "Ice Shard",
+        "move_type": "ice",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Dewgong",
+    "hp": 90,
+    "level": 5,
+    "attack": 70,
+    "defense": 80,
+    "types": [
+      "water",
+      "ice"
+    ],
+    "sprite_path": "assets/sprites/dewgong.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble Beam",
+        "move_type": "water",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Aurora Beam",
+        "move_type": "ice",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Grimer",
+    "hp": 80,
+    "level": 5,
+    "attack": 80,
+    "defense": 50,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/grimer.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 38,
+    "evolution_target": "Muk",
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Mud Shot",
+        "move_type": "ground",
+        "power": 55,
+        "accuracy": 95
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Muk",
+    "hp": 105,
+    "level": 5,
+    "attack": 105,
+    "defense": 75,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/muk.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Moonblast",
+        "move_type": "fairy",
+        "power": 95,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Shellder",
+    "hp": 30,
+    "level": 5,
+    "attack": 65,
+    "defense": 100,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/shellder.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Icicle Spear",
+        "move_type": "ice",
+        "power": 25,
+        "accuracy": 100
+      },
+      {
+        "name": "Clamp",
+        "move_type": "water",
+        "power": 35,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Cloyster",
+    "hp": 50,
+    "level": 5,
+    "attack": 95,
+    "defense": 180,
+    "types": [
+      "water",
+      "ice"
+    ],
+    "sprite_path": "assets/sprites/cloyster.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Icicle Spear",
+        "move_type": "ice",
+        "power": 25,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Twineedle",
+        "move_type": "bug",
+        "power": 25,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Gastly",
+    "hp": 30,
+    "level": 5,
+    "attack": 35,
+    "defense": 30,
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/gastly.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 25,
+    "evolution_target": "Haunter",
+    "moves": [
+      {
+        "name": "Lick",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Astonish",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Venoshock",
+        "move_type": "poison",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Haunter",
+    "hp": 45,
+    "level": 5,
+    "attack": 50,
+    "defense": 45,
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/haunter.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Lick",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Astonish",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Venoshock",
+        "move_type": "poison",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Gengar",
+    "hp": 60,
+    "level": 5,
+    "attack": 65,
+    "defense": 60,
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/gengar.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Lick",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Astonish",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Venoshock",
+        "move_type": "poison",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Onix",
+    "hp": 35,
+    "level": 5,
+    "attack": 45,
+    "defense": 160,
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/onix.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rollout",
+        "move_type": "rock",
+        "power": 30,
+        "accuracy": 90
+      },
+      {
+        "name": "Bulldoze",
+        "move_type": "ground",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Drowzee",
+    "hp": 60,
+    "level": 5,
+    "attack": 48,
+    "defense": 45,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/drowzee.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 26,
+    "evolution_target": "Hypno",
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Hypno",
+    "hp": 85,
+    "level": 5,
+    "attack": 73,
+    "defense": 70,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/hypno.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Krabby",
+    "hp": 30,
+    "level": 5,
+    "attack": 105,
+    "defense": 90,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/krabby.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 28,
+    "evolution_target": "Kingler",
+    "moves": [
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble Beam",
+        "move_type": "water",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Vice Grip",
+        "move_type": "normal",
+        "power": 55,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Kingler",
+    "hp": 55,
+    "level": 5,
+    "attack": 130,
+    "defense": 115,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/kingler.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Vice Grip",
+        "move_type": "normal",
+        "power": 55,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Metal Claw",
+        "move_type": "steel",
+        "power": 50,
+        "accuracy": 95
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Voltorb",
+    "hp": 40,
+    "level": 5,
+    "attack": 30,
+    "defense": 50,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/voltorb.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 30,
+    "evolution_target": "Electrode",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Self Destruct",
+        "move_type": "normal",
+        "power": 200,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Electrode",
+    "hp": 60,
+    "level": 5,
+    "attack": 50,
+    "defense": 70,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/electrode.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Self Destruct",
+        "move_type": "normal",
+        "power": 200,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Exeggcute",
+    "hp": 60,
+    "level": 5,
+    "attack": 40,
+    "defense": 80,
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/exeggcute.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Barrage",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Uproar",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Exeggutor",
+    "hp": 95,
+    "level": 5,
+    "attack": 95,
+    "defense": 85,
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/exeggutor.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Mega Drain",
+        "move_type": "grass",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Solar Beam",
+        "move_type": "grass",
+        "power": 120,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Cubone",
+    "hp": 50,
+    "level": 5,
+    "attack": 50,
+    "defense": 95,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/cubone.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 28,
+    "evolution_target": "Marowak",
+    "moves": [
+      {
+        "name": "Bone Club",
+        "move_type": "ground",
+        "power": 65,
+        "accuracy": 85
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "False Swipe",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Marowak",
+    "hp": 60,
+    "level": 5,
+    "attack": 80,
+    "defense": 110,
+    "types": [
+      "ground"
+    ],
+    "sprite_path": "assets/sprites/marowak.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Bone Club",
+        "move_type": "ground",
+        "power": 65,
+        "accuracy": 85
+      },
+      {
+        "name": "Mud Slap",
+        "move_type": "ground",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "False Swipe",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Hitmonlee",
+    "hp": 50,
+    "level": 5,
+    "attack": 120,
+    "defense": 53,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/hitmonlee.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Double Kick",
+        "move_type": "fighting",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fake Out",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Revenge",
+        "move_type": "fighting",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Hitmonchan",
+    "hp": 50,
+    "level": 5,
+    "attack": 105,
+    "defense": 79,
+    "types": [
+      "fighting"
+    ],
+    "sprite_path": "assets/sprites/hitmonchan.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Drain Punch",
+        "move_type": "fighting",
+        "power": 75,
+        "accuracy": 100
+      },
+      {
+        "name": "Comet Punch",
+        "move_type": "normal",
+        "power": 18,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Fake Out",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Lickitung",
+    "hp": 90,
+    "level": 5,
+    "attack": 55,
+    "defense": 75,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/lickitung.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Lick",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Koffing",
+    "hp": 40,
+    "level": 5,
+    "attack": 65,
+    "defense": 95,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/koffing.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 35,
+    "evolution_target": "Weezing",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Assurance",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Clear Smog",
+        "move_type": "poison",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Weezing",
+    "hp": 65,
+    "level": 5,
+    "attack": 90,
+    "defense": 120,
+    "types": [
+      "poison"
+    ],
+    "sprite_path": "assets/sprites/weezing.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Smog",
+        "move_type": "poison",
+        "power": 30,
+        "accuracy": 70
+      },
+      {
+        "name": "Sludge",
+        "move_type": "poison",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Rhyhorn",
+    "hp": 80,
+    "level": 5,
+    "attack": 85,
+    "defense": 95,
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "sprite_path": "assets/sprites/rhyhorn.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 42,
+    "evolution_target": "Rhydon",
+    "moves": [
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rock Smash",
+        "move_type": "fighting",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Smack Down",
+        "move_type": "rock",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Rhydon",
+    "hp": 105,
+    "level": 5,
+    "attack": 130,
+    "defense": 120,
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "sprite_path": "assets/sprites/rhydon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Attack",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Chansey",
+    "hp": 250,
+    "level": 5,
+    "attack": 5,
+    "defense": 5,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/chansey.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Slap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Covet",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Tangela",
+    "hp": 65,
+    "level": 5,
+    "attack": 55,
+    "defense": 115,
+    "types": [
+      "grass"
+    ],
+    "sprite_path": "assets/sprites/tangela.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Constrict",
+        "move_type": "normal",
+        "power": 10,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Acid Spray",
+        "move_type": "poison",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Kangaskhan",
+    "hp": 105,
+    "level": 5,
+    "attack": 95,
+    "defense": 80,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/kangaskhan.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Comet Punch",
+        "move_type": "normal",
+        "power": 18,
+        "accuracy": 85
+      },
+      {
+        "name": "Rage",
+        "move_type": "normal",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Horsea",
+    "hp": 30,
+    "level": 5,
+    "attack": 40,
+    "defense": 70,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/horsea.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 32,
+    "evolution_target": "Seadra",
+    "moves": [
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble Beam",
+        "move_type": "water",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Dragon Breath",
+        "move_type": "dragon",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Waterfall",
+        "move_type": "water",
+        "power": 80,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Seadra",
+    "hp": 55,
+    "level": 5,
+    "attack": 65,
+    "defense": 95,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/seadra.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Clear Smog",
+        "move_type": "poison",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Bubble Beam",
+        "move_type": "water",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Dragon Breath",
+        "move_type": "dragon",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Goldeen",
+    "hp": 45,
+    "level": 5,
+    "attack": 67,
+    "defense": 60,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/goldeen.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 33,
+    "evolution_target": "Seaking",
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Pulse",
+        "move_type": "water",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Seaking",
+    "hp": 80,
+    "level": 5,
+    "attack": 92,
+    "defense": 65,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/seaking.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Skull Bash",
+        "move_type": "normal",
+        "power": 130,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Staryu",
+    "hp": 30,
+    "level": 5,
+    "attack": 45,
+    "defense": 55,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/staryu.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Rapid Spin",
+        "move_type": "normal",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Starmie",
+    "hp": 60,
+    "level": 5,
+    "attack": 75,
+    "defense": 85,
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/starmie.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Hydro Pump",
+        "move_type": "water",
+        "power": 110,
+        "accuracy": 80
+      },
+      {
+        "name": "Surf",
+        "move_type": "water",
+        "power": 90,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Mr-mime",
+    "hp": 40,
+    "level": 5,
+    "attack": 45,
+    "defense": 65,
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "sprite_path": "assets/sprites/mr-mime.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Zen Headbutt",
+        "move_type": "psychic",
+        "power": 80,
+        "accuracy": 90
+      },
+      {
+        "name": "Magical Leaf",
+        "move_type": "grass",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Scyther",
+    "hp": 70,
+    "level": 5,
+    "attack": 110,
+    "defense": 80,
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/scyther.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Vacuum Wave",
+        "move_type": "fighting",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Silver Wind",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Aerial Ace",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Jynx",
+    "hp": 65,
+    "level": 5,
+    "attack": 50,
+    "defense": 35,
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/jynx.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Powder Snow",
+        "move_type": "ice",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Draining Kiss",
+        "move_type": "fairy",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Electabuzz",
+    "hp": 65,
+    "level": 5,
+    "attack": 83,
+    "defense": 57,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/electabuzz.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Quick Attack",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Shock Wave",
+        "move_type": "electric",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Swift",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Magmar",
+    "hp": 65,
+    "level": 5,
+    "attack": 95,
+    "defense": 57,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/magmar.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Flame Wheel",
+        "move_type": "fire",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Feint Attack",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Pinsir",
+    "hp": 65,
+    "level": 5,
+    "attack": 125,
+    "defense": 100,
+    "types": [
+      "bug"
+    ],
+    "sprite_path": "assets/sprites/pinsir.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Vice Grip",
+        "move_type": "normal",
+        "power": 55,
+        "accuracy": 100
+      },
+      {
+        "name": "Bug Bite",
+        "move_type": "bug",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Hit",
+        "move_type": "normal",
+        "power": 35,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Tauros",
+    "hp": 75,
+    "level": 5,
+    "attack": 100,
+    "defense": 95,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/tauros.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Assurance",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Stomp",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Magikarp",
+    "hp": 20,
+    "level": 5,
+    "attack": 10,
+    "defense": 55,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/magikarp.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 20,
+    "evolution_target": "Gyarados",
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Gyarados",
+    "hp": 95,
+    "level": 5,
+    "attack": 125,
+    "defense": 79,
+    "types": [
+      "water",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/gyarados.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Water Pulse",
+        "move_type": "water",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thrash",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Lapras",
+    "hp": 130,
+    "level": 5,
+    "attack": 85,
+    "defense": 80,
+    "types": [
+      "water",
+      "ice"
+    ],
+    "sprite_path": "assets/sprites/lapras.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ice Shard",
+        "move_type": "ice",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Pulse",
+        "move_type": "water",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Body Slam",
+        "move_type": "normal",
+        "power": 85,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Ditto",
+    "hp": 48,
+    "level": 5,
+    "attack": 48,
+    "defense": 48,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/ditto.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Eevee",
+    "hp": 55,
+    "level": 5,
+    "attack": 55,
+    "defense": 50,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/eevee.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Double Kick",
+        "move_type": "fighting",
+        "power": 30,
+        "accuracy": 100
+      },
+      {
+        "name": "Swift",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Covet",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Vaporeon",
+    "hp": 130,
+    "level": 5,
+    "attack": 65,
+    "defense": 60,
+    "types": [
+      "water"
+    ],
+    "sprite_path": "assets/sprites/vaporeon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Bubble",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Jolteon",
+    "hp": 65,
+    "level": 5,
+    "attack": 65,
+    "defense": 60,
+    "types": [
+      "electric"
+    ],
+    "sprite_path": "assets/sprites/jolteon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Flareon",
+    "hp": 65,
+    "level": 5,
+    "attack": 130,
+    "defense": 60,
+    "types": [
+      "fire"
+    ],
+    "sprite_path": "assets/sprites/flareon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Take Down",
+        "move_type": "normal",
+        "power": 90,
+        "accuracy": 85
+      },
+      {
+        "name": "Double Edge",
+        "move_type": "normal",
+        "power": 120,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Porygon",
+    "hp": 65,
+    "level": 5,
+    "attack": 60,
+    "defense": 70,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/porygon.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Spark",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Psybeam",
+        "move_type": "psychic",
+        "power": 65,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Omanyte",
+    "hp": 35,
+    "level": 5,
+    "attack": 40,
+    "defense": 100,
+    "types": [
+      "rock",
+      "water"
+    ],
+    "sprite_path": "assets/sprites/omanyte.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 40,
+    "evolution_target": "Omastar",
+    "moves": [
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Water Gun",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Constrict",
+        "move_type": "normal",
+        "power": 10,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Omastar",
+    "hp": 70,
+    "level": 5,
+    "attack": 60,
+    "defense": 125,
+    "types": [
+      "rock",
+      "water"
+    ],
+    "sprite_path": "assets/sprites/omastar.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Crunch",
+        "move_type": "dark",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Bind",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 85
+      },
+      {
+        "name": "Horn Attack",
+        "move_type": "normal",
+        "power": 65,
+        "accuracy": 100
+      },
+      {
+        "name": "Bite",
+        "move_type": "dark",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Kabuto",
+    "hp": 30,
+    "level": 5,
+    "attack": 80,
+    "defense": 90,
+    "types": [
+      "rock",
+      "water"
+    ],
+    "sprite_path": "assets/sprites/kabuto.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 40,
+    "evolution_target": "Kabutops",
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Mud Shot",
+        "move_type": "ground",
+        "power": 55,
+        "accuracy": 95
+      },
+      {
+        "name": "Rock Throw",
+        "move_type": "rock",
+        "power": 50,
+        "accuracy": 90
+      },
+      {
+        "name": "Aqua Jet",
+        "move_type": "water",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Kabutops",
+    "hp": 60,
+    "level": 5,
+    "attack": 115,
+    "defense": 105,
+    "types": [
+      "rock",
+      "water"
+    ],
+    "sprite_path": "assets/sprites/kabutops.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Scratch",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Absorb",
+        "move_type": "grass",
+        "power": 20,
+        "accuracy": 100
+      },
+      {
+        "name": "Fury Cutter",
+        "move_type": "bug",
+        "power": 40,
+        "accuracy": 95
+      },
+      {
+        "name": "Feint",
+        "move_type": "normal",
+        "power": 30,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Aerodactyl",
+    "hp": 80,
+    "level": 5,
+    "attack": 105,
+    "defense": 65,
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/aerodactyl.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Wing Attack",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Fang",
+        "move_type": "electric",
+        "power": 65,
+        "accuracy": 95
+      },
+      {
+        "name": "Ice Fang",
+        "move_type": "ice",
+        "power": 65,
+        "accuracy": 95
+      },
+      {
+        "name": "Fire Fang",
+        "move_type": "fire",
+        "power": 65,
+        "accuracy": 95
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Snorlax",
+    "hp": 160,
+    "level": 5,
+    "attack": 110,
+    "defense": 65,
+    "types": [
+      "normal"
+    ],
+    "sprite_path": "assets/sprites/snorlax.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Headbutt",
+        "move_type": "normal",
+        "power": 70,
+        "accuracy": 100
+      },
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Last Resort",
+        "move_type": "normal",
+        "power": 140,
+        "accuracy": 100
+      },
+      {
+        "name": "Lick",
+        "move_type": "ghost",
+        "power": 30,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Articuno",
+    "hp": 90,
+    "level": 5,
+    "attack": 85,
+    "defense": 100,
+    "types": [
+      "ice",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/articuno.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Ice Beam",
+        "move_type": "ice",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Powder Snow",
+        "move_type": "ice",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Zapdos",
+    "hp": 90,
+    "level": 5,
+    "attack": 90,
+    "defense": 85,
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/zapdos.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      },
+      {
+        "name": "Drill Peck",
+        "move_type": "flying",
+        "power": 80,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Shock",
+        "move_type": "electric",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Pluck",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Moltres",
+    "hp": 90,
+    "level": 5,
+    "attack": 100,
+    "defense": 90,
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/moltres.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Gust",
+        "move_type": "flying",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Wing Attack",
+        "move_type": "flying",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Ember",
+        "move_type": "fire",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Peck",
+        "move_type": "flying",
+        "power": 35,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Dratini",
+    "hp": 41,
+    "level": 5,
+    "attack": 64,
+    "defense": 45,
+    "types": [
+      "dragon"
+    ],
+    "sprite_path": "assets/sprites/dratini.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 30,
+    "evolution_target": "Dragonair",
+    "moves": [
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Twister",
+        "move_type": "dragon",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Slam",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 75
+      },
+      {
+        "name": "Aqua Tail",
+        "move_type": "water",
+        "power": 90,
+        "accuracy": 90
+      }
+    ],
+    "locked": false
+  },
+  {
+    "name": "Dragonair",
+    "hp": 61,
+    "level": 5,
+    "attack": 84,
+    "defense": 65,
+    "types": [
+      "dragon"
+    ],
+    "sprite_path": "assets/sprites/dragonair.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": 55,
+    "evolution_target": "Dragonite",
+    "moves": [
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Twister",
+        "move_type": "dragon",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Aqua Tail",
+        "move_type": "water",
+        "power": 90,
+        "accuracy": 90
+      },
+      {
+        "name": "Dragon Tail",
+        "move_type": "dragon",
+        "power": 60,
+        "accuracy": 90
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Dragonite",
+    "hp": 91,
+    "level": 5,
+    "attack": 134,
+    "defense": 95,
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "sprite_path": "assets/sprites/dragonite.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Fire Punch",
+        "move_type": "fire",
+        "power": 75,
+        "accuracy": 100
+      },
+      {
+        "name": "Thunder Punch",
+        "move_type": "electric",
+        "power": 75,
+        "accuracy": 100
+      },
+      {
+        "name": "Wrap",
+        "move_type": "normal",
+        "power": 15,
+        "accuracy": 90
+      },
+      {
+        "name": "Twister",
+        "move_type": "dragon",
+        "power": 40,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Mewtwo",
+    "hp": 106,
+    "level": 5,
+    "attack": 110,
+    "defense": 90,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/mewtwo.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Psychic",
+        "move_type": "psychic",
+        "power": 90,
+        "accuracy": 100
+      },
+      {
+        "name": "Swift",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Ancient Power",
+        "move_type": "rock",
+        "power": 60,
+        "accuracy": 100
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Mew",
+    "hp": 100,
+    "level": 5,
+    "attack": 100,
+    "defense": 100,
+    "types": [
+      "psychic"
+    ],
+    "sprite_path": "assets/sprites/mew.png",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Pound",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Confusion",
+        "move_type": "psychic",
+        "power": 50,
+        "accuracy": 100
+      },
+      {
+        "name": "Swift",
+        "move_type": "normal",
+        "power": 60,
+        "accuracy": 100
+      },
+      {
+        "name": "Mega Punch",
+        "move_type": "normal",
+        "power": 80,
+        "accuracy": 85
+      }
+    ],
+    "locked": true
+  },
+  {
+    "name": "Popouri",
+    "hp": 130,
+    "level": 5,
+    "attack": 40,
+    "defense": 60,
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "sprite_path": "",
+    "xp": 0,
+    "xp_to_next_level": 35,
+    "evolution_level": null,
+    "evolution_target": null,
+    "moves": [
+      {
+        "name": "Tackle",
+        "move_type": "normal",
+        "power": 40,
+        "accuracy": 100
+      },
+      {
+        "name": "Water Attack",
+        "move_type": "water",
+        "power": 50,
+        "accuracy": 100
+      }
+    ],
+    "locked": false
+  }
+]

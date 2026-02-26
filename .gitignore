@@ -190,7 +190,6 @@ cython_debug/
 
 # Project-specific
 saves/
-assets/sprites/*.png
 .claude/
 
 # Dev artifacts (pas partie du jeu)
@@ -200,7 +199,6 @@ tests/
 Ressources-projet/
 
 # Donnees generees au runtime (recreees par scripts ou gameplay)
-data/pokemon.json
 data/pokedex.json
 
 # Diagrammes generes (source = docs/class_diagram.d2)
