@@ -16,8 +16,6 @@ class MenuScreen(BaseScreen):
         self.font_title = get_font(48, bold=True)
         self.font_button = get_font(24)
         self.font_small = get_font(16)
-        self.message = ""
-        self.message_timer = 0
 
         center_x = Constants.SCREEN_WIDTH // 2 - Constants.BUTTON_WIDTH // 2
         self.buttons = {
@@ -65,11 +63,7 @@ class MenuScreen(BaseScreen):
         return None
 
     def update(self):
-        """Update message timer."""
-        if self.message_timer > 0:
-            self.message_timer -= 1
-            if self.message_timer == 0:
-                self.message = ""
+        """No update logic needed."""
 
     def draw(self, surface):
         """Draw the menu."""
@@ -93,6 +87,8 @@ class MenuScreen(BaseScreen):
             "add_pokemon": "Add Pokemon",
         }
         for key, rect in self.buttons.items():
+            if key == "team_battle" and len(self.game.get_available_pokemon()) < 3:
+                continue
             color = Constants.BLUE if self.hover_button == key else Constants.DARK_GRAY
             pygame.draw.rect(surface, color, rect, border_radius=Constants.BUTTON_RADIUS)
             label = self.font_button.render(labels[key], True, Constants.WHITE)
@@ -115,9 +111,3 @@ class MenuScreen(BaseScreen):
         pdex_rect = pdex.get_rect(center=(Constants.SCREEN_WIDTH // 2, 585))
         surface.blit(pdex, pdex_rect)
 
-        if self.message:
-            msg_surf = self.font_small.render(self.message, True, Constants.GREEN)
-            msg_rect = msg_surf.get_rect(
-                center=(Constants.SCREEN_WIDTH // 2, 520)
-            )
-            surface.blit(msg_surf, msg_rect)

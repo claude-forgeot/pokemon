@@ -161,7 +161,9 @@ class AddPokemonScreen(BaseScreen):
             "types": list(self.selected_types),
             "sprite_path": "",
         }
-        self.game.add_pokemon(pokemon_data)
+        if not self.game.add_pokemon(pokemon_data):
+            self.error_message = "A Pokemon with this name already exists"
+            return None
         return GameState.MENU
 
     def update(self):
